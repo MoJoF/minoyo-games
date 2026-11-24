@@ -288,6 +288,109 @@
       transform: rotate(-4deg);
     }
 
+    .battle-mini {
+      position: relative;
+      z-index: 1;
+      width: min(330px, 78%);
+      aspect-ratio: 1.5;
+      overflow: hidden;
+      border: 1px solid rgba(176, 208, 190, 0.32);
+      border-radius: 17px;
+      background:
+        linear-gradient(rgba(138, 184, 147, 0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(138, 184, 147, 0.045) 1px, transparent 1px),
+        linear-gradient(145deg, #1d392e, #142720);
+      background-size: 24px 24px, 24px 24px, auto;
+      box-shadow: 0 20px 55px rgba(0, 0, 0, 0.42), 0 0 42px rgba(65, 158, 116, 0.15);
+      transform: rotate(3deg);
+    }
+
+    .battle-mini::before {
+      position: absolute;
+      top: 10%;
+      bottom: 10%;
+      left: 50%;
+      border-left: 1px dashed rgba(215, 237, 211, 0.17);
+      content: "";
+    }
+
+    .mini-base {
+      position: absolute;
+      top: 26%;
+      width: 23%;
+      height: 48%;
+      border-top: 5px solid #87938d;
+      border-bottom: 5px solid #87938d;
+      filter: drop-shadow(0 3px 4px rgba(0, 0, 0, 0.35));
+    }
+
+    .mini-base-blue {
+      left: 8%;
+      border-left: 5px solid #87938d;
+      border-right: 5px solid transparent;
+    }
+
+    .mini-base-red {
+      right: 8%;
+      border-right: 5px solid #87938d;
+      border-left: 5px solid transparent;
+    }
+
+    .mini-player,
+    .mini-bot {
+      position: absolute;
+      top: 46%;
+      width: 15px;
+      height: 15px;
+      border: 2px solid rgba(255, 255, 255, 0.76);
+      border-radius: 50%;
+      box-shadow: 0 0 20px currentColor;
+    }
+
+    .mini-player {
+      left: 31%;
+      background: #55b8ff;
+      color: #55b8ff;
+    }
+
+    .mini-bot {
+      right: 30%;
+      background: #ff6874;
+      color: #ff6874;
+    }
+
+    .mini-flag {
+      position: absolute;
+      top: 39%;
+      left: 65%;
+      width: 19px;
+      height: 25px;
+      border-left: 2px solid #e8eee8;
+    }
+
+    .mini-flag::after {
+      position: absolute;
+      top: 1px;
+      left: 1px;
+      width: 15px;
+      height: 10px;
+      background: #ff6874;
+      clip-path: polygon(0 0, 100% 25%, 0 100%);
+      content: "";
+    }
+
+    .mini-shot {
+      position: absolute;
+      top: 50%;
+      left: 47%;
+      width: 16px;
+      height: 3px;
+      border-radius: 99px;
+      background: #c5f2ff;
+      box-shadow: 0 0 12px #72d9ff;
+      transform: rotate(-8deg);
+    }
+
     .bricks {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
@@ -469,7 +572,7 @@
       </a>
       <div class="library-count">
         <span class="status-dot" aria-hidden="true"></span>
-        <span>1 игра в коллекции</span>
+        <span>2 игры в коллекции</span>
       </div>
     </header>
 
@@ -483,7 +586,7 @@
       <section aria-labelledby="games-title">
         <div class="section-heading">
           <h2 id="games-title">Выбирай игру</h2>
-          <span>Коллекция · 01</span>
+          <span>Коллекция · 02</span>
         </div>
 
         <a class="game-card" href="/arkanoid" aria-label="Играть в Арканоид">
@@ -505,6 +608,25 @@
                 <span class="ball"></span>
                 <span class="paddle"></span>
               </div>
+            </div>
+          </div>
+        </a>
+
+        <a class="game-card" href="/capture" aria-label="Играть в Флаг захвата">
+          <div class="game-info">
+            <span class="game-tag"><span aria-hidden="true">✦</span> Тактика</span>
+            <h3>Флаг захвата</h3>
+            <p>Обойди соперника, захвати его знамя и донеси до своей базы. Тебе противостоит бот.</p>
+            <span class="play-button">Играть <span class="play-arrow" aria-hidden="true">→</span></span>
+          </div>
+          <div class="artwork capture-artwork" aria-hidden="true">
+            <div class="battle-mini">
+              <span class="mini-base mini-base-blue"></span>
+              <span class="mini-base mini-base-red"></span>
+              <span class="mini-player"></span>
+              <span class="mini-bot"></span>
+              <span class="mini-flag"></span>
+              <span class="mini-shot"></span>
             </div>
           </div>
         </a>

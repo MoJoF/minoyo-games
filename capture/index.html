@@ -1,0 +1,3076 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+  <meta name="theme-color" content="#0b1018">
+  <meta name="description" content="Захвати флаг противника и принеси его на свою базу.">
+  <title>Флаг захвата — Minoyo Games</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0b1018;
+      color: #edf2f7;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+      -webkit-font-smoothing: antialiased;
+      --muted: #9ba8b5;
+      --line: rgba(195, 213, 227, 0.12);
+      --blue: #59baff;
+      --red: #ff6b78;
+      --green: #63d79a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      min-width: 320px;
+      min-height: 100vh;
+      min-height: 100dvh;
+      margin: 0;
+      overflow-x: hidden;
+      overscroll-behavior: none;
+      background:
+        radial-gradient(ellipse at 50% 12%, rgba(52, 94, 110, 0.16), transparent 46rem),
+        #0b1018;
+    }
+
+    button,
+    a {
+      font: inherit;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .page {
+      width: min(1120px, calc(100% - 32px));
+      margin: 0 auto;
+      padding: 18px 0 28px;
+    }
+
+    .topbar,
+    .game-heading,
+    .scoreboard,
+    .team-readout,
+    .game-actions,
+    .game-footer,
+    .control-item {
+      display: flex;
+      align-items: center;
+    }
+
+    .topbar {
+      justify-content: space-between;
+      min-height: 48px;
+      margin-bottom: 22px;
+    }
+
+    .back-link {
+      color: #b7c1cc;
+      font-size: 13px;
+      transition: color 150ms ease;
+    }
+
+    .back-link:hover {
+      color: #fff;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 9px;
+      font-size: 13px;
+      font-weight: 800;
+      letter-spacing: 0.1em;
+    }
+
+    .brand-mark {
+      display: grid;
+      width: 30px;
+      height: 30px;
+      place-items: center;
+      border: 1px solid rgba(89, 186, 255, 0.35);
+      border-radius: 9px;
+      background: rgba(89, 186, 255, 0.1);
+      color: #8ed3ff;
+    }
+
+    .game-heading {
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 15px;
+    }
+
+    .game-heading h1 {
+      margin: 0;
+      font-size: clamp(22px, 3vw, 30px);
+      letter-spacing: -0.045em;
+    }
+
+    .game-heading p {
+      margin: 5px 0 0;
+      color: var(--muted);
+      font-size: 13px;
+    }
+
+    .game-actions {
+      gap: 8px;
+    }
+
+    .button {
+      min-height: 38px;
+      padding: 0 13px;
+      border: 1px solid rgba(195, 213, 227, 0.15);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.045);
+      color: #dce5ed;
+      font-size: 12px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
+    }
+
+    .button:hover {
+      transform: translateY(-1px);
+      border-color: rgba(195, 213, 227, 0.3);
+      background: rgba(255, 255, 255, 0.09);
+    }
+
+    .button:focus-visible,
+    a:focus-visible {
+      outline: 2px solid #8ed3ff;
+      outline-offset: 3px;
+    }
+
+    .button-primary {
+      border-color: rgba(89, 186, 255, 0.38);
+      background: #227db9;
+      color: #fff;
+    }
+
+    .button-primary:hover {
+      border-color: #69c5ff;
+      background: #2a8bca;
+    }
+
+    .game-panel {
+      overflow: hidden;
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      background: #111922;
+      box-shadow: 0 24px 70px rgba(0, 0, 0, 0.32);
+    }
+
+    .scoreboard {
+      display: flex;
+      flex-direction: column;
+      min-height: 66px;
+      justify-content: center;
+      gap: 12px;
+      padding: 11px 18px;
+      border-bottom: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.018);
+    }
+
+    .score-chips {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .score-chip {
+      display: flex;
+      min-width: 128px;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 10px;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: rgba(255, 255, 255, 0.035);
+    }
+
+    .score-chip-dot {
+      width: 8px;
+      height: 8px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+    }
+
+    .score-chip-name {
+      min-width: 0;
+      flex: 1;
+      color: #dce5ed;
+      font-size: 11px;
+      font-weight: 700;
+    }
+
+    .score-chip-life {
+      display: block;
+      margin-top: 2px;
+      color: #8d9aa8;
+      font-size: 9px;
+      font-weight: 500;
+    }
+
+    .score-chip-value {
+      color: #fff;
+      font-size: 17px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .team-readout {
+      min-width: 185px;
+      gap: 10px;
+    }
+
+    .team-readout.right {
+      justify-content: flex-end;
+      text-align: right;
+    }
+
+    .team-dot {
+      width: 10px;
+      height: 10px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--blue);
+      box-shadow: 0 0 14px rgba(89, 186, 255, 0.52);
+    }
+
+    .team-dot.red {
+      background: var(--red);
+      box-shadow: 0 0 14px rgba(255, 107, 120, 0.45);
+    }
+
+    .team-name {
+      color: #dce5ed;
+      font-size: 12px;
+      font-weight: 750;
+    }
+
+    .team-detail {
+      margin-top: 3px;
+      color: #8d9aa8;
+      font-size: 11px;
+    }
+
+    .team-score {
+      min-width: 22px;
+      color: #fff;
+      font-size: 21px;
+      font-weight: 800;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .score-separator {
+      color: #64717e;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .status-message {
+      width: 100%;
+      color: #c1ccd6;
+      font-size: 12px;
+      text-align: center;
+    }
+
+    .canvas-wrap {
+      position: relative;
+      overflow: hidden;
+      background: #18271f;
+      line-height: 0;
+    }
+
+    #battlefield {
+      display: block;
+      width: 100%;
+      height: auto;
+      aspect-ratio: 5 / 3;
+      cursor: crosshair;
+      touch-action: none;
+    }
+
+    .overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      display: grid;
+      place-items: center;
+      padding: 18px;
+      background: rgba(5, 10, 15, 0.75);
+      backdrop-filter: blur(5px);
+      line-height: 1.5;
+    }
+
+    .overlay[hidden] {
+      display: none;
+    }
+
+    .dialog {
+      width: min(450px, 100%);
+      padding: 27px 28px;
+      border: 1px solid rgba(193, 214, 230, 0.18);
+      border-radius: 17px;
+      background: rgba(17, 26, 36, 0.97);
+      box-shadow: 0 18px 70px rgba(0, 0, 0, 0.45);
+      text-align: center;
+    }
+
+    .dialog-kicker {
+      margin: 0 0 8px;
+      color: #76caff;
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+    }
+
+    .dialog h2 {
+      margin: 0;
+      font-size: 25px;
+      letter-spacing: -0.04em;
+    }
+
+    .dialog-copy {
+      margin: 12px 0 20px;
+      color: #a9b5c1;
+      font-size: 13px;
+      line-height: 1.65;
+    }
+
+    .menu-setting {
+      display: grid;
+      grid-template-columns: 1fr auto;
+      align-items: center;
+      gap: 8px 14px;
+      margin: 0 0 20px;
+      padding: 12px;
+      border: 1px solid rgba(193, 214, 230, 0.12);
+      border-radius: 11px;
+      background: rgba(255, 255, 255, 0.035);
+      text-align: left;
+    }
+
+    .menu-setting[hidden] {
+      display: none;
+    }
+
+    .menu-setting label {
+      color: #e2eaf1;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .menu-setting select {
+      min-height: 36px;
+      padding: 0 30px 0 10px;
+      border: 1px solid rgba(193, 214, 230, 0.2);
+      border-radius: 8px;
+      background: #182431;
+      color: #f0f5f8;
+      font: inherit;
+      font-size: 12px;
+    }
+
+    .menu-setting small {
+      grid-column: 1 / -1;
+      color: #9ba8b5;
+      font-size: 10px;
+    }
+
+    .connection-form,
+    .room-lobby {
+      display: grid;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .connection-form[hidden],
+    .room-lobby[hidden] {
+      display: none;
+    }
+
+    .text-field {
+      display: grid;
+      gap: 6px;
+      color: #e2eaf1;
+      font-size: 12px;
+      font-weight: 700;
+    }
+
+    .text-field input {
+      width: 100%;
+      min-height: 42px;
+      padding: 0 12px;
+      border: 1px solid rgba(193, 214, 230, 0.2);
+      border-radius: 9px;
+      background: #101923;
+      color: #f0f5f8;
+      font: inherit;
+      font-size: 14px;
+    }
+
+    .room-actions,
+    .room-heading {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .room-actions .button {
+      flex: 1;
+    }
+
+    .signal-panel {
+      display: grid;
+      gap: 8px;
+      padding: 10px;
+      border: 1px solid rgba(193, 214, 230, 0.14);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.025);
+    }
+
+    .signal-panel[hidden] {
+      display: none;
+    }
+
+    .signal-panel p {
+      margin: 0;
+      color: #a9b5c1;
+      font-size: 11px;
+      line-height: 1.5;
+    }
+
+    .signal-code {
+      width: 100%;
+      min-height: 78px;
+      padding: 8px;
+      border: 1px solid rgba(193, 214, 230, 0.2);
+      border-radius: 8px;
+      background: #101923;
+      color: #dce5ed;
+      font: 10px/1.45 ui-monospace, SFMono-Regular, Consolas, monospace;
+      overflow-wrap: anywhere;
+      resize: vertical;
+    }
+
+    .room-status {
+      min-height: 18px;
+      margin: 0;
+      color: #a9b5c1;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .room-heading {
+      justify-content: space-between;
+      padding: 10px 12px;
+      border: 1px solid rgba(193, 214, 230, 0.14);
+      border-radius: 10px;
+      background: rgba(255, 255, 255, 0.035);
+      color: #a9b5c1;
+      font-size: 11px;
+    }
+
+    .room-heading strong {
+      color: #fff;
+      font-size: 17px;
+      letter-spacing: 0.15em;
+    }
+
+    .room-roster {
+      display: grid;
+      gap: 6px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .room-roster li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 9px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, 0.035);
+      color: #dce5ed;
+      font-size: 12px;
+    }
+
+    .room-roster li::before {
+      width: 7px;
+      height: 7px;
+      flex: 0 0 auto;
+      border-radius: 50%;
+      background: var(--green);
+      content: "";
+    }
+
+    .room-buttons {
+      display: flex;
+      gap: 8px;
+    }
+
+    .room-buttons .button {
+      flex: 1;
+    }
+
+    .dialog .button {
+      min-height: 43px;
+      padding: 0 19px;
+      font-size: 13px;
+    }
+
+    .game-footer {
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 14px 18px;
+      border-top: 1px solid var(--line);
+      background: rgba(255, 255, 255, 0.018);
+    }
+
+    .health-row {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      color: #a9b5c1;
+      font-size: 11px;
+    }
+
+    .health-row strong {
+      color: #f0f5f8;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .health-icon {
+      color: #ff7b82;
+      font-size: 14px;
+    }
+
+    .ammo-row {
+      color: #c4cfda;
+    }
+
+    .ammo-row.reloading strong {
+      color: #ffc879;
+    }
+
+    .flag-state {
+      min-height: 17px;
+      color: #b7c4cf;
+      font-size: 11px;
+      text-align: center;
+    }
+
+    .bot-stats {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 6px 12px;
+    }
+
+    .bot-stat {
+      color: #a9b5c1;
+      font-size: 10px;
+      white-space: nowrap;
+    }
+
+    .bot-stat strong {
+      color: #e8eef3;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .controls {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 10px 24px;
+      padding: 14px 6px 0;
+      color: #9ba8b5;
+      font-size: 11px;
+    }
+
+    .touch-controls {
+      position: absolute;
+      inset: 0;
+      z-index: 1;
+      display: none;
+      pointer-events: none;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+      -webkit-touch-callout: none;
+    }
+
+    .move-pad {
+      position: absolute;
+      bottom: max(14px, env(safe-area-inset-bottom));
+      left: max(14px, env(safe-area-inset-left));
+      display: grid;
+      width: min(128px, 30vw);
+      aspect-ratio: 1;
+      place-items: center;
+      border: 1px solid rgba(226, 238, 246, 0.32);
+      border-radius: 50%;
+      background: rgba(9, 17, 24, 0.42);
+      pointer-events: auto;
+      touch-action: none;
+    }
+
+    .move-pad::before,
+    .move-pad::after {
+      position: absolute;
+      background: rgba(226, 238, 246, 0.16);
+      content: "";
+    }
+
+    .move-pad::before {
+      width: 1px;
+      height: 68%;
+    }
+
+    .move-pad::after {
+      width: 68%;
+      height: 1px;
+    }
+
+    .move-stick {
+      position: relative;
+      z-index: 1;
+      width: 38%;
+      aspect-ratio: 1;
+      border: 1px solid rgba(226, 238, 246, 0.55);
+      border-radius: 50%;
+      background: rgba(89, 186, 255, 0.62);
+      box-shadow: 0 2px 14px rgba(0, 0, 0, 0.35);
+      pointer-events: none;
+    }
+
+    .fire-touch {
+      position: absolute;
+      right: max(20px, env(safe-area-inset-right));
+      bottom: max(24px, env(safe-area-inset-bottom));
+      display: grid;
+      width: min(76px, 18vw);
+      aspect-ratio: 1;
+      place-items: center;
+      border: 2px solid rgba(255, 217, 220, 0.68);
+      border-radius: 50%;
+      background: rgba(220, 67, 82, 0.72);
+      color: #fff;
+      font-size: 11px;
+      font-weight: 900;
+      letter-spacing: 0.08em;
+      pointer-events: auto;
+      touch-action: none;
+    }
+
+    .fire-touch:active,
+    .fire-touch.pressed {
+      background: rgba(255, 91, 108, 0.92);
+      transform: scale(0.95);
+    }
+
+    .orientation-hint {
+      position: fixed;
+      inset: 0;
+      z-index: 20;
+      display: none;
+      place-items: center;
+      padding: 28px;
+      background: #0b1018;
+      color: #f0f5f8;
+      text-align: center;
+    }
+
+    .orientation-hint p {
+      max-width: 280px;
+      margin: 0;
+      font-size: 18px;
+      font-weight: 750;
+      line-height: 1.5;
+    }
+
+    .control-item {
+      gap: 7px;
+    }
+
+    kbd {
+      min-width: 22px;
+      padding: 3px 6px;
+      border: 1px solid rgba(195, 213, 227, 0.19);
+      border-bottom-width: 2px;
+      border-radius: 5px;
+      background: rgba(255, 255, 255, 0.05);
+      color: #e2e9ef;
+      font: inherit;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .mouse-icon {
+      display: inline-grid;
+      width: 17px;
+      height: 22px;
+      place-items: center;
+      border: 1px solid rgba(195, 213, 227, 0.45);
+      border-radius: 9px;
+      color: #e2e9ef;
+      font-size: 8px;
+      line-height: 1;
+    }
+
+    @media (max-width: 650px) {
+      .page {
+        width: min(100% - 20px, 540px);
+        padding-top: 10px;
+      }
+
+      .topbar {
+        margin-bottom: 16px;
+      }
+
+      .game-heading {
+        align-items: flex-start;
+      }
+
+      .game-heading p {
+        max-width: 245px;
+        line-height: 1.45;
+      }
+
+      .game-actions {
+        flex-direction: column;
+      }
+
+      .button {
+        min-height: 34px;
+        padding: 0 9px;
+      }
+
+      .scoreboard {
+        min-height: 58px;
+        padding: 9px 10px;
+      }
+
+      .score-chip {
+        min-width: 112px;
+      }
+
+      .team-readout {
+        min-width: 0;
+        gap: 6px;
+      }
+
+      .team-score {
+        font-size: 18px;
+      }
+
+      .team-name {
+        font-size: 10px;
+      }
+
+      .team-detail {
+        font-size: 9px;
+      }
+
+      .status-message {
+        max-width: 100%;
+        font-size: 10px;
+      }
+
+      .game-footer {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 8px 18px;
+        padding: 11px 8px;
+      }
+    }
+
+    @media (max-width: 390px) {
+      .brand {
+        font-size: 11px;
+      }
+
+      .back-link {
+        font-size: 11px;
+      }
+
+      .game-heading h1 {
+        font-size: 22px;
+      }
+
+      .game-heading p {
+        max-width: 185px;
+        font-size: 11px;
+      }
+
+      .team-detail {
+        display: none;
+      }
+
+      .status-message {
+        max-width: 100%;
+        font-size: 9px;
+      }
+    }
+
+    @media (pointer: coarse) and (orientation: portrait) and (max-width: 900px) {
+      .orientation-hint {
+        display: grid;
+      }
+    }
+
+    @media (orientation: landscape) and (max-height: 600px) {
+      body {
+        overflow: hidden;
+      }
+
+      .page {
+        display: flex;
+        width: 100%;
+        height: 100vh;
+        height: 100dvh;
+        flex-direction: column;
+        padding: env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+      }
+
+      .topbar {
+        min-height: 28px;
+        flex: 0 0 28px;
+        margin: 0 6px 4px;
+      }
+
+      .brand-mark {
+        width: 22px;
+        height: 22px;
+      }
+
+      main {
+        display: flex;
+        min-height: 0;
+        flex: 1;
+        flex-direction: column;
+      }
+
+      .game-heading {
+        display: none;
+      }
+
+      .game-panel {
+        display: flex;
+        min-height: 0;
+        flex: 1;
+        flex-direction: column;
+        border-radius: 10px;
+      }
+
+      .dialog {
+        max-height: calc(100% - 12px);
+        overflow-y: auto;
+        padding: 14px 18px;
+      }
+
+      .dialog-copy {
+        margin: 7px 0 11px;
+      }
+
+      .scoreboard {
+        min-height: 34px;
+        flex: 0 0 auto;
+        flex-direction: row;
+        gap: 5px;
+        padding: 3px 7px;
+      }
+
+      .status-message {
+        width: auto;
+        min-width: 0;
+        flex: 1;
+        font-size: 10px;
+        text-align: left;
+      }
+
+      .score-chips {
+        flex: 0 1 auto;
+        flex-wrap: nowrap;
+        gap: 3px;
+        overflow: hidden;
+      }
+
+      .score-chip {
+        min-width: 0;
+        gap: 4px;
+        padding: 3px 5px;
+      }
+
+      .score-chip-name {
+        font-size: 9px;
+      }
+
+      .score-chip-life {
+        display: none;
+      }
+
+      .score-chip-value {
+        font-size: 12px;
+      }
+
+      .canvas-wrap {
+        display: grid;
+        min-height: 0;
+        flex: 1;
+        place-items: center;
+      }
+
+      #battlefield {
+        width: auto;
+        height: auto;
+        max-width: 100%;
+        max-height: 100%;
+      }
+
+      .game-footer {
+        flex: 0 0 auto;
+        justify-content: space-around;
+        gap: 4px 8px;
+        padding: 4px 7px;
+      }
+
+      .health-row,
+      .bot-stat,
+      .flag-state {
+        font-size: 9px;
+      }
+
+      .bot-stats {
+        justify-content: center;
+        gap: 3px 8px;
+      }
+
+      .controls {
+        display: none;
+      }
+    }
+
+    @media (pointer: coarse) and (orientation: landscape) and (max-height: 600px) {
+      .touch-controls {
+        display: block;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *,
+      *::before,
+      *::after {
+        scroll-behavior: auto !important;
+        transition-duration: 0.01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="topbar">
+      <a class="back-link" href="/">← Все игры</a>
+      <a class="brand" href="/" aria-label="Minoyo Games — на главную">
+        <span class="brand-mark" aria-hidden="true">✦</span>
+        <span>MINOYO GAMES</span>
+      </a>
+    </header>
+
+    <main>
+      <div class="game-heading">
+        <div>
+          <h1>Флаг захвата</h1>
+          <p>Забирай флаги соперников и доставляй их на свою базу.</p>
+        </div>
+        <div class="game-actions">
+          <button class="button" id="pauseButton" type="button" aria-label="Пауза" disabled>Пауза</button>
+          <button class="button" id="restartButton" type="button">Заново</button>
+        </div>
+      </div>
+
+      <section class="game-panel" aria-label="Игровое поле">
+        <div class="scoreboard">
+          <div class="status-message" id="gameStatus" role="status" aria-live="polite">Приготовься к бою</div>
+          <div class="score-chips" id="scoreChips" aria-label="Счёт"></div>
+        </div>
+
+        <div class="canvas-wrap">
+          <canvas id="battlefield" width="1000" height="600" tabindex="0" role="img" aria-label="Поле битвы: синяя база слева, красная база справа">
+            Для этой игры нужен браузер с поддержкой HTML Canvas.
+          </canvas>
+          <div class="touch-controls" id="touchControls" aria-label="Сенсорное управление">
+            <div class="move-pad" id="movePad" aria-label="Движение">
+              <span class="move-stick" id="moveStick"></span>
+            </div>
+            <button class="fire-touch" id="fireTouch" type="button" aria-label="Стрелять">ОГОНЬ</button>
+          </div>
+          <div class="overlay" id="overlay">
+            <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" aria-describedby="dialogCopy">
+              <p class="dialog-kicker">Захвати флаг</p>
+              <h2 id="dialogTitle">Сетевая игра</h2>
+              <p class="dialog-copy" id="dialogCopy">Создай лобби или вставь приглашение от другого игрока. Offer и answer передаются вручную; используется публичный STUN.</p>
+              <div class="connection-form" id="connectionForm">
+                <label class="text-field" for="playerName">Твоё имя
+                  <input id="playerName" maxlength="16" autocomplete="nickname" placeholder="Например, Алекс">
+                </label>
+                <div class="room-actions">
+                  <button class="button button-primary" id="createRoomButton" type="button">Создать лобби</button>
+                </div>
+                <label class="text-field" for="joinCode">Код-приглашение от создателя
+                  <textarea class="signal-code" id="joinCode" aria-label="Код-приглашение" placeholder="Вставь сюда offer-код"></textarea>
+                </label>
+                <button class="button" id="joinRoomButton" type="button">Подготовить ответ</button>
+                <div class="signal-panel" id="guestAnswerPanel" hidden>
+                  <p>Передай этот answer-код создателю лобби и дождись подключения.</p>
+                  <textarea class="signal-code" id="guestAnswerCode" aria-label="Твой answer-код" readonly></textarea>
+                  <button class="button" id="copyGuestAnswerButton" type="button">Скопировать ответ</button>
+                </div>
+                <p class="room-status" id="roomStatus" role="status" aria-live="polite"></p>
+              </div>
+              <div class="room-lobby" id="roomLobby" hidden>
+                <div class="room-heading">
+                  <span>Участники</span>
+                  <strong id="roomCodeLabel">1 / 4</strong>
+                </div>
+                <ul class="room-roster" id="roomRoster"></ul>
+                <button class="button" id="createInviteButton" type="button">Создать приглашение игроку</button>
+                <div class="signal-panel" id="hostInvitePanel" hidden>
+                  <p>Отправь offer-код игроку. Его answer-код вставь ниже.</p>
+                  <textarea class="signal-code" id="hostOfferCode" aria-label="Offer-код для игрока" readonly></textarea>
+                  <button class="button" id="copyHostOfferButton" type="button">Скопировать приглашение</button>
+                  <button class="button" id="cancelHostInviteButton" type="button">Отменить приглашение</button>
+                  <label class="text-field" for="hostAnswerCode">Answer-код игрока
+                    <textarea class="signal-code" id="hostAnswerCode" placeholder="Вставь answer-код сюда"></textarea>
+                  </label>
+                  <button class="button" id="acceptHostAnswerButton" type="button">Подтвердить ответ</button>
+                </div>
+                <div class="menu-setting" id="botCountSetting">
+                  <label for="botCountSelect">Ботов в матче</label>
+                  <select id="botCountSelect"></select>
+                  <small id="matchSize">Всего игроков: 1 из 4</small>
+                </div>
+                <p class="room-status" id="lobbyStatus"></p>
+                <div class="room-buttons">
+                  <button class="button button-primary" id="startMatchButton" type="button">Начать матч</button>
+                  <button class="button" id="leaveRoomButton" type="button">Выйти</button>
+                </div>
+              </div>
+              <button class="button button-primary" id="overlayButton" type="button" hidden>Продолжить</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="game-footer">
+          <div class="health-row">
+            <span class="health-icon" aria-hidden="true">♥</span>
+            <span>Здоровье:</span>
+            <strong id="playerHealth">4 / 4</strong>
+          </div>
+          <div class="health-row ammo-row" id="playerAmmoRow">
+            <span>Патроны:</span>
+            <strong id="playerAmmo">10 / 10</strong>
+          </div>
+          <div class="flag-state" id="flagStatus">Твой флаг на базе · флаг бота на базе</div>
+          <div class="bot-stats" id="botStats" aria-label="Состояние ботов"></div>
+        </div>
+      </section>
+
+      <div class="controls" aria-label="Управление">
+        <span class="control-item"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd> движение</span>
+        <span class="control-item"><span class="mouse-icon" aria-hidden="true">●</span> мышь — прицел, левая кнопка — стрелять</span>
+        <span class="control-item"><kbd>Esc</kbd> пауза</span>
+      </div>
+    </main>
+  </div>
+  <div class="orientation-hint" id="orientationHint">
+    <p>Поверни устройство горизонтально, чтобы играть.</p>
+  </div>
+
+  <script>
+    (() => {
+      "use strict";
+
+      const canvas = document.getElementById("battlefield");
+      const ctx = canvas.getContext("2d");
+      const overlay = document.getElementById("overlay");
+      const overlayTitle = document.getElementById("dialogTitle");
+      const overlayCopy = document.getElementById("dialogCopy");
+      const overlayButton = document.getElementById("overlayButton");
+      const connectionForm = document.getElementById("connectionForm");
+      const playerNameInput = document.getElementById("playerName");
+      const joinCodeInput = document.getElementById("joinCode");
+      const createRoomButton = document.getElementById("createRoomButton");
+      const joinRoomButton = document.getElementById("joinRoomButton");
+      const roomStatus = document.getElementById("roomStatus");
+      const guestAnswerPanel = document.getElementById("guestAnswerPanel");
+      const guestAnswerCode = document.getElementById("guestAnswerCode");
+      const copyGuestAnswerButton = document.getElementById("copyGuestAnswerButton");
+      const roomLobby = document.getElementById("roomLobby");
+      const roomCodeLabel = document.getElementById("roomCodeLabel");
+      const roomRoster = document.getElementById("roomRoster");
+      const lobbyStatus = document.getElementById("lobbyStatus");
+      const createInviteButton = document.getElementById("createInviteButton");
+      const hostInvitePanel = document.getElementById("hostInvitePanel");
+      const hostOfferCode = document.getElementById("hostOfferCode");
+      const hostAnswerCode = document.getElementById("hostAnswerCode");
+      const copyHostOfferButton = document.getElementById("copyHostOfferButton");
+      const cancelHostInviteButton = document.getElementById("cancelHostInviteButton");
+      const acceptHostAnswerButton = document.getElementById("acceptHostAnswerButton");
+      const startMatchButton = document.getElementById("startMatchButton");
+      const leaveRoomButton = document.getElementById("leaveRoomButton");
+      const botCountSetting = document.getElementById("botCountSetting");
+      const botCountSelect = document.getElementById("botCountSelect");
+      const matchSize = document.getElementById("matchSize");
+      const movePad = document.getElementById("movePad");
+      const moveStick = document.getElementById("moveStick");
+      const fireTouch = document.getElementById("fireTouch");
+      const pauseButton = document.getElementById("pauseButton");
+      const restartButton = document.getElementById("restartButton");
+      const gameStatus = document.getElementById("gameStatus");
+      const scoreChips = document.getElementById("scoreChips");
+      const playerHealthElement = document.getElementById("playerHealth");
+      const playerAmmoElement = document.getElementById("playerAmmo");
+      const flagStatus = document.getElementById("flagStatus");
+      const botStats = document.getElementById("botStats");
+
+      const WIDTH = 1000;
+      const HEIGHT = 600;
+      const ZOOM = 0.7;
+      const CAMERA_OFFSET_X = (WIDTH - WIDTH * ZOOM) / 2;
+      const CAMERA_OFFSET_Y = (HEIGHT - HEIGHT * ZOOM) / 2;
+      const MAX_HEALTH = 4;
+      const WIN_SCORE = 5;
+      const MAGAZINE_SIZE = 10;
+      const RELOAD_DURATION = 2;
+      const RTC_CONFIGURATION = {
+        iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
+      };
+      const NAV_STEP = 25;
+      const NAV_DIRECTIONS = [
+        [1, 0], [-1, 0], [0, 1], [0, -1],
+        [1, 1], [1, -1], [-1, 1], [-1, -1]
+      ];
+      const TEAMS = [
+        { name: "Синий", color: "#4ca9e9", stroke: "#c4eaff", flag: "#55b8ff", zone: "rgba(61,158,222,.10)" },
+        { name: "Красный", color: "#e65362", stroke: "#ffd0d2", flag: "#ff6874", zone: "rgba(228,87,99,.09)" },
+        { name: "Зелёный", color: "#54c79a", stroke: "#c8f7df", flag: "#5ee1a8", zone: "rgba(75,197,143,.09)" },
+        { name: "Жёлтый", color: "#e8b84f", stroke: "#fff0bc", flag: "#ffd15f", zone: "rgba(232,184,79,.09)" }
+      ];
+      const BASES = [
+        {
+          x: 82, y: 170, w: 205, h: 260,
+          home: { x: 150, y: 300 }, spawn: { x: 142, y: 350 },
+          walls: [
+            { x: 82, y: 170, w: 205, h: 18 },
+            { x: 82, y: 412, w: 205, h: 18 },
+            { x: 269, y: 170, w: 18, h: 260 }
+          ]
+        },
+        {
+          x: 713, y: 170, w: 205, h: 260,
+          home: { x: 850, y: 300 }, spawn: { x: 858, y: 350 },
+          walls: [
+            { x: 713, y: 170, w: 205, h: 18 },
+            { x: 713, y: 412, w: 205, h: 18 },
+            { x: 713, y: 170, w: 18, h: 260 }
+          ]
+        },
+        {
+          x: 420, y: 20, w: 160, h: 125,
+          home: { x: 500, y: 82 }, spawn: { x: 500, y: 110 },
+          walls: [
+            { x: 420, y: 20, w: 160, h: 18 },
+            { x: 420, y: 20, w: 18, h: 125 },
+            { x: 562, y: 20, w: 18, h: 125 }
+          ]
+        },
+        {
+          x: 420, y: 455, w: 160, h: 125,
+          home: { x: 500, y: 518 }, spawn: { x: 500, y: 485 },
+          walls: [
+            { x: 420, y: 562, w: 160, h: 18 },
+            { x: 420, y: 455, w: 18, h: 125 },
+            { x: 562, y: 455, w: 18, h: 125 }
+          ]
+        }
+      ];
+      const COVERS = [
+        { x: 340, y: 205, w: 72, h: 19 },
+        { x: 587, y: 365, w: 72, h: 19 },
+        { x: 333, y: 374, w: 54, h: 20 },
+        { x: 613, y: 196, w: 54, h: 20 },
+        { x: 433, y: 223, w: 20, h: 67 },
+        { x: 547, y: 310, w: 20, h: 67 },
+        { x: 477, y: 177, w: 48, h: 17 },
+        { x: 477, y: 406, w: 48, h: 17 },
+        { x: 365, y: 284, w: 34, h: 18 },
+        { x: 601, y: 298, w: 34, h: 18 }
+      ];
+      const input = {
+        keys: new Set(),
+        mouseDown: false,
+        touchFire: false,
+        touchMove: { x: 0, y: 0 },
+        pointer: { x: 500, y: 300 }
+      };
+
+      let mode = "menu";
+      let pixelRatio = 1;
+      let elapsed = 0;
+      let previousFrame = 0;
+      let hudAccumulator = 0;
+      let networkAccumulator = 0;
+      let announceTimer = 0;
+      let statusText = "";
+      let bullets = [];
+      let soundSequence = 0;
+      let receivedSoundSequence = 0;
+      let pendingSounds = [];
+      let player;
+      let bots = [];
+      let actors = [];
+      let flags = [];
+      let score = [];
+      let obstacles = [];
+      let audioContext = null;
+      let hostPeers = new Map();
+      let pendingConnections = new Map();
+      let latestInviteId = null;
+      let inviteGeneration = 0;
+      let guestConnection = null;
+      let guestDataChannel = null;
+      let currentRoom = null;
+      let localId = "";
+      let isHost = false;
+      let remoteControls = new Map();
+      let movePointerId = null;
+
+      function createActor(team, name, id, isBot) {
+        const base = BASES[team];
+        const aimX = WIDTH / 2 - base.home.x;
+        const aimY = HEIGHT / 2 - base.home.y;
+        const aimLength = Math.hypot(aimX, aimY) || 1;
+        return {
+          id,
+          team,
+          name,
+          isBot,
+          connected: true,
+          x: base.spawn.x,
+          y: base.spawn.y,
+          radius: 16,
+          speed: 205,
+          health: MAX_HEALTH,
+          ammo: MAGAZINE_SIZE,
+          reloadTimer: 0,
+          lastDamageAt: -Infinity,
+          regenAccumulator: 0,
+          shotCooldown: 0,
+          respawnTimer: 0,
+          deaths: 0,
+          invulnerable: 0,
+          aimX: aimX / aimLength,
+          aimY: aimY / aimLength,
+          alive: true,
+          carrying: null,
+          hitFlash: 0,
+          path: [],
+          pathTarget: null,
+          pathTimer: 0
+        };
+      }
+
+      function createFlag(owner) {
+        const home = BASES[owner].home;
+        return { owner, home, x: home.x, y: home.y, state: "home", carrier: null, droppedBy: null, pickupLock: 0 };
+      }
+
+      function startMatch(roomData) {
+        currentRoom = roomData;
+        isHost = roomData.hostId === localId;
+        const participants = roomData.players.map((member, index) =>
+          createActor(index, member.name, member.id, false)
+        );
+        bots = Array.from({ length: roomData.botCount }, (_, index) =>
+          createActor(participants.length + index, "Бот " + (index + 1), "bot-" + index, true)
+        );
+        actors = [...participants, ...bots];
+        player = actors.find((actor) => actor.id === localId);
+        if (!player) {
+          showConnectionError("Не удалось определить твоего персонажа в комнате.");
+          return;
+        }
+        flags = actors.map((actor) => createFlag(actor.team));
+        score = actors.map(() => 0);
+        obstacles = actors.flatMap((actor) => BASES[actor.team].walls).concat(COVERS);
+        bullets = [];
+        elapsed = 0;
+        announceTimer = 0;
+        networkAccumulator = 0;
+        remoteControls = new Map();
+        mode = "running";
+        setStatus("Матч начался · доставь пять флагов");
+        renderScoreboard();
+        renderBotStats();
+        hideOverlay();
+        pauseButton.disabled = !isHost;
+        restartButton.disabled = !isHost;
+        updateHud();
+        if (isHost) broadcastGameState();
+      }
+
+      function setStatus(message) {
+        statusText = message;
+        gameStatus.textContent = message;
+      }
+
+      function announce(message) {
+        setStatus(message);
+        announceTimer = 3.2;
+      }
+
+      function showOverlay(title, copy, buttonText, panel, focusButton) {
+        overlayTitle.textContent = title;
+        overlayCopy.textContent = copy;
+        const activePanel = panel || "pause";
+        connectionForm.hidden = activePanel !== "connect";
+        roomLobby.hidden = activePanel !== "lobby";
+        overlayButton.hidden = activePanel === "connect" || activePanel === "lobby";
+        overlayButton.textContent = buttonText || "";
+        overlayButton.disabled = (activePanel === "result" || activePanel === "pause") && !isHost;
+        overlay.hidden = false;
+        if (focusButton !== false) {
+          if (activePanel === "connect") playerNameInput.focus();
+          else if (activePanel === "lobby") startMatchButton.focus();
+          else if (!overlayButton.disabled) overlayButton.focus();
+        }
+      }
+
+      function hideOverlay() {
+        overlay.hidden = true;
+      }
+
+      function showConnectionError(message) {
+        roomStatus.textContent = message;
+        createRoomButton.disabled = false;
+        joinRoomButton.disabled = false;
+        showOverlay("Сетевая игра", "Создай лобби или вставь приглашение от другого игрока. Offer и answer передаются вручную; используется публичный STUN.", "", "connect", false);
+      }
+
+      function pauseGame() {
+        if (!isHost || !currentRoom) return;
+        if (mode === "running") {
+          mode = "paused";
+          input.keys.clear();
+          input.mouseDown = false;
+          input.touchFire = false;
+          pauseButton.textContent = "Продолжить";
+          showOverlay("Пауза", "Хозяин комнаты поставил матч на паузу.", "Продолжить", "pause");
+          broadcastGameState();
+        } else if (mode === "paused") {
+          mode = "running";
+          pauseButton.textContent = "Пауза";
+          hideOverlay();
+          broadcastGameState();
+        }
+      }
+
+      function createPeerId() {
+        return window.crypto && typeof window.crypto.randomUUID === "function"
+          ? window.crypto.randomUUID()
+          : Date.now().toString(36) + Math.random().toString(36).slice(2);
+      }
+
+      function cleanPlayerName(value) {
+        return typeof value === "string"
+          ? value.replace(/[\u0000-\u001f\u007f<>]/g, "").trim().slice(0, 16) || "Игрок"
+          : "Игрок";
+      }
+
+      function ensureWebRtcAvailable() {
+        if (!window.RTCPeerConnection) {
+          roomStatus.textContent = "Этот браузер не поддерживает WebRTC.";
+          return false;
+        }
+        if (window.isSecureContext === false) {
+          roomStatus.textContent = "WebRTC требует HTTPS или localhost.";
+          return false;
+        }
+        return true;
+      }
+
+      function encodeSignal(signal) {
+        const bytes = new TextEncoder().encode(JSON.stringify(signal));
+        let binary = "";
+        for (const byte of bytes) binary += String.fromCharCode(byte);
+        return btoa(binary).replace(/\+/g, "-").replace(/\//g, "_").replace(/=+$/g, "");
+      }
+
+      function decodeSignal(code) {
+        const normalized = String(code || "").replace(/\s/g, "").replace(/-/g, "+").replace(/_/g, "/");
+        if (!normalized) throw new Error("Вставь код подключения.");
+        const padded = normalized + "=".repeat((4 - normalized.length % 4) % 4);
+        const binary = atob(padded);
+        const bytes = Uint8Array.from(binary, (character) => character.charCodeAt(0));
+        const signal = JSON.parse(new TextDecoder().decode(bytes));
+        if (!signal || typeof signal.token !== "string" || typeof signal.sdp !== "string" ||
+            (signal.kind !== "offer" && signal.kind !== "answer")) {
+          throw new Error("Код offer/answer имеет неверный формат.");
+        }
+        return signal;
+      }
+
+      function waitForIceGatheringComplete(connection) {
+        if (connection.iceGatheringState === "complete") return Promise.resolve();
+        return new Promise((resolve, reject) => {
+          const timeout = window.setTimeout(() => {
+            connection.removeEventListener("icegatheringstatechange", checkState);
+            reject(new Error("Истекло время ожидания ICE-кандидатов."));
+          }, 20000);
+          function checkState() {
+            if (connection.iceGatheringState !== "complete") return;
+            window.clearTimeout(timeout);
+            connection.removeEventListener("icegatheringstatechange", checkState);
+            resolve();
+          }
+          connection.addEventListener("icegatheringstatechange", checkState);
+          checkState();
+        });
+      }
+
+      function roomSnapshot() {
+        return {
+          hostId: currentRoom.hostId,
+          status: currentRoom.status,
+          botCount: currentRoom.botCount,
+          players: currentRoom.players.map((member) => ({ id: member.id, name: member.name }))
+        };
+      }
+
+      function sendPeerMessage(peerId, message) {
+        const peer = hostPeers.get(peerId);
+        if (!peer || peer.channel.readyState !== "open") return false;
+        peer.channel.send(JSON.stringify(message));
+        return true;
+      }
+
+      function broadcastPeerMessage(message, excludedPeerId) {
+        let sent = false;
+        for (const [peerId, peer] of hostPeers) {
+          if (peerId === excludedPeerId || !peer.name || peer.channel.readyState !== "open") continue;
+          peer.channel.send(JSON.stringify(message));
+          sent = true;
+        }
+        return sent;
+      }
+
+      function broadcastRoomState() {
+        if (!isHost || !currentRoom) return;
+        broadcastPeerMessage({ type: "roomState", room: roomSnapshot() });
+      }
+
+      function parsePeerMessage(data, peerId) {
+        let message;
+        try {
+          message = JSON.parse(data);
+        } catch (error) {
+          console.error("Invalid WebRTC data-channel message:", error);
+          if (isHost) sendPeerMessage(peerId, { type: "error", message: "Некорректное сообщение." });
+          else showConnectionError("Получено некорректное сообщение от создателя.");
+          return;
+        }
+        handlePeerMessage(peerId, message);
+      }
+
+      function configureHostPeer(peerId, connection, channel) {
+        const peer = { id: peerId, connection, channel, name: "" };
+        hostPeers.set(peerId, peer);
+        pendingConnections.set(peerId, peer);
+        channel.addEventListener("message", (event) => parsePeerMessage(event.data, peerId));
+        channel.addEventListener("open", () => {
+          lobbyStatus.textContent = "Связь установлена; ожидаю имя игрока.";
+        });
+        channel.addEventListener("close", () => disconnectPeer(peerId));
+        channel.addEventListener("error", (event) => console.error("WebRTC data-channel error:", event));
+        connection.addEventListener("connectionstatechange", () => {
+          if (connection.connectionState === "failed" || connection.connectionState === "closed") disconnectPeer(peerId);
+        });
+      }
+
+      function createHostRoom() {
+        enableAudio();
+        if (!ensureWebRtcAvailable()) return;
+        closePeerConnections();
+        localId = createPeerId();
+        isHost = true;
+        currentRoom = {
+          hostId: localId,
+          status: "lobby",
+          botCount: 0,
+          players: [{ id: localId, name: cleanPlayerName(playerNameInput.value) }]
+        };
+        renderLobby(roomSnapshot());
+      }
+
+      async function createInvite() {
+        if (!isHost || !currentRoom || currentRoom.status !== "lobby") return;
+        if (pendingConnections.size > 0) {
+          lobbyStatus.textContent = "Сначала дождись ответа или отмени текущее приглашение.";
+          return;
+        }
+        const occupied = currentRoom.players.length + currentRoom.botCount + pendingConnections.size;
+        if (occupied >= 4) {
+          lobbyStatus.textContent = "Нет свободного места для приглашения.";
+          return;
+        }
+        if (!ensureWebRtcAvailable()) {
+          lobbyStatus.textContent = roomStatus.textContent;
+          return;
+        }
+
+        const peerId = createPeerId();
+        const generation = ++inviteGeneration;
+        latestInviteId = peerId;
+        let connection;
+        let channel;
+        try {
+          connection = new RTCPeerConnection(RTC_CONFIGURATION);
+          channel = connection.createDataChannel("minoyo-game", { ordered: true });
+        } catch (error) {
+          lobbyStatus.textContent = "Не удалось создать WebRTC-соединение: " + error.message;
+          return;
+        }
+        configureHostPeer(peerId, connection, channel);
+        hostInvitePanel.hidden = false;
+        hostOfferCode.value = "";
+        lobbyStatus.textContent = "Собираю ICE-кандидатов…";
+        try {
+          await connection.setLocalDescription(await connection.createOffer());
+          if (generation !== inviteGeneration || !pendingConnections.has(peerId) || currentRoom.status !== "lobby") return;
+          await waitForIceGatheringComplete(connection);
+          if (generation !== inviteGeneration || !pendingConnections.has(peerId) || currentRoom.status !== "lobby") return;
+          hostOfferCode.value = encodeSignal({
+            kind: "offer",
+            token: peerId,
+            sdp: connection.localDescription.sdp
+          });
+          lobbyStatus.textContent = "Приглашение готово. Передай offer-код игроку.";
+          renderLobby(roomSnapshot());
+          hostInvitePanel.hidden = false;
+        } catch (error) {
+          if (generation !== inviteGeneration || !pendingConnections.has(peerId)) return;
+          disconnectPeer(peerId);
+          lobbyStatus.textContent = "Не удалось создать приглашение: " + error.message;
+        }
+      }
+
+      async function createGuestAnswer() {
+        enableAudio();
+        if (!ensureWebRtcAvailable()) return;
+        let offer;
+        try {
+          offer = decodeSignal(joinCodeInput.value);
+          if (offer.kind !== "offer") throw new Error("Здесь нужен offer-код создателя.");
+        } catch (error) {
+          roomStatus.textContent = error.message;
+          return;
+        }
+
+        let connection;
+        try {
+          connection = new RTCPeerConnection(RTC_CONFIGURATION);
+        } catch (error) {
+          roomStatus.textContent = "Не удалось создать WebRTC-соединение: " + error.message;
+          return;
+        }
+        closePeerConnections();
+        isHost = false;
+        localId = "";
+        mode = "connecting";
+        guestAnswerPanel.hidden = true;
+        guestAnswerCode.value = "";
+        guestConnection = connection;
+        connection.addEventListener("datachannel", (event) => {
+          guestDataChannel = event.channel;
+          event.channel.addEventListener("open", () => {
+            event.channel.send(JSON.stringify({
+              type: "hello",
+              name: cleanPlayerName(playerNameInput.value)
+            }));
+            roomStatus.textContent = "Соединение установлено; ожидаю подтверждение создателя.";
+          });
+          event.channel.addEventListener("message", (messageEvent) => parsePeerMessage(messageEvent.data, null));
+          event.channel.addEventListener("close", () => {
+            if (mode !== "menu") resetToMenu("Соединение с создателем потеряно.");
+          });
+        });
+        connection.addEventListener("connectionstatechange", () => {
+          if (connection.connectionState === "failed" && guestConnection === connection) {
+            resetToMenu("WebRTC не смог соединить игроков. Попробуй ещё раз или используй одну сеть.");
+          }
+        });
+
+        createRoomButton.disabled = true;
+        joinRoomButton.disabled = true;
+        roomStatus.textContent = "Готовлю answer-код…";
+        try {
+          await connection.setRemoteDescription({ type: "offer", sdp: offer.sdp });
+          if (guestConnection !== connection) return;
+          await connection.setLocalDescription(await connection.createAnswer());
+          await waitForIceGatheringComplete(connection);
+          if (guestConnection !== connection) return;
+          guestAnswerCode.value = encodeSignal({
+            kind: "answer",
+            token: offer.token,
+            sdp: connection.localDescription.sdp
+          });
+          guestAnswerPanel.hidden = false;
+          createRoomButton.disabled = false;
+          joinRoomButton.disabled = false;
+          roomStatus.textContent = "Передай answer-код создателю лобби.";
+        } catch (error) {
+          closePeerConnections();
+          createRoomButton.disabled = false;
+          joinRoomButton.disabled = false;
+          roomStatus.textContent = "Не удалось подготовить ответ: " + error.message;
+        }
+      }
+
+      async function acceptHostAnswer() {
+        let answer;
+        try {
+          answer = decodeSignal(hostAnswerCode.value);
+          if (answer.kind !== "answer") throw new Error("Здесь нужен answer-код игрока.");
+          const peer = pendingConnections.get(answer.token);
+          if (!peer) throw new Error("Приглашение не найдено или уже истекло.");
+          await peer.connection.setRemoteDescription({ type: "answer", sdp: answer.sdp });
+          if (pendingConnections.get(answer.token) !== peer || !currentRoom || currentRoom.status !== "lobby") return;
+          lobbyStatus.textContent = "Ответ принят; ожидаю подключения игрока…";
+          hostAnswerCode.value = "";
+        } catch (error) {
+          lobbyStatus.textContent = "Не удалось принять ответ: " + error.message;
+        }
+      }
+
+      function cancelHostInvite() {
+        if (!latestInviteId) return;
+        inviteGeneration += 1;
+        disconnectPeer(latestInviteId);
+        lobbyStatus.textContent = "Приглашение отменено.";
+      }
+
+      async function copySignalCode(textarea, statusElement, successMessage) {
+        if (!textarea.value) {
+          statusElement.textContent = "Сначала создай код подключения.";
+          return;
+        }
+        try {
+          await navigator.clipboard.writeText(textarea.value);
+          statusElement.textContent = successMessage;
+        } catch (error) {
+          textarea.focus();
+          textarea.select();
+          statusElement.textContent = "Не удалось скопировать автоматически — код выделен для ручного копирования.";
+        }
+      }
+
+      function renderLobby(roomData) {
+        mode = "lobby";
+        currentRoom = roomData;
+        isHost = roomData.hostId === localId;
+        const pendingCount = pendingConnections.size;
+        roomCodeLabel.textContent = roomData.players.length + " / 4";
+        roomRoster.replaceChildren();
+        roomData.players.forEach((member, index) => {
+          const item = document.createElement("li");
+          const role = member.id === roomData.hostId ? " · создатель" : "";
+          const self = member.id === localId ? " · ты" : "";
+          item.textContent = TEAMS[index].name + " · " + member.name + role + self;
+          roomRoster.appendChild(item);
+        });
+
+        const maxBots = Math.max(0, 4 - roomData.players.length - pendingCount);
+        botCountSelect.replaceChildren();
+        for (let count = 0; count <= maxBots; count += 1) {
+          const option = document.createElement("option");
+          option.value = String(count);
+          option.textContent = count === 0 ? "Без ботов" : count + (count === 1 ? " бот" : " бота");
+          botCountSelect.appendChild(option);
+        }
+        botCountSelect.value = String(Math.min(roomData.botCount, maxBots));
+        botCountSelect.disabled = !isHost || roomData.status !== "lobby";
+        botCountSetting.hidden = roomData.status !== "lobby";
+        const occupied = roomData.players.length + roomData.botCount + pendingCount;
+        matchSize.textContent = "Игроки и боты: " + (roomData.players.length + roomData.botCount) + " из 4";
+        createInviteButton.hidden = !isHost;
+        createInviteButton.disabled = roomData.status !== "lobby" || occupied >= 4 || pendingCount > 0;
+        cancelHostInviteButton.disabled = pendingCount === 0;
+        hostInvitePanel.hidden = !isHost || pendingCount === 0;
+        startMatchButton.disabled = !isHost ||
+          roomData.status !== "lobby" ||
+          roomData.players.length + roomData.botCount < 2;
+        lobbyStatus.textContent = isHost
+          ? pendingCount > 0
+            ? "Приглашение отправлено. Вставь ответ-код игрока."
+            : roomData.players.length + roomData.botCount < 2
+            ? "Добавь игроков или ботов, чтобы начать."
+            : "Приглашай игроков или начинай матч."
+          : "Ждём, пока создатель комнаты начнёт матч.";
+        createRoomButton.disabled = false;
+        joinRoomButton.disabled = false;
+        roomStatus.textContent = "";
+        pauseButton.disabled = true;
+        restartButton.disabled = true;
+        showOverlay("Лобби", "Offer и answer обмениваются вручную. Публичный STUN помогает соединить сети; некоторые NAT требуют TURN.", "", "lobby", false);
+      }
+
+      function resetToMenu(message) {
+        closePeerConnections();
+        mode = "menu";
+        currentRoom = null;
+        localId = "";
+        isHost = false;
+        player = null;
+        actors = [];
+        bots = [];
+        flags = [];
+        score = [];
+        bullets = [];
+        obstacles = [];
+        remoteControls.clear();
+        renderScoreboard();
+        renderBotStats();
+        pauseButton.disabled = true;
+        restartButton.disabled = true;
+        guestAnswerPanel.hidden = true;
+        hostInvitePanel.hidden = true;
+        hostOfferCode.value = "";
+        hostAnswerCode.value = "";
+        guestAnswerCode.value = "";
+        createInviteButton.hidden = true;
+        setStatus("Приготовься к бою");
+        roomStatus.textContent = message || "";
+        createRoomButton.disabled = false;
+        joinRoomButton.disabled = false;
+        showOverlay("Сетевая игра", "Создай лобби или вставь приглашение от другого игрока. Offer и answer передаются вручную; используется публичный STUN.", "", "connect", false);
+      }
+
+      function handlePlayerLeft(id) {
+        const actor = actors.find((participant) => participant.id === id);
+        if (!actor || !actor.connected) return;
+        if (actor.carrying) dropFlag(actor);
+        actor.connected = false;
+        actor.alive = false;
+        actor.respawnTimer = 0;
+        remoteControls.delete(id);
+        announce(actor.name + " покинул матч");
+        updateHud();
+      }
+
+      function disconnectPeer(peerId) {
+        const peer = hostPeers.get(peerId);
+        if (!peer) {
+          pendingConnections.delete(peerId);
+          return;
+        }
+        if (pendingConnections.has(peerId)) inviteGeneration += 1;
+        hostPeers.delete(peerId);
+        pendingConnections.delete(peerId);
+        if (latestInviteId === peerId) {
+          latestInviteId = Array.from(pendingConnections.keys()).pop() || null;
+          if (!latestInviteId) hostOfferCode.value = "";
+        }
+        const wasPlayer = currentRoom && currentRoom.players.some((member) => member.id === peerId);
+        if (wasPlayer) {
+          currentRoom.players = currentRoom.players.filter((member) => member.id !== peerId);
+          if (mode === "running" || mode === "paused" || mode === "finished") handlePlayerLeft(peerId);
+          broadcastPeerMessage({ type: "playerLeft", playerId: peerId });
+          broadcastRoomState();
+        }
+        if (peer.channel.readyState !== "closed") peer.channel.close();
+        if (peer.connection.connectionState !== "closed") peer.connection.close();
+        if (mode === "lobby" && currentRoom) renderLobby(roomSnapshot());
+      }
+
+      function closePeerConnections() {
+        inviteGeneration += 1;
+        const peers = Array.from(hostPeers.values());
+        hostPeers.clear();
+        pendingConnections.clear();
+        latestInviteId = null;
+        for (const peer of peers) {
+          if (peer.channel.readyState !== "closed") peer.channel.close();
+          if (peer.connection.connectionState !== "closed") peer.connection.close();
+        }
+        if (guestDataChannel && guestDataChannel.readyState !== "closed") guestDataChannel.close();
+        if (guestConnection && guestConnection.connectionState !== "closed") guestConnection.close();
+        guestDataChannel = null;
+        guestConnection = null;
+      }
+
+      function startHostMatch() {
+        if (!isHost || !currentRoom || mode === "menu" || mode === "connecting") return;
+        if (mode === "lobby" && currentRoom.players.length + currentRoom.botCount < 2) {
+          lobbyStatus.textContent = "Для матча добавь игрока или бота.";
+          return;
+        }
+        for (const peerId of pendingConnections.keys()) {
+          const peer = hostPeers.get(peerId);
+          hostPeers.delete(peerId);
+          if (peer) {
+            if (peer.channel.readyState !== "closed") peer.channel.close();
+            if (peer.connection.connectionState !== "closed") peer.connection.close();
+          }
+        }
+        inviteGeneration += 1;
+        pendingConnections.clear();
+        latestInviteId = null;
+        currentRoom.status = "running";
+        hostInvitePanel.hidden = true;
+        const snapshot = roomSnapshot();
+        broadcastPeerMessage({ type: "matchStarted", room: snapshot });
+        startMatch(snapshot);
+      }
+
+      function handlePeerMessage(peerId, message) {
+        if (!message || typeof message.type !== "string") return;
+        if (isHost) {
+          if (message.type === "hello") {
+            const peer = hostPeers.get(peerId);
+            if (!peer || mode !== "lobby" || !currentRoom) {
+              sendPeerMessage(peerId, { type: "error", message: "Лобби уже закрыто." });
+              disconnectPeer(peerId);
+              return;
+            }
+            if (peer.name) return;
+            if (currentRoom.players.length + currentRoom.botCount >= 4) {
+              sendPeerMessage(peerId, { type: "error", message: "В матче нет свободного места." });
+              disconnectPeer(peerId);
+              return;
+            }
+            peer.name = cleanPlayerName(message.name);
+            pendingConnections.delete(peerId);
+            if (latestInviteId === peerId) latestInviteId = Array.from(pendingConnections.keys()).pop() || null;
+            currentRoom.players.push({ id: peerId, name: peer.name });
+            const snapshot = roomSnapshot();
+            sendPeerMessage(peerId, { type: "welcome", selfId: peerId, room: snapshot });
+            broadcastPeerMessage({ type: "roomState", room: snapshot }, peerId);
+            renderLobby(snapshot);
+          } else if (message.type === "input" && mode === "running") {
+            const controls = message.controls;
+            if (controls && ["moveX", "moveY", "aimX", "aimY"].every((key) => Number.isFinite(controls[key]))) {
+              remoteControls.set(peerId, {
+                moveX: Math.max(-1, Math.min(1, controls.moveX)),
+                moveY: Math.max(-1, Math.min(1, controls.moveY)),
+                aimX: Math.max(0, Math.min(WIDTH, controls.aimX)),
+                aimY: Math.max(0, Math.min(HEIGHT, controls.aimY)),
+                fire: controls.fire === true
+              });
+            }
+          } else if (message.type === "leaveRoom") {
+            disconnectPeer(peerId);
+          }
+          return;
+        }
+
+        if (message.type === "welcome") {
+          localId = message.selfId;
+          renderLobby(message.room);
+        } else if (message.type === "roomState") {
+          currentRoom = message.room;
+          if (mode === "lobby" || mode === "connecting") renderLobby(message.room);
+        } else if (message.type === "matchStarted") {
+          startMatch(message.room);
+        } else if (message.type === "gameState") {
+          applyGameState(message.state);
+        } else if (message.type === "playerLeft") {
+          handlePlayerLeft(message.playerId);
+        } else if (message.type === "roomClosed") {
+          resetToMenu(message.message || "Комната закрыта.");
+        } else if (message.type === "error") {
+          if (mode === "menu" || mode === "connecting") roomStatus.textContent = message.message || "Ошибка подключения.";
+          else if (mode === "lobby") lobbyStatus.textContent = message.message || "Ошибка подключения.";
+          else announce(message.message || "Ошибка соединения.");
+        }
+      }
+
+      function buildGameState() {
+        const winner = actors.find((actor) => score[actor.team] >= WIN_SCORE);
+        return {
+          mode,
+          elapsed,
+          status: statusText,
+          winnerId: mode === "finished" && winner ? winner.id : null,
+          sounds: pendingSounds,
+          scores: score,
+          actors: actors.map((actor) => ({
+            id: actor.id,
+            x: actor.x,
+            y: actor.y,
+            health: actor.health,
+            ammo: actor.ammo,
+            reloadTimer: actor.reloadTimer,
+            alive: actor.alive,
+            connected: actor.connected,
+            respawnTimer: actor.respawnTimer,
+            deaths: actor.deaths,
+            invulnerable: actor.invulnerable,
+            aimX: actor.aimX,
+            aimY: actor.aimY,
+            hitFlash: actor.hitFlash
+          })),
+          flags: flags.map((flag) => ({
+            owner: flag.owner,
+            state: flag.state,
+            x: flag.x,
+            y: flag.y,
+            pickupLock: flag.pickupLock,
+            carrierId: flag.carrier ? flag.carrier.id : null,
+            droppedById: flag.droppedBy ? flag.droppedBy.id : null
+          })),
+          bullets: bullets.map((bullet) => ({
+            x: bullet.x,
+            y: bullet.y,
+            vx: bullet.vx,
+            vy: bullet.vy,
+            range: bullet.range,
+            ownerId: bullet.owner.id
+          }))
+        };
+      }
+
+      function broadcastGameState() {
+        if (!isHost || !currentRoom) return;
+        broadcastPeerMessage({ type: "gameState", state: buildGameState() });
+        pendingSounds = [];
+      }
+
+      function applyGameState(state) {
+        if (!state || !Array.isArray(state.actors) || !Array.isArray(state.flags) ||
+            !Array.isArray(state.scores) || !Array.isArray(state.bullets) ||
+            !["running", "paused", "finished"].includes(state.mode)) return;
+        const previousMode = mode;
+        if (Array.isArray(state.sounds)) {
+          for (const sound of state.sounds) {
+            if (Number.isInteger(sound.sequence) && sound.sequence > receivedSoundSequence) {
+              receivedSoundSequence = sound.sequence;
+              playSound(sound.name);
+            }
+          }
+        }
+        const actorById = new Map(actors.map((actor) => [actor.id, actor]));
+        for (const actorState of state.actors) {
+          const actor = actorById.get(actorState.id);
+          if (!actor) continue;
+          actor.x = actorState.x;
+          actor.y = actorState.y;
+          actor.health = actorState.health;
+          actor.ammo = actorState.ammo;
+          actor.reloadTimer = actorState.reloadTimer;
+          actor.alive = actorState.alive === true;
+          actor.connected = actorState.connected !== false;
+          actor.respawnTimer = actorState.respawnTimer;
+          actor.deaths = actorState.deaths;
+          actor.invulnerable = actorState.invulnerable;
+          actor.aimX = actorState.aimX;
+          actor.aimY = actorState.aimY;
+          actor.hitFlash = actorState.hitFlash;
+          actor.carrying = null;
+        }
+        const nextFlags = [];
+        for (const flagState of state.flags) {
+          const home = BASES[flagState.owner] && BASES[flagState.owner].home;
+          if (!home || !["home", "dropped", "carried"].includes(flagState.state)) return;
+          const flag = {
+            owner: flagState.owner,
+            home,
+            x: flagState.x,
+            y: flagState.y,
+            state: flagState.state,
+            carrier: actorById.get(flagState.carrierId) || null,
+            droppedBy: actorById.get(flagState.droppedById) || null,
+            pickupLock: flagState.pickupLock
+          };
+          if (flag.carrier) flag.carrier.carrying = flag;
+          nextFlags.push(flag);
+        }
+        if (nextFlags.length !== actors.length) return;
+        flags = nextFlags;
+        score = state.scores.slice(0, actors.length);
+        elapsed = state.elapsed;
+        bullets = state.bullets.map((bullet) => ({
+          x: bullet.x,
+          y: bullet.y,
+          vx: bullet.vx,
+          vy: bullet.vy,
+          range: bullet.range,
+          owner: actorById.get(bullet.ownerId)
+        })).filter((bullet) => bullet.owner);
+        mode = state.mode;
+        setStatus(typeof state.status === "string" ? state.status : "");
+        if (mode === "paused" && previousMode !== "paused") {
+          showOverlay("Пауза", "Хозяин комнаты поставил матч на паузу.", isHost ? "Продолжить" : "Ждём хоста", "pause", false);
+        } else if (mode === "finished" && previousMode !== "finished") {
+          const winner = actors.find((actor) => actor.id === state.winnerId);
+          const won = winner && winner.id === localId;
+          showOverlay(
+            won ? "Победа!" : "Поражение",
+            winner ? winner.name + " первым доставил " + WIN_SCORE + " флагов." : "Матч завершён.",
+            isHost ? "Сыграть снова" : "Ожидаем хозяина",
+            "result",
+            false
+          );
+        } else if (mode === "running" && (previousMode === "paused" || previousMode === "finished")) {
+          hideOverlay();
+        }
+        updateHud();
+      }
+
+      function sendLocalInput() {
+        if (mode !== "running" || isHost || !player || !guestDataChannel || guestDataChannel.readyState !== "open") return;
+        guestDataChannel.send(JSON.stringify({ type: "input", controls: currentControls() }));
+      }
+
+      function canvasPoint(event) {
+        const rect = canvas.getBoundingClientRect();
+        const viewX = (event.clientX - rect.left) * WIDTH / rect.width;
+        const viewY = (event.clientY - rect.top) * HEIGHT / rect.height;
+        return {
+          x: Math.max(0, Math.min(WIDTH, (viewX - CAMERA_OFFSET_X) / ZOOM)),
+          y: Math.max(0, Math.min(HEIGHT, (viewY - CAMERA_OFFSET_Y) / ZOOM))
+        };
+      }
+
+      function resizeCanvas() {
+        pixelRatio = Math.min(window.devicePixelRatio || 1, 2);
+        canvas.width = Math.round(WIDTH * pixelRatio);
+        canvas.height = Math.round(HEIGHT * pixelRatio);
+        draw();
+      }
+
+      function isBlocked(x, y, radius) {
+        if (x - radius < 0 || x + radius > WIDTH || y - radius < 0 || y + radius > HEIGHT) {
+          return true;
+        }
+        return obstacles.some((obstacle) => {
+          const nearestX = Math.max(obstacle.x, Math.min(x, obstacle.x + obstacle.w));
+          const nearestY = Math.max(obstacle.y, Math.min(y, obstacle.y + obstacle.h));
+          const dx = x - nearestX;
+          const dy = y - nearestY;
+          return dx * dx + dy * dy < radius * radius;
+        });
+      }
+
+      function hasLineOfFire(shooter, target) {
+        const dx = target.x - shooter.x;
+        const dy = target.y - shooter.y;
+        const distance = Math.hypot(dx, dy);
+        const start = shooter.radius + 6;
+        const end = distance - target.radius;
+        for (let travelled = start; travelled < end; travelled += 4) {
+          const progress = travelled / distance;
+          if (isBlocked(shooter.x + dx * progress, shooter.y + dy * progress, 2)) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function moveActor(actor, dx, dy, dt) {
+        const length = Math.hypot(dx, dy);
+        if (!length) return;
+        const stepX = dx / length * actor.speed * dt;
+        const stepY = dy / length * actor.speed * dt;
+        const nextX = actor.x + stepX;
+        const nextY = actor.y + stepY;
+
+        if (!isBlocked(nextX, actor.y, actor.radius)) actor.x = nextX;
+        if (!isBlocked(actor.x, nextY, actor.radius)) actor.y = nextY;
+      }
+
+      function findPath(startX, startY, targetX, targetY, radius) {
+        const columns = Math.ceil(WIDTH / NAV_STEP);
+        const rows = Math.ceil(HEIGHT / NAV_STEP);
+        const total = columns * rows;
+        const center = (column, row) => ({
+          x: column * NAV_STEP + NAV_STEP / 2,
+          y: row * NAV_STEP + NAV_STEP / 2
+        });
+        const cellIsOpen = (column, row) => {
+          if (column < 0 || column >= columns || row < 0 || row >= rows) return false;
+          const point = center(column, row);
+          return !isBlocked(point.x, point.y, radius);
+        };
+        const nearestOpenCell = (x, y) => {
+          let nearest = -1;
+          let nearestDistance = Infinity;
+          for (let row = 0; row < rows; row += 1) {
+            for (let column = 0; column < columns; column += 1) {
+              if (!cellIsOpen(column, row)) continue;
+              const point = center(column, row);
+              const distance = Math.hypot(point.x - x, point.y - y);
+              if (distance < nearestDistance) {
+                nearestDistance = distance;
+                nearest = row * columns + column;
+              }
+            }
+          }
+          return nearest;
+        };
+
+        const start = nearestOpenCell(startX, startY);
+        const goal = nearestOpenCell(targetX, targetY);
+        if (start < 0 || goal < 0 || start === goal) return [];
+
+        const previous = new Int32Array(total);
+        previous.fill(-2);
+        previous[start] = -1;
+        const queue = new Int32Array(total);
+        let queueStart = 0;
+        let queueEnd = 0;
+        queue[queueEnd++] = start;
+
+        while (queueStart < queueEnd && previous[goal] === -2) {
+          const current = queue[queueStart++];
+          const column = current % columns;
+          const row = Math.floor(current / columns);
+          for (const [stepX, stepY] of NAV_DIRECTIONS) {
+            const nextColumn = column + stepX;
+            const nextRow = row + stepY;
+            if (!cellIsOpen(nextColumn, nextRow)) continue;
+            if (stepX !== 0 && stepY !== 0 &&
+                (!cellIsOpen(column + stepX, row) || !cellIsOpen(column, row + stepY))) continue;
+            const next = nextRow * columns + nextColumn;
+            if (previous[next] !== -2) continue;
+            previous[next] = current;
+            queue[queueEnd++] = next;
+          }
+        }
+
+        if (previous[goal] === -2) return [];
+        const path = [];
+        for (let cell = goal; cell !== start; cell = previous[cell]) {
+          path.push(center(cell % columns, Math.floor(cell / columns)));
+        }
+        path.reverse();
+        return path;
+      }
+
+      function enableAudio() {
+        const AudioContextConstructor = window.AudioContext || window.webkitAudioContext;
+        if (!AudioContextConstructor) return;
+        if (!audioContext) audioContext = new AudioContextConstructor();
+        if (audioContext.state === "suspended") {
+          audioContext.resume().catch((error) => console.error("Не удалось включить звук игры", error));
+        }
+      }
+
+      function playSound(name) {
+        if (!["shoot", "pickup", "capture", "death", "drop"].includes(name)) return;
+        if (isHost) {
+          pendingSounds.push({ sequence: ++soundSequence, name });
+        }
+        if (!audioContext) return;
+        const patterns = {
+          shoot: [{ wave: "square", frequency: 180, endFrequency: 72, duration: 0.045, volume: 0.025, delay: 0 }],
+          pickup: [
+            { wave: "square", frequency: 520, endFrequency: 520, duration: 0.07, volume: 0.045, delay: 0 },
+            { wave: "square", frequency: 780, endFrequency: 780, duration: 0.09, volume: 0.045, delay: 0.075 }
+          ],
+          capture: [
+            { wave: "square", frequency: 523, endFrequency: 523, duration: 0.08, volume: 0.05, delay: 0 },
+            { wave: "square", frequency: 659, endFrequency: 659, duration: 0.08, volume: 0.05, delay: 0.09 },
+            { wave: "square", frequency: 784, endFrequency: 784, duration: 0.08, volume: 0.055, delay: 0.18 },
+            { wave: "square", frequency: 1047, endFrequency: 1047, duration: 0.14, volume: 0.06, delay: 0.27 }
+          ],
+          death: [
+            { wave: "square", frequency: 330, endFrequency: 330, duration: 0.08, volume: 0.045, delay: 0 },
+            { wave: "square", frequency: 220, endFrequency: 220, duration: 0.1, volume: 0.05, delay: 0.09 },
+            { wave: "square", frequency: 147, endFrequency: 147, duration: 0.14, volume: 0.055, delay: 0.2 }
+          ],
+          drop: [{ wave: "square", frequency: 220, endFrequency: 130, duration: 0.12, volume: 0.045, delay: 0 }]
+        };
+        const now = audioContext.currentTime;
+        for (const note of patterns[name]) {
+          const start = now + note.delay;
+          const oscillator = audioContext.createOscillator();
+          const gain = audioContext.createGain();
+          oscillator.type = note.wave;
+          oscillator.frequency.setValueAtTime(note.frequency, start);
+          oscillator.frequency.exponentialRampToValueAtTime(note.endFrequency, start + note.duration);
+          gain.gain.setValueAtTime(0.0001, start);
+          gain.gain.linearRampToValueAtTime(note.volume, start + 0.008);
+          gain.gain.exponentialRampToValueAtTime(0.0001, start + note.duration);
+          oscillator.connect(gain);
+          gain.connect(audioContext.destination);
+          oscillator.start(start);
+          oscillator.stop(start + note.duration + 0.01);
+        }
+      }
+
+      function fire(actor, targetX, targetY) {
+        if (!actor.alive || actor.shotCooldown > 0 || actor.reloadTimer > 0) return;
+        if (actor.ammo === 0) {
+          actor.reloadTimer = RELOAD_DURATION;
+          return;
+        }
+        const dx = targetX - actor.x;
+        const dy = targetY - actor.y;
+        const distance = Math.hypot(dx, dy);
+        if (!distance) return;
+        const nx = dx / distance;
+        const ny = dy / distance;
+        actor.aimX = nx;
+        actor.aimY = ny;
+        actor.shotCooldown = actor.isBot ? 0.68 : 0.19;
+        actor.ammo -= 1;
+        if (actor.ammo === 0) actor.reloadTimer = RELOAD_DURATION;
+        playSound("shoot");
+        bullets.push({
+          x: actor.x + nx * (actor.radius + 6),
+          y: actor.y + ny * (actor.radius + 6),
+          vx: nx * 610,
+          vy: ny * 610,
+          owner: actor,
+          range: 560
+        });
+      }
+
+      function dropFlag(actor) {
+        if (!actor.carrying) return;
+        const flag = actor.carrying;
+        flag.state = "dropped";
+        flag.carrier = null;
+        flag.x = actor.x;
+        flag.y = actor.y;
+        flag.droppedBy = actor;
+        flag.pickupLock = 1.2;
+        actor.carrying = null;
+        playSound("drop");
+      }
+
+      function damageActor(actor) {
+        if (!actor.connected || !actor.alive) return;
+        if (actor.invulnerable > 0) {
+          if (actor.carrying) {
+            dropFlag(actor);
+            announce(actor === player ? "Попадание! Флаг упал — забери его снова" : actor.name + " выронил флаг");
+          }
+          return;
+        }
+        actor.health -= 1;
+        actor.lastDamageAt = elapsed;
+        actor.regenAccumulator = 0;
+        actor.hitFlash = 0.18;
+        if (actor.carrying) {
+          dropFlag(actor);
+          announce(actor === player ? "Попадание! Флаг упал — забери его снова" : actor.name + " выронил флаг");
+        } else {
+          announce(actor === player ? "Попадание! Найди укрытие" : "Попадание по " + actor.name);
+        }
+        if (actor.health <= 0) {
+          actor.health = 0;
+          actor.alive = false;
+          playSound("death");
+          actor.deaths += 1;
+          actor.respawnTimer = Math.min(3 + (actor.deaths - 1) * 2, 10);
+          actor.shotCooldown = 0;
+          if (actor === player) {
+            input.mouseDown = false;
+            input.touchFire = false;
+          }
+          if (actor.carrying) dropFlag(actor);
+          announce(actor === player
+            ? "Ты выбыл — возвращение через " + actor.respawnTimer + " сек."
+            : actor.name + " выбыл");
+        }
+      }
+
+      function respawn(actor) {
+        const base = BASES[actor.team];
+        actor.x = base.spawn.x;
+        actor.y = base.spawn.y;
+        actor.health = MAX_HEALTH;
+        actor.ammo = MAGAZINE_SIZE;
+        actor.reloadTimer = 0;
+        actor.alive = true;
+        actor.lastDamageAt = elapsed;
+        actor.regenAccumulator = 0;
+        actor.invulnerable = 1.6;
+        actor.respawnTimer = 0;
+        actor.shotCooldown = 0.6;
+        actor.path = [];
+        actor.pathTarget = null;
+        actor.pathTimer = 0;
+        if (actor === player) {
+          announce("Ты снова в бою");
+        }
+      }
+
+      function handleFlags(actor) {
+        for (const flag of Object.values(flags)) {
+          if (flag.state === "carried" || Math.hypot(actor.x - flag.x, actor.y - flag.y) > actor.radius + 13) continue;
+          if (flag.state === "dropped" && flag.droppedBy === actor && flag.pickupLock > 0) continue;
+
+          if (flag.state === "dropped" && flag.owner === actor.team) {
+            flag.state = "home";
+            flag.x = flag.home.x;
+            flag.y = flag.home.y;
+            flag.droppedBy = null;
+            flag.pickupLock = 0;
+            playSound("pickup");
+            announce(actor === player ? "Твой флаг возвращён на базу" : actor.name + " вернул свой флаг");
+            continue;
+          }
+
+          if (flag.owner !== actor.team) {
+            flag.state = "carried";
+            flag.carrier = actor;
+            flag.droppedBy = null;
+            flag.pickupLock = 0;
+            actor.carrying = flag;
+            playSound("pickup");
+            announce(actor === player ? "Флаг у тебя! Возвращайся на базу" : actor.name + " забрал флаг!");
+          }
+        }
+      }
+
+      function tryCapture(actor) {
+        if (!actor.connected || !actor.alive || !actor.carrying) return;
+        const homeFlag = flags[actor.team];
+        const home = BASES[actor.team].home;
+        if (homeFlag.state !== "home" || Math.hypot(actor.x - home.x, actor.y - home.y) > 31) return;
+
+        score[actor.team] += 1;
+        actors.forEach((participant) => { participant.carrying = null; });
+        flags = actors.map((participant) => createFlag(participant.team));
+        playSound("capture");
+        if (score[actor.team] >= WIN_SCORE) {
+          mode = "finished";
+          setStatus(actor === player ? "Ты выиграл матч!" : actor.name + " выиграл матч");
+          showOverlay(
+            actor === player ? "Победа!" : "Поражение",
+            actor === player ? "Ты первым доставил " + WIN_SCORE + " флагов." : actor.name + " первым доставил " + WIN_SCORE + " флагов.",
+            isHost ? "Сыграть снова" : "Ожидаем хозяина",
+            "result"
+          );
+          pauseButton.disabled = true;
+          restartButton.disabled = !isHost;
+        } else {
+          announce(actor === player ? "Флаг доставлен! Осталось " + (WIN_SCORE - score[actor.team]) : actor.name + " доставил флаг");
+        }
+        updateHud();
+        if (mode === "finished" && isHost) broadcastGameState();
+      }
+
+      function updateActorHealth(actor, dt) {
+        if (!actor.connected) return;
+        if (!actor.alive) {
+          actor.respawnTimer -= dt;
+          if (actor.respawnTimer <= 0) respawn(actor);
+          return;
+        }
+        if (actor.invulnerable > 0) actor.invulnerable = Math.max(0, actor.invulnerable - dt);
+        if (actor.hitFlash > 0) actor.hitFlash = Math.max(0, actor.hitFlash - dt);
+        if (actor.shotCooldown > 0) actor.shotCooldown = Math.max(0, actor.shotCooldown - dt);
+        if (actor.reloadTimer > 0) {
+          actor.reloadTimer = Math.max(0, actor.reloadTimer - dt);
+          if (actor.reloadTimer === 0) actor.ammo = MAGAZINE_SIZE;
+        }
+
+        if (actor.health < MAX_HEALTH && elapsed - actor.lastDamageAt >= 10) {
+          actor.regenAccumulator += dt;
+          if (actor.regenAccumulator >= 2.2) {
+            actor.health = Math.min(MAX_HEALTH, actor.health + 1);
+            actor.regenAccumulator = 0;
+            if (actor === player) announce("Здоровье восстановлено");
+          }
+        } else {
+          actor.regenAccumulator = 0;
+        }
+      }
+
+      function nearestEnemy(actor) {
+        let nearest = null;
+        let nearestDistance = Infinity;
+        for (const candidate of actors) {
+          if (candidate === actor || !candidate.connected || !candidate.alive) continue;
+          const distance = Math.hypot(candidate.x - actor.x, candidate.y - actor.y);
+          if (distance < nearestDistance) {
+            nearest = candidate;
+            nearestDistance = distance;
+          }
+        }
+        return { actor: nearest, distance: nearestDistance };
+      }
+
+      function getBotTarget(actor) {
+        if (actor.carrying) return BASES[actor.team].home;
+
+        const ownFlag = flags[actor.team];
+        if (ownFlag.state === "dropped") return ownFlag;
+        if (ownFlag.state === "carried" && ownFlag.carrier && ownFlag.carrier !== actor) return ownFlag.carrier;
+
+        const enemy = nearestEnemy(actor);
+        if (enemy.actor && enemy.distance < 520) return enemy.actor;
+
+        let nearestFlag = null;
+        let nearestDistance = Infinity;
+        for (const flag of flags) {
+          if (flag.owner === actor.team) continue;
+          const target = flag.state === "carried" ? flag.carrier : flag;
+          if (!target) continue;
+          const distance = Math.hypot(target.x - actor.x, target.y - actor.y);
+          if (distance < nearestDistance) {
+            nearestFlag = target;
+            nearestDistance = distance;
+          }
+        }
+        return nearestFlag || enemy.actor || BASES[actor.team].home;
+      }
+
+      function updateBot(actor, dt) {
+        if (!actor.connected || !actor.alive) return;
+        const target = getBotTarget(actor);
+        const dx = target.x - actor.x;
+        const dy = target.y - actor.y;
+        const distance = Math.hypot(dx, dy);
+        const enemy = nearestEnemy(actor);
+        const targetIsEnemy = actors.includes(target);
+        const targetVisible = targetIsEnemy && hasLineOfFire(actor, target);
+
+        if (enemy.actor && enemy.distance < 490 && hasLineOfFire(actor, enemy.actor)) {
+          fire(actor, enemy.actor.x, enemy.actor.y);
+        }
+
+        actor.pathTimer -= dt;
+        const targetChanged = !actor.pathTarget ||
+          actor.pathTarget.reference !== target ||
+          Math.hypot(actor.pathTarget.x - target.x, actor.pathTarget.y - target.y) > 30;
+        if (actor.pathTimer <= 0 || targetChanged) {
+          actor.path = findPath(actor.x, actor.y, target.x, target.y, actor.radius);
+          actor.pathTarget = { reference: target, x: target.x, y: target.y };
+          actor.pathTimer = 0.45;
+        }
+
+        while (actor.path.length && Math.hypot(actor.path[0].x - actor.x, actor.path[0].y - actor.y) < 15) {
+          actor.path.shift();
+        }
+        const waypoint = actor.path[0] || target;
+        const waypointDistance = Math.hypot(waypoint.x - actor.x, waypoint.y - actor.y);
+        const shouldApproach = actor.carrying ||
+          flags.includes(target) ||
+          (targetIsEnemy && (!targetVisible || distance > 250));
+        if (shouldApproach && waypointDistance > 8) {
+          moveActor(actor, waypoint.x - actor.x, waypoint.y - actor.y, dt);
+        }
+
+        handleFlags(actor);
+        tryCapture(actor);
+      }
+
+      function updateBullets(dt) {
+        const survivors = [];
+        for (const bullet of bullets) {
+          const distance = Math.hypot(bullet.vx * dt, bullet.vy * dt);
+          const steps = Math.max(1, Math.ceil(distance / 5));
+          const stepTime = dt / steps;
+          let hit = false;
+          for (let i = 0; i < steps; i += 1) {
+            bullet.x += bullet.vx * stepTime;
+            bullet.y += bullet.vy * stepTime;
+            bullet.range -= Math.hypot(bullet.vx * stepTime, bullet.vy * stepTime);
+
+            if (isBlocked(bullet.x, bullet.y, 2) || bullet.range <= 0) {
+              hit = true;
+              break;
+            }
+
+            for (const target of actors) {
+              if (target === bullet.owner || !target.connected || !target.alive) continue;
+              if (Math.hypot(target.x - bullet.x, target.y - bullet.y) < target.radius + 3) {
+                damageActor(target);
+                hit = true;
+                break;
+              }
+            }
+            if (hit) break;
+          }
+          if (!hit) survivors.push(bullet);
+        }
+        bullets = survivors;
+      }
+
+      function currentControls() {
+        let moveX = (input.keys.has("d") ? 1 : 0) - (input.keys.has("a") ? 1 : 0) + input.touchMove.x;
+        let moveY = (input.keys.has("s") ? 1 : 0) - (input.keys.has("w") ? 1 : 0) + input.touchMove.y;
+        moveX = Math.max(-1, Math.min(1, moveX));
+        moveY = Math.max(-1, Math.min(1, moveY));
+        let aimX = input.pointer.x;
+        let aimY = input.pointer.y;
+        if (input.touchFire && player) {
+          const enemy = nearestEnemy(player).actor;
+          if (enemy) {
+            aimX = enemy.x;
+            aimY = enemy.y;
+          }
+        }
+        return { moveX, moveY, aimX, aimY, fire: input.mouseDown || input.touchFire };
+      }
+
+      function applyHumanControls(actor, controls, dt) {
+        if (!actor.alive) return;
+        moveActor(actor, controls.moveX, controls.moveY, dt);
+        const aimX = controls.aimX - actor.x;
+        const aimY = controls.aimY - actor.y;
+        const aimLength = Math.hypot(aimX, aimY) || 1;
+        actor.aimX = aimX / aimLength;
+        actor.aimY = aimY / aimLength;
+        if (controls.fire) fire(actor, controls.aimX, controls.aimY);
+        handleFlags(actor);
+        tryCapture(actor);
+      }
+
+      function update(dt) {
+        if (mode !== "running" || !isHost) return;
+        elapsed += dt;
+        for (const flag of Object.values(flags)) {
+          if (flag.pickupLock > 0) flag.pickupLock = Math.max(0, flag.pickupLock - dt);
+        }
+        if (announceTimer > 0) {
+          announceTimer -= dt;
+          if (announceTimer <= 0) setStatus("Захвати вражеский флаг и вернись домой");
+        }
+
+        actors.forEach((actor) => updateActorHealth(actor, dt));
+
+        for (const actor of actors) {
+          if (actor.isBot) continue;
+          const controls = actor.id === localId
+            ? currentControls()
+            : remoteControls.get(actor.id) || { moveX: 0, moveY: 0, aimX: actor.x + actor.aimX, aimY: actor.y + actor.aimY, fire: false };
+          applyHumanControls(actor, controls, dt);
+          if (mode !== "running") break;
+        }
+
+        if (mode === "running") {
+          for (const actor of bots) {
+            updateBot(actor, dt);
+            if (mode !== "running") break;
+          }
+        }
+        if (mode === "running") updateBullets(dt);
+        hudAccumulator += dt;
+        networkAccumulator += dt;
+        if (networkAccumulator >= 0.05) {
+          broadcastGameState();
+          networkAccumulator = 0;
+        }
+        if (hudAccumulator >= 0.12) {
+          updateHud();
+          hudAccumulator = 0;
+        }
+      }
+
+      function renderScoreboard() {
+        scoreChips.replaceChildren();
+        for (const actor of actors) {
+          const team = TEAMS[actor.team];
+          const chip = document.createElement("div");
+          chip.className = "score-chip";
+          chip.setAttribute("aria-label", team.name + ", " + actor.name);
+
+          const dot = document.createElement("span");
+          dot.className = "score-chip-dot";
+          dot.style.backgroundColor = team.color;
+          dot.style.boxShadow = "0 0 12px " + team.color;
+
+          const name = document.createElement("span");
+          name.className = "score-chip-name";
+          name.appendChild(document.createTextNode(team.name + " · " + actor.name));
+
+          const life = document.createElement("span");
+          life.className = "score-chip-life";
+          name.appendChild(life);
+
+          const value = document.createElement("span");
+          value.className = "score-chip-value";
+
+          chip.append(dot, name, value);
+          scoreChips.appendChild(chip);
+          actor.lifeElement = life;
+          actor.scoreElement = value;
+        }
+      }
+
+      function renderBotStats() {
+        botStats.replaceChildren();
+        for (const actor of actors) {
+          if (actor === player) continue;
+          const row = document.createElement("span");
+          row.className = "bot-stat";
+          row.appendChild(document.createTextNode(actor.name + " · ♥ "));
+
+          const health = document.createElement("strong");
+          row.appendChild(health);
+          row.appendChild(document.createTextNode(" · патроны "));
+
+          const ammo = document.createElement("strong");
+          row.appendChild(ammo);
+          const state = document.createElement("span");
+          row.appendChild(state);
+          botStats.appendChild(row);
+
+          actor.healthElement = health;
+          actor.ammoElement = ammo;
+          actor.stateElement = state;
+        }
+      }
+
+      function ammoLabel(actor) {
+        return actor.reloadTimer > 0
+          ? "Перезарядка " + actor.reloadTimer.toFixed(1) + " с"
+          : actor.ammo + " / " + MAGAZINE_SIZE;
+      }
+
+      function updateHud() {
+        for (const actor of actors) {
+          actor.scoreElement.textContent = score[actor.team] + " / " + WIN_SCORE;
+          actor.lifeElement.textContent = actor.alive
+            ? "В строю"
+            : actor === player
+              ? "Возврат через " + Math.max(0, Math.ceil(actor.respawnTimer)) + " с"
+              : actor.connected
+                ? "Выбыл"
+                : "Вышел";
+          if (actor !== player) {
+            actor.healthElement.textContent = actor.health + " / " + MAX_HEALTH;
+            actor.ammoElement.textContent = ammoLabel(actor);
+            actor.stateElement.textContent = actor.alive ? "" : " · выбыл";
+          }
+        }
+
+        playerHealthElement.textContent = player.health + " / " + MAX_HEALTH;
+        playerAmmoElement.textContent = ammoLabel(player);
+        const flagLabels = flags.map((flag) => {
+          const name = flag.owner === player.team ? "Твой флаг" : TEAMS[flag.owner].name + " флаг";
+          if (flag.state === "home") return name + " на базе";
+          if (flag.state === "dropped") return name + " на земле";
+          return name + (flag.carrier === player ? " у тебя" : " у " + flag.carrier.name);
+        });
+        flagStatus.textContent = flagLabels.join(" · ");
+        matchSize.textContent = "Всего игроков: " + actors.length + " из 4";
+        pauseButton.textContent = mode === "paused" ? "Продолжить" : "Пауза";
+        pauseButton.disabled = !isHost || (mode !== "running" && mode !== "paused");
+        restartButton.disabled = !isHost;
+      }
+
+      function drawGround() {
+        ctx.fillStyle = "#1b3026";
+        ctx.fillRect(0, 0, WIDTH, HEIGHT);
+
+        for (let row = 0; row < 15; row += 1) {
+          for (let col = 0; col < 25; col += 1) {
+            const shade = (row * 17 + col * 29) % 4;
+            ctx.fillStyle = ["rgba(193,222,160,.025)", "rgba(0,0,0,.025)", "rgba(155,205,145,.035)", "rgba(0,0,0,0)"][shade];
+            ctx.fillRect(col * 40, row * 40, 40, 40);
+          }
+        }
+
+        ctx.strokeStyle = "rgba(217,235,214,.055)";
+        ctx.lineWidth = 1;
+        ctx.setLineDash([5, 10]);
+        ctx.beginPath();
+        ctx.moveTo(500, 35);
+        ctx.lineTo(500, 565);
+        ctx.stroke();
+        ctx.setLineDash([]);
+
+        for (const actor of actors) {
+          drawBaseZone(actor.team);
+        }
+
+        ctx.strokeStyle = "rgba(199,226,194,.12)";
+        ctx.lineWidth = 2;
+        ctx.strokeRect(10, 10, WIDTH - 20, HEIGHT - 20);
+      }
+
+      function drawBaseZone(team) {
+        const base = BASES[team];
+        ctx.fillStyle = TEAMS[team].zone;
+        ctx.fillRect(base.x + 18, base.y + 18, base.w - 36, base.h - 36);
+        ctx.save();
+        ctx.fillStyle = TEAMS[team].color;
+        ctx.font = "700 11px system-ui, sans-serif";
+        ctx.textAlign = "center";
+        const owner = actors.find((actor) => actor.team === team);
+        const label = player && player.team === team ? "ТВОЯ БАЗА" : owner && !owner.isBot ? "БАЗА ИГРОКА" : "БАЗА БОТА";
+        ctx.fillText(TEAMS[team].name.toLocaleUpperCase("ru") + " · " + label, base.x + base.w / 2, base.y + 43);
+        ctx.restore();
+      }
+
+      function drawWalls() {
+        for (const obstacle of obstacles) {
+          ctx.fillStyle = "rgba(0,0,0,.28)";
+          ctx.fillRect(obstacle.x + 3, obstacle.y + 5, obstacle.w, obstacle.h);
+          ctx.fillStyle = "#727c80";
+          ctx.fillRect(obstacle.x, obstacle.y, obstacle.w, obstacle.h);
+          ctx.fillStyle = "rgba(225,234,228,.22)";
+          ctx.fillRect(obstacle.x + 2, obstacle.y + 2, obstacle.w - 4, 3);
+          ctx.strokeStyle = "rgba(35,47,45,.8)";
+          ctx.lineWidth = 2;
+          ctx.strokeRect(obstacle.x + 1, obstacle.y + 1, obstacle.w - 2, obstacle.h - 2);
+
+          ctx.strokeStyle = "rgba(38,49,48,.65)";
+          ctx.lineWidth = 1;
+          if (obstacle.w > obstacle.h) {
+            for (let x = obstacle.x + 25; x < obstacle.x + obstacle.w; x += 27) {
+              ctx.beginPath();
+              ctx.moveTo(x, obstacle.y + 2);
+              ctx.lineTo(x, obstacle.y + obstacle.h - 2);
+              ctx.stroke();
+            }
+            ctx.beginPath();
+            ctx.moveTo(obstacle.x + 2, obstacle.y + obstacle.h / 2);
+            ctx.lineTo(obstacle.x + obstacle.w - 2, obstacle.y + obstacle.h / 2);
+            ctx.stroke();
+          } else {
+            for (let y = obstacle.y + 25; y < obstacle.y + obstacle.h; y += 27) {
+              ctx.beginPath();
+              ctx.moveTo(obstacle.x + 2, y);
+              ctx.lineTo(obstacle.x + obstacle.w - 2, y);
+              ctx.stroke();
+            }
+            ctx.beginPath();
+            ctx.moveTo(obstacle.x + obstacle.w / 2, obstacle.y + 2);
+            ctx.lineTo(obstacle.x + obstacle.w / 2, obstacle.y + obstacle.h - 2);
+            ctx.stroke();
+          }
+        }
+      }
+
+      function drawFlag(flag) {
+        if (flag.state === "carried") return;
+        const x = flag.state === "home" ? flag.home.x : flag.x;
+        const y = flag.state === "home" ? flag.home.y : flag.y;
+        if (flag.state === "dropped") {
+          ctx.fillStyle = "rgba(5,12,10,.35)";
+          ctx.beginPath();
+          ctx.ellipse(x, y + 9, 15, 5, 0, 0, Math.PI * 2);
+          ctx.fill();
+        }
+
+        ctx.strokeStyle = "#d9dfd9";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(x, y + 13);
+        ctx.lineTo(x, y - 16);
+        ctx.stroke();
+        ctx.fillStyle = TEAMS[flag.owner].flag;
+        ctx.beginPath();
+        ctx.moveTo(x + 1, y - 15);
+        ctx.lineTo(x + (flag.owner % 2 === 0 ? 19 : -19), y - 10);
+        ctx.lineTo(x + 1, y - 3);
+        ctx.closePath();
+        ctx.fill();
+        ctx.fillStyle = "rgba(239,246,236,.72)";
+        ctx.beginPath();
+        ctx.ellipse(x, y + 14, 8, 3, 0, 0, Math.PI * 2);
+        ctx.fill();
+      }
+
+      function drawActor(actor) {
+        if (!actor.alive) return;
+
+        ctx.save();
+        ctx.translate(actor.x, actor.y);
+        if (actor.hitFlash > 0) ctx.globalAlpha = 0.5;
+
+        ctx.fillStyle = "rgba(0,0,0,.34)";
+        ctx.beginPath();
+        ctx.ellipse(0, 12, 17, 7, 0, 0, Math.PI * 2);
+        ctx.fill();
+
+        if (actor.invulnerable > 0 && Math.floor(elapsed * 10) % 2 === 0) {
+          ctx.strokeStyle = "rgba(245,248,255,.82)";
+          ctx.lineWidth = 2;
+          ctx.beginPath();
+          ctx.arc(0, 0, actor.radius + 5, 0, Math.PI * 2);
+          ctx.stroke();
+        }
+
+        ctx.rotate(Math.atan2(actor.aimY, actor.aimX));
+        ctx.fillStyle = "#282f36";
+        ctx.fillRect(1, -4, 23, 8);
+        ctx.fillStyle = "#b7c2ca";
+        ctx.fillRect(17, -2, 10, 4);
+        ctx.restore();
+
+        ctx.save();
+        ctx.fillStyle = TEAMS[actor.team].color;
+        ctx.strokeStyle = TEAMS[actor.team].stroke;
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.arc(actor.x, actor.y, actor.radius, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.stroke();
+        ctx.fillStyle = "rgba(13,22,28,.8)";
+        ctx.beginPath();
+        ctx.arc(actor.x, actor.y, 5, 0, Math.PI * 2);
+        ctx.fill();
+
+        ctx.fillStyle = "rgba(6,12,16,.68)";
+        ctx.fillRect(actor.x - 20, actor.y - 30, 40, 4);
+        ctx.fillStyle = actor.health <= 1 ? "#ff737b" : "#75e1a3";
+        ctx.fillRect(actor.x - 20, actor.y - 30, 40 * actor.health / MAX_HEALTH, 4);
+        ctx.fillStyle = "#edf4f6";
+        ctx.font = "600 10px system-ui, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText(actor.name, actor.x, actor.y - 36);
+        ctx.restore();
+
+        if (actor.carrying) {
+          drawCarriedFlag(actor);
+        }
+      }
+
+      function drawCarriedFlag(actor) {
+        const x = actor.x;
+        const y = actor.y - 23;
+        ctx.strokeStyle = "#e7eceb";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(x, y + 2);
+        ctx.lineTo(x, y - 16);
+        ctx.stroke();
+        ctx.fillStyle = TEAMS[actor.carrying.owner].flag;
+        ctx.beginPath();
+        ctx.moveTo(x + 1, y - 15);
+        ctx.lineTo(x + 13, y - 11);
+        ctx.lineTo(x + 1, y - 7);
+        ctx.closePath();
+        ctx.fill();
+      }
+
+      function drawBullets() {
+        for (const bullet of bullets) {
+          ctx.fillStyle = TEAMS[bullet.owner.team].stroke;
+          ctx.shadowColor = TEAMS[bullet.owner.team].flag;
+          ctx.shadowBlur = 9;
+          ctx.beginPath();
+          ctx.arc(bullet.x, bullet.y, 3, 0, Math.PI * 2);
+          ctx.fill();
+        }
+        ctx.shadowBlur = 0;
+      }
+
+      function draw() {
+        if (!ctx || !player || !actors.length) return;
+        ctx.setTransform(1, 0, 0, 1, 0, 0);
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.setTransform(
+          pixelRatio * ZOOM,
+          0,
+          0,
+          pixelRatio * ZOOM,
+          pixelRatio * CAMERA_OFFSET_X,
+          pixelRatio * CAMERA_OFFSET_Y
+        );
+        drawGround();
+        for (const flag of flags) {
+          if (flag.state === "home") drawFlag(flag);
+        }
+        drawWalls();
+        drawBullets();
+        for (const actor of actors) {
+          drawActor(actor);
+        }
+        for (const flag of flags) {
+          if (flag.state === "dropped") drawFlag(flag);
+        }
+        if (!player.alive) drawRespawnCountdown();
+      }
+
+      function drawRespawnCountdown() {
+        ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0);
+        ctx.fillStyle = "rgba(7,12,18,.78)";
+        ctx.fillRect(WIDTH / 2 - 98, HEIGHT / 2 - 82, 196, 164);
+        ctx.strokeStyle = "rgba(213,229,240,.3)";
+        ctx.lineWidth = 1;
+        ctx.strokeRect(WIDTH / 2 - 98, HEIGHT / 2 - 82, 196, 164);
+        ctx.textAlign = "center";
+        ctx.fillStyle = "#f4f8fc";
+        ctx.font = "800 76px system-ui, sans-serif";
+        ctx.fillText(Math.max(0, Math.ceil(player.respawnTimer)), WIDTH / 2, HEIGHT / 2 + 23);
+        ctx.fillStyle = "#a9c5d8";
+        ctx.font = "700 12px system-ui, sans-serif";
+        ctx.fillText("ВОЗВРАЩЕНИЕ В БОЙ", WIDTH / 2, HEIGHT / 2 + 53);
+      }
+
+      function frame(timestamp) {
+        if (!previousFrame) previousFrame = timestamp;
+        const dt = Math.min((timestamp - previousFrame) / 1000, 0.05);
+        previousFrame = timestamp;
+        update(dt);
+        draw();
+        requestAnimationFrame(frame);
+      }
+
+      overlayButton.addEventListener("click", () => {
+        enableAudio();
+        if (mode === "paused") {
+          pauseGame();
+        } else if (mode === "finished" && isHost) {
+          startHostMatch();
+        }
+      });
+
+      botCountSelect.addEventListener("change", () => {
+        if (!isHost || !currentRoom) return;
+        currentRoom.botCount = Number(botCountSelect.value);
+        broadcastRoomState();
+        renderLobby(roomSnapshot());
+      });
+
+      createRoomButton.addEventListener("click", createHostRoom);
+      joinRoomButton.addEventListener("click", createGuestAnswer);
+      createInviteButton.addEventListener("click", createInvite);
+      acceptHostAnswerButton.addEventListener("click", acceptHostAnswer);
+      cancelHostInviteButton.addEventListener("click", cancelHostInvite);
+      copyHostOfferButton.addEventListener("click", () => {
+        copySignalCode(hostOfferCode, lobbyStatus, "Offer-код скопирован.");
+      });
+      copyGuestAnswerButton.addEventListener("click", () => {
+        copySignalCode(guestAnswerCode, roomStatus, "Answer-код скопирован.");
+      });
+      startMatchButton.addEventListener("click", () => {
+        enableAudio();
+        startHostMatch();
+      });
+      leaveRoomButton.addEventListener("click", () => {
+        if (isHost) {
+          broadcastPeerMessage({ type: "roomClosed", message: "Создатель закрыл лобби." });
+        } else if (guestDataChannel && guestDataChannel.readyState === "open") {
+          guestDataChannel.send(JSON.stringify({ type: "leaveRoom" }));
+        }
+        resetToMenu("");
+      });
+
+      pauseButton.addEventListener("click", pauseGame);
+      restartButton.addEventListener("click", () => {
+        enableAudio();
+        if (isHost) startHostMatch();
+      });
+
+      window.addEventListener("keydown", (event) => {
+        if (event.target instanceof HTMLInputElement || event.target instanceof HTMLTextAreaElement || event.target instanceof HTMLSelectElement) return;
+        const key = event.key.toLowerCase();
+        if (["w", "a", "s", "d"].includes(key)) {
+          event.preventDefault();
+          input.keys.add(key);
+        } else if (key === "escape" && mode !== "menu" && mode !== "lobby") {
+          pauseGame();
+        }
+      });
+
+      window.addEventListener("keyup", (event) => {
+        input.keys.delete(event.key.toLowerCase());
+      });
+
+      window.addEventListener("blur", () => {
+        input.keys.clear();
+        input.mouseDown = false;
+        input.touchFire = false;
+        input.touchMove = { x: 0, y: 0 };
+        moveStick.style.transform = "";
+        fireTouch.classList.remove("pressed");
+      });
+
+      function updateTouchMove(event) {
+        const rect = movePad.getBoundingClientRect();
+        const radius = rect.width * 0.34;
+        const rawX = event.clientX - (rect.left + rect.width / 2);
+        const rawY = event.clientY - (rect.top + rect.height / 2);
+        const scale = Math.max(1, Math.hypot(rawX, rawY) / radius);
+        const x = rawX / scale;
+        const y = rawY / scale;
+        input.touchMove = { x: x / radius, y: y / radius };
+        moveStick.style.transform = "translate(" + x + "px, " + y + "px)";
+      }
+
+      movePad.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        movePointerId = event.pointerId;
+        movePad.setPointerCapture(event.pointerId);
+        updateTouchMove(event);
+      });
+      movePad.addEventListener("pointermove", (event) => {
+        if (event.pointerId === movePointerId) updateTouchMove(event);
+      });
+      function releaseMovePointer(event) {
+        if (event.pointerId !== movePointerId) return;
+        movePointerId = null;
+        input.touchMove = { x: 0, y: 0 };
+        moveStick.style.transform = "";
+      }
+      movePad.addEventListener("pointerup", releaseMovePointer);
+      movePad.addEventListener("pointercancel", releaseMovePointer);
+
+      fireTouch.addEventListener("pointerdown", (event) => {
+        event.preventDefault();
+        enableAudio();
+        input.touchFire = true;
+        fireTouch.classList.add("pressed");
+        fireTouch.setPointerCapture(event.pointerId);
+      });
+      function releaseFirePointer() {
+        input.touchFire = false;
+        fireTouch.classList.remove("pressed");
+      }
+      fireTouch.addEventListener("pointerup", releaseFirePointer);
+      fireTouch.addEventListener("pointercancel", releaseFirePointer);
+
+      canvas.addEventListener("pointermove", (event) => {
+        input.pointer = canvasPoint(event);
+      });
+
+      canvas.addEventListener("pointerdown", (event) => {
+        if (event.button !== 0) return;
+        input.pointer = canvasPoint(event);
+        input.mouseDown = true;
+        canvas.setPointerCapture(event.pointerId);
+      });
+
+      canvas.addEventListener("pointerup", (event) => {
+        if (event.button === 0) input.mouseDown = false;
+      });
+
+      canvas.addEventListener("pointercancel", () => {
+        input.mouseDown = false;
+      });
+
+      canvas.addEventListener("contextmenu", (event) => event.preventDefault());
+      window.addEventListener("resize", resizeCanvas);
+      window.addEventListener("orientationchange", resizeCanvas);
+
+      resizeCanvas();
+      showOverlay("Сетевая игра", "Создай лобби или вставь приглашение от другого игрока. Offer и answer передаются вручную; используется публичный STUN.", "", "connect", false);
+      window.setInterval(sendLocalInput, 50);
+      requestAnimationFrame(frame);
+    })();
+  </script>
+</body>
+</html>
