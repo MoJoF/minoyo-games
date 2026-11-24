@@ -305,6 +305,7 @@
       z-index: 2;
       display: grid;
       place-items: center;
+      overflow-y: auto;
       padding: 18px;
       background: rgba(5, 10, 15, 0.75);
       backdrop-filter: blur(5px);
@@ -317,6 +318,10 @@
 
     .dialog {
       width: min(450px, 100%);
+      min-height: 0;
+      max-height: calc(100% - 12px);
+      overflow-y: auto;
+      overscroll-behavior: contain;
       padding: 27px 28px;
       border: 1px solid rgba(193, 214, 230, 0.18);
       border-radius: 17px;
@@ -452,7 +457,7 @@
 
     .signal-code {
       width: 100%;
-      min-height: 78px;
+      min-height: 64px;
       padding: 8px;
       border: 1px solid rgba(193, 214, 230, 0.2);
       border-radius: 8px;
@@ -469,6 +474,16 @@
       color: #a9b5c1;
       font-size: 11px;
       text-align: center;
+    }
+
+    .room-lobby > .room-status,
+    .connection-form > .room-status {
+      position: sticky;
+      top: 0;
+      z-index: 1;
+      padding: 5px 7px;
+      border-radius: 6px;
+      background: #111a24;
     }
 
     .room-heading {
@@ -1026,19 +1041,19 @@
                 <label class="text-field" for="playerName">Твоё имя
                   <input id="playerName" maxlength="16" autocomplete="nickname" placeholder="Например, Алекс">
                 </label>
+                <p class="room-status" id="roomStatus" role="status" aria-live="polite"></p>
                 <div class="room-actions">
                   <button class="button button-primary" id="createRoomButton" type="button">Создать лобби</button>
                 </div>
                 <label class="text-field" for="joinCode">Код-приглашение от создателя
-                  <textarea class="signal-code" id="joinCode" aria-label="Код-приглашение" placeholder="Вставь сюда offer-код"></textarea>
+                  <textarea class="signal-code" id="joinCode" aria-label="Код-приглашение" placeholder="Вставь сюда offer-код" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
                 </label>
                 <button class="button" id="joinRoomButton" type="button">Подготовить ответ</button>
                 <div class="signal-panel" id="guestAnswerPanel" hidden>
                   <p>Передай этот answer-код создателю лобби и дождись подключения.</p>
-                  <textarea class="signal-code" id="guestAnswerCode" aria-label="Твой answer-код" readonly></textarea>
+                  <textarea class="signal-code" id="guestAnswerCode" aria-label="Твой answer-код" readonly autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
                   <button class="button" id="copyGuestAnswerButton" type="button">Скопировать ответ</button>
                 </div>
-                <p class="room-status" id="roomStatus" role="status" aria-live="polite"></p>
               </div>
               <div class="room-lobby" id="roomLobby" hidden>
                 <div class="room-heading">
@@ -1046,14 +1061,15 @@
                   <strong id="roomCodeLabel">1 / 4</strong>
                 </div>
                 <ul class="room-roster" id="roomRoster"></ul>
+                <p class="room-status" id="lobbyStatus" role="status" aria-live="polite"></p>
                 <button class="button" id="createInviteButton" type="button">Создать приглашение игроку</button>
                 <div class="signal-panel" id="hostInvitePanel" hidden>
                   <p>Отправь offer-код игроку. Его answer-код вставь ниже.</p>
-                  <textarea class="signal-code" id="hostOfferCode" aria-label="Offer-код для игрока" readonly></textarea>
+                  <textarea class="signal-code" id="hostOfferCode" aria-label="Offer-код для игрока" readonly autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
                   <button class="button" id="copyHostOfferButton" type="button">Скопировать приглашение</button>
                   <button class="button" id="cancelHostInviteButton" type="button">Отменить приглашение</button>
                   <label class="text-field" for="hostAnswerCode">Answer-код игрока
-                    <textarea class="signal-code" id="hostAnswerCode" placeholder="Вставь answer-код сюда"></textarea>
+                    <textarea class="signal-code" id="hostAnswerCode" placeholder="Вставь answer-код сюда" autocapitalize="off" autocomplete="off" autocorrect="off" spellcheck="false"></textarea>
                   </label>
                   <button class="button" id="acceptHostAnswerButton" type="button">Подтвердить ответ</button>
                 </div>
@@ -1062,7 +1078,6 @@
                   <select id="botCountSelect"></select>
                   <small id="matchSize">Всего игроков: 1 из 4</small>
                 </div>
-                <p class="room-status" id="lobbyStatus"></p>
                 <div class="room-buttons">
                   <button class="button button-primary" id="startMatchButton" type="button">Начать матч</button>
                   <button class="button" id="leaveRoomButton" type="button">Выйти</button>
@@ -1501,12 +1516,33 @@
         pendingConnections.set(peerId, peer);
         channel.addEventListener("message", (event) => parsePeerMessage(event.data, peerId));
         channel.addEventListener("open", () => {
-          lobbyStatus.textContent = "Связь установлена; ожидаю имя игрока.";
+          lobbyStatus.textContent = "DataChannel открыт; жду данные игрока…";
         });
         channel.addEventListener("close", () => disconnectPeer(peerId));
-        channel.addEventListener("error", (event) => console.error("WebRTC data-channel error:", event));
+        channel.addEventListener("error", (event) => {
+          console.error("WebRTC data-channel error:", event);
+          lobbyStatus.textContent = "Ошибка передачи данных по WebRTC.";
+        });
+        connection.addEventListener("icecandidateerror", (event) => {
+          lobbyStatus.textContent = "Ошибка STUN" + (event.errorCode ? " " + event.errorCode : "") +
+            (event.errorText ? ": " + event.errorText : ".");
+        });
+        connection.addEventListener("iceconnectionstatechange", () => {
+          if (!hostPeers.has(peerId)) return;
+          if (connection.iceConnectionState === "checking") {
+            lobbyStatus.textContent = "Проверяю прямое соединение…";
+          } else if (connection.iceConnectionState === "connected" || connection.iceConnectionState === "completed") {
+            lobbyStatus.textContent = "Сеть соединена; открываю канал игры…";
+          } else if (connection.iceConnectionState === "failed") {
+            disconnectPeer(peerId, "ICE-соединение не удалось. Эта сеть может требовать TURN или блокировать STUN.");
+          }
+        });
         connection.addEventListener("connectionstatechange", () => {
-          if (connection.connectionState === "failed" || connection.connectionState === "closed") disconnectPeer(peerId);
+          if (connection.connectionState === "failed") {
+            disconnectPeer(peerId, "WebRTC-соединение не установлено. Проверьте сеть или попробуйте одну Wi-Fi-сеть.");
+          } else if (connection.connectionState === "closed") {
+            disconnectPeer(peerId);
+          }
         });
       }
 
@@ -1619,8 +1655,16 @@
         });
         connection.addEventListener("connectionstatechange", () => {
           if (connection.connectionState === "failed" && guestConnection === connection) {
-            resetToMenu("WebRTC не смог соединить игроков. Попробуй ещё раз или используй одну сеть.");
+            resetToMenu("ICE не смог соединить игроков. Сеть может требовать TURN или блокировать STUN; попробуйте одну Wi-Fi-сеть.");
+          } else if (connection.connectionState === "connecting" && guestConnection === connection) {
+            roomStatus.textContent = "Проверяю прямое соединение…";
+          } else if (connection.connectionState === "connected" && guestConnection === connection) {
+            roomStatus.textContent = "Сеть соединена; открываю канал игры…";
           }
+        });
+        connection.addEventListener("icecandidateerror", (event) => {
+          roomStatus.textContent = "Ошибка STUN" + (event.errorCode ? " " + event.errorCode : "") +
+            (event.errorText ? ": " + event.errorText : ".");
         });
 
         createRoomButton.disabled = true;
@@ -1656,6 +1700,7 @@
           if (answer.kind !== "answer") throw new Error("Здесь нужен answer-код игрока.");
           const peer = pendingConnections.get(answer.token);
           if (!peer) throw new Error("Приглашение не найдено или уже истекло.");
+          lobbyStatus.textContent = "Применяю answer-код…";
           await peer.connection.setRemoteDescription({ type: "answer", sdp: answer.sdp });
           if (pendingConnections.get(answer.token) !== peer || !currentRoom || currentRoom.status !== "lobby") return;
           lobbyStatus.textContent = "Ответ принят; ожидаю подключения игрока…";
@@ -1780,7 +1825,7 @@
         updateHud();
       }
 
-      function disconnectPeer(peerId) {
+      function disconnectPeer(peerId, statusMessage) {
         const peer = hostPeers.get(peerId);
         if (!peer) {
           pendingConnections.delete(peerId);
@@ -1802,7 +1847,10 @@
         }
         if (peer.channel.readyState !== "closed") peer.channel.close();
         if (peer.connection.connectionState !== "closed") peer.connection.close();
-        if (mode === "lobby" && currentRoom) renderLobby(roomSnapshot());
+        if (mode === "lobby" && currentRoom) {
+          renderLobby(roomSnapshot());
+          if (statusMessage) lobbyStatus.textContent = statusMessage;
+        }
       }
 
       function closePeerConnections() {
