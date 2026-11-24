@@ -73,7 +73,7 @@
 
     .back-link {
       color: #b7c1cc;
-      font-size: 13px;
+      font-size: 15px;
       transition: color 150ms ease;
     }
 
@@ -85,7 +85,7 @@
       display: inline-flex;
       align-items: center;
       gap: 9px;
-      font-size: 13px;
+      font-size: 15px;
       font-weight: 800;
       letter-spacing: 0.1em;
     }
@@ -116,7 +116,7 @@
     .game-heading p {
       margin: 5px 0 0;
       color: var(--muted);
-      font-size: 13px;
+      font-size: 15px;
     }
 
     .game-actions {
@@ -130,7 +130,7 @@
       border-radius: 10px;
       background: rgba(255, 255, 255, 0.045);
       color: #dce5ed;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 700;
       cursor: pointer;
       transition: background 150ms ease, border-color 150ms ease, transform 150ms ease;
@@ -207,7 +207,7 @@
       min-width: 0;
       flex: 1;
       color: #dce5ed;
-      font-size: 11px;
+      font-size: 15px;
       font-weight: 700;
     }
 
@@ -215,13 +215,13 @@
       display: block;
       margin-top: 2px;
       color: #8d9aa8;
-      font-size: 9px;
+      font-size: 12px;
       font-weight: 500;
     }
 
     .score-chip-value {
       color: #fff;
-      font-size: 17px;
+      font-size: 20px;
       font-weight: 800;
       font-variant-numeric: tabular-nums;
     }
@@ -252,14 +252,14 @@
 
     .team-name {
       color: #dce5ed;
-      font-size: 12px;
+      font-size: 16px;
       font-weight: 750;
     }
 
     .team-detail {
       margin-top: 3px;
       color: #8d9aa8;
-      font-size: 11px;
+      font-size: 13px;
     }
 
     .team-score {
@@ -272,21 +272,23 @@
 
     .score-separator {
       color: #64717e;
-      font-size: 12px;
+      font-size: 14px;
       font-weight: 700;
     }
 
     .status-message {
       width: 100%;
       color: #c1ccd6;
-      font-size: 12px;
+      font-size: 16px;
       text-align: center;
     }
 
     .canvas-wrap {
       position: relative;
       overflow: hidden;
-      background: #18271f;
+      width: min(100%, 900px, 80vh);
+      margin: 0 auto;
+      background: transparent;
       line-height: 0;
     }
 
@@ -294,7 +296,7 @@
       display: block;
       width: 100%;
       height: auto;
-      aspect-ratio: 5 / 3;
+      aspect-ratio: 6 / 5;
       cursor: crosshair;
       touch-action: none;
     }
@@ -333,7 +335,7 @@
     .dialog-kicker {
       margin: 0 0 8px;
       color: #76caff;
-      font-size: 10px;
+      font-size: 12px;
       font-weight: 800;
       letter-spacing: 0.16em;
       text-transform: uppercase;
@@ -348,7 +350,7 @@
     .dialog-copy {
       margin: 12px 0 20px;
       color: #a9b5c1;
-      font-size: 13px;
+      font-size: 15px;
       line-height: 1.65;
     }
 
@@ -371,7 +373,7 @@
 
     .menu-setting label {
       color: #e2eaf1;
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 700;
     }
 
@@ -383,13 +385,13 @@
       background: #182431;
       color: #f0f5f8;
       font: inherit;
-      font-size: 12px;
+      font-size: 15px;
     }
 
     .menu-setting small {
       grid-column: 1 / -1;
       color: #9ba8b5;
-      font-size: 10px;
+      font-size: 13px;
     }
 
     .connection-form,
@@ -408,7 +410,7 @@
       display: grid;
       gap: 6px;
       color: #e2eaf1;
-      font-size: 12px;
+      font-size: 15px;
       font-weight: 700;
     }
 
@@ -421,7 +423,7 @@
       background: #101923;
       color: #f0f5f8;
       font: inherit;
-      font-size: 14px;
+      font-size: 15px;
     }
 
     .room-actions,
@@ -451,7 +453,7 @@
     .signal-panel p {
       margin: 0;
       color: #a9b5c1;
-      font-size: 11px;
+      font-size: 13px;
       line-height: 1.5;
     }
 
@@ -472,7 +474,7 @@
       min-height: 18px;
       margin: 0;
       color: #a9b5c1;
-      font-size: 11px;
+      font-size: 13px;
       text-align: center;
     }
 
@@ -493,7 +495,7 @@
       border-radius: 10px;
       background: rgba(255, 255, 255, 0.035);
       color: #a9b5c1;
-      font-size: 11px;
+      font-size: 13px;
     }
 
     .room-heading strong {
@@ -518,7 +520,7 @@
       border-radius: 8px;
       background: rgba(255, 255, 255, 0.035);
       color: #dce5ed;
-      font-size: 12px;
+      font-size: 14px;
     }
 
     .room-roster li::before {
@@ -542,7 +544,7 @@
     .dialog .button {
       min-height: 43px;
       padding: 0 19px;
-      font-size: 13px;
+      font-size: 15px;
     }
 
     .game-footer {
@@ -559,7 +561,7 @@
       align-items: center;
       gap: 9px;
       color: #a9b5c1;
-      font-size: 11px;
+      font-size: 15px;
     }
 
     .health-row strong {
@@ -569,7 +571,7 @@
 
     .health-icon {
       color: #ff7b82;
-      font-size: 14px;
+      font-size: 16px;
     }
 
     .ammo-row {
@@ -583,7 +585,7 @@
     .flag-state {
       min-height: 17px;
       color: #b7c4cf;
-      font-size: 11px;
+      font-size: 15px;
       text-align: center;
     }
 
@@ -596,7 +598,7 @@
 
     .bot-stat {
       color: #a9b5c1;
-      font-size: 10px;
+      font-size: 14px;
       white-space: nowrap;
     }
 
@@ -612,7 +614,7 @@
       gap: 10px 24px;
       padding: 14px 6px 0;
       color: #9ba8b5;
-      font-size: 11px;
+      font-size: 14px;
     }
 
     .touch-controls {
@@ -627,10 +629,10 @@
       -webkit-touch-callout: none;
     }
 
-    .move-pad {
+    .move-pad,
+    .aim-pad {
       position: absolute;
       bottom: max(14px, env(safe-area-inset-bottom));
-      left: max(14px, env(safe-area-inset-left));
       display: grid;
       width: min(128px, 30vw);
       aspect-ratio: 1;
@@ -642,10 +644,27 @@
       touch-action: none;
     }
 
+    .move-pad {
+      left: max(14px, env(safe-area-inset-left));
+    }
+
+    .aim-pad {
+      right: max(14px, env(safe-area-inset-right));
+      border-color: rgba(255, 217, 220, 0.5);
+      background: rgba(79, 24, 31, 0.42);
+    }
+
     .move-pad::before,
     .move-pad::after {
       position: absolute;
       background: rgba(226, 238, 246, 0.16);
+      content: "";
+    }
+
+    .aim-pad::before,
+    .aim-pad::after {
+      position: absolute;
+      background: rgba(255, 217, 220, 0.2);
       content: "";
     }
 
@@ -659,7 +678,18 @@
       height: 1px;
     }
 
-    .move-stick {
+    .aim-pad::before {
+      width: 1px;
+      height: 68%;
+    }
+
+    .aim-pad::after {
+      width: 68%;
+      height: 1px;
+    }
+
+    .move-stick,
+    .aim-stick {
       position: relative;
       z-index: 1;
       width: 38%;
@@ -671,29 +701,23 @@
       pointer-events: none;
     }
 
-    .fire-touch {
-      position: absolute;
-      right: max(20px, env(safe-area-inset-right));
-      bottom: max(24px, env(safe-area-inset-bottom));
-      display: grid;
-      width: min(76px, 18vw);
-      aspect-ratio: 1;
-      place-items: center;
-      border: 2px solid rgba(255, 217, 220, 0.68);
-      border-radius: 50%;
+    .aim-stick {
+      border-color: rgba(255, 217, 220, 0.7);
       background: rgba(220, 67, 82, 0.72);
-      color: #fff;
-      font-size: 11px;
-      font-weight: 900;
-      letter-spacing: 0.08em;
-      pointer-events: auto;
-      touch-action: none;
     }
 
-    .fire-touch:active,
-    .fire-touch.pressed {
-      background: rgba(255, 91, 108, 0.92);
-      transform: scale(0.95);
+    .joystick-label {
+      position: absolute;
+      top: 10px;
+      color: rgba(241, 247, 250, 0.76);
+      font-size: 8px;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      pointer-events: none;
+    }
+
+    .aim-pad.pressed {
+      background: rgba(120, 35, 45, 0.65);
     }
 
     .orientation-hint {
@@ -792,16 +816,16 @@
       }
 
       .team-name {
-        font-size: 10px;
+        font-size: 13px;
       }
 
       .team-detail {
-        font-size: 9px;
+        font-size: 12px;
       }
 
       .status-message {
         max-width: 100%;
-        font-size: 10px;
+        font-size: 13px;
       }
 
       .game-footer {
@@ -814,11 +838,11 @@
 
     @media (max-width: 390px) {
       .brand {
-        font-size: 11px;
+        font-size: 13px;
       }
 
       .back-link {
-        font-size: 11px;
+        font-size: 13px;
       }
 
       .game-heading h1 {
@@ -827,7 +851,7 @@
 
       .game-heading p {
         max-width: 185px;
-        font-size: 11px;
+        font-size: 13px;
       }
 
       .team-detail {
@@ -836,7 +860,7 @@
 
       .status-message {
         max-width: 100%;
-        font-size: 9px;
+        font-size: 12px;
       }
     }
 
@@ -912,7 +936,7 @@
         width: auto;
         min-width: 0;
         flex: 1;
-        font-size: 10px;
+        font-size: 12px;
         text-align: left;
       }
 
@@ -930,7 +954,7 @@
       }
 
       .score-chip-name {
-        font-size: 9px;
+        font-size: 12px;
       }
 
       .score-chip-life {
@@ -938,13 +962,16 @@
       }
 
       .score-chip-value {
-        font-size: 12px;
+        font-size: 15px;
       }
 
       .canvas-wrap {
         display: grid;
         min-height: 0;
         flex: 1;
+        width: auto;
+        max-width: none;
+        margin: 0;
         place-items: center;
       }
 
@@ -965,7 +992,7 @@
       .health-row,
       .bot-stat,
       .flag-state {
-        font-size: 9px;
+        font-size: 12px;
       }
 
       .bot-stats {
@@ -978,7 +1005,7 @@
       }
     }
 
-    @media (pointer: coarse) and (orientation: landscape) and (max-height: 600px) {
+    @media (pointer: coarse) and (orientation: landscape) {
       .touch-controls {
         display: block;
       }
@@ -1023,14 +1050,18 @@
         </div>
 
         <div class="canvas-wrap">
-          <canvas id="battlefield" width="1000" height="600" tabindex="0" role="img" aria-label="Поле битвы: синяя база слева, красная база справа">
+          <canvas id="battlefield" width="1200" height="1000" tabindex="0" role="img" aria-label="Поле битвы: четыре базы по сторонам света">
             Для этой игры нужен браузер с поддержкой HTML Canvas.
           </canvas>
           <div class="touch-controls" id="touchControls" aria-label="Сенсорное управление">
             <div class="move-pad" id="movePad" aria-label="Движение">
+              <span class="joystick-label" aria-hidden="true">Движение</span>
               <span class="move-stick" id="moveStick"></span>
             </div>
-            <button class="fire-touch" id="fireTouch" type="button" aria-label="Стрелять">ОГОНЬ</button>
+            <div class="aim-pad" id="aimPad" aria-label="Прицел и стрельба">
+              <span class="joystick-label" aria-hidden="true">Огонь</span>
+              <span class="aim-stick" id="aimStick"></span>
+            </div>
           </div>
           <div class="overlay" id="overlay">
             <div class="dialog" role="dialog" aria-modal="true" aria-labelledby="dialogTitle" aria-describedby="dialogCopy">
@@ -1077,6 +1108,15 @@
                   <label for="botCountSelect">Ботов в матче</label>
                   <select id="botCountSelect"></select>
                   <small id="matchSize">Всего игроков: 1 из 4</small>
+                </div>
+                <div class="menu-setting" id="weaponSetting">
+                  <label for="weaponSelect">Твоё оружие</label>
+                  <select id="weaponSelect">
+                    <option value="standard">Обычное</option>
+                    <option value="double">Двуствольное</option>
+                    <option value="laser">Лазер</option>
+                  </select>
+                  <small>Двуствольное стреляет быстрее, но наносит половину урона. Лазер может убить с одного выстрела, но стреляет медленнее всех и не проходит сквозь укрытия. Оружие ботов выбирается случайно.</small>
                 </div>
                 <div class="room-buttons">
                   <button class="button button-primary" id="startMatchButton" type="button">Начать матч</button>
@@ -1148,10 +1188,13 @@
       const leaveRoomButton = document.getElementById("leaveRoomButton");
       const botCountSetting = document.getElementById("botCountSetting");
       const botCountSelect = document.getElementById("botCountSelect");
+      const weaponSetting = document.getElementById("weaponSetting");
+      const weaponSelect = document.getElementById("weaponSelect");
       const matchSize = document.getElementById("matchSize");
       const movePad = document.getElementById("movePad");
       const moveStick = document.getElementById("moveStick");
-      const fireTouch = document.getElementById("fireTouch");
+      const aimPad = document.getElementById("aimPad");
+      const aimStick = document.getElementById("aimStick");
       const pauseButton = document.getElementById("pauseButton");
       const restartButton = document.getElementById("restartButton");
       const gameStatus = document.getElementById("gameStatus");
@@ -1161,15 +1204,36 @@
       const flagStatus = document.getElementById("flagStatus");
       const botStats = document.getElementById("botStats");
 
-      const WIDTH = 1000;
-      const HEIGHT = 600;
-      const ZOOM = 0.7;
+      const WIDTH = 1200;
+      const HEIGHT = 1000;
+      const ZOOM = 1;
       const CAMERA_OFFSET_X = (WIDTH - WIDTH * ZOOM) / 2;
       const CAMERA_OFFSET_Y = (HEIGHT - HEIGHT * ZOOM) / 2;
       const MAX_HEALTH = 4;
       const WIN_SCORE = 5;
       const MAGAZINE_SIZE = 10;
       const RELOAD_DURATION = 2;
+      const PLAYER_SHOT_COOLDOWN = 0.19;
+      const LASER_CHARGE_DURATION = 1;
+      const LASER_BEAM_DURATION = 0.16;
+      const LASER_MAX_TARGETS = 2;
+      const WEAPONS = {
+        standard: { label: "Обычное", damage: 1, cooldownMultiplier: 1, projectileSpeed: 610 },
+        double: { label: "Двуствольное", damage: 0.5, cooldownMultiplier: 0.5, projectileSpeed: 610 },
+        laser: { label: "Лазер", damage: MAX_HEALTH, cooldownMultiplier: 4, projectileSpeed: 1800 }
+      };
+      const WEAPON_IDS = Object.keys(WEAPONS);
+      const COVER_MAX_HEALTH = 3;
+      const GUARDIAN_HEALTH = MAX_HEALTH * 3;
+      const GUARDIAN_RADIUS = 25;
+      const GUARDIAN_WAKE_RANGE = 320;
+      const GUARDIAN_ATTACK_COOLDOWN = 1.15;
+      const GUARDIAN_RESPAWN_DELAY = 60;
+      const DIAMOND_RADIUS = 16;
+      const FLAG_SCALE = 1.5;
+      const COMPANION_LIFETIME = 30;
+      const COMPANION_DAMAGE = 1 / 2.5;
+      const COMPANION_SHOT_COOLDOWN = PLAYER_SHOT_COOLDOWN * 1.25;
       const RTC_CONFIGURATION = {
         iceServers: [{ urls: "stun:stun.l.google.com:19302" }]
       };
@@ -1186,60 +1250,61 @@
       ];
       const BASES = [
         {
-          x: 82, y: 170, w: 205, h: 260,
-          home: { x: 150, y: 300 }, spawn: { x: 142, y: 350 },
+          x: 70, y: 370, w: 205, h: 260,
+          home: { x: 138, y: 500 }, spawn: { x: 130, y: 550 },
           walls: [
-            { x: 82, y: 170, w: 205, h: 18 },
-            { x: 82, y: 412, w: 205, h: 18 },
-            { x: 269, y: 170, w: 18, h: 260 }
+            { x: 70, y: 370, w: 205, h: 18 },
+            { x: 70, y: 612, w: 205, h: 18 },
+            { x: 257, y: 370, w: 18, h: 260 }
           ]
         },
         {
-          x: 713, y: 170, w: 205, h: 260,
-          home: { x: 850, y: 300 }, spawn: { x: 858, y: 350 },
+          x: 925, y: 370, w: 205, h: 260,
+          home: { x: 1062, y: 500 }, spawn: { x: 1070, y: 550 },
           walls: [
-            { x: 713, y: 170, w: 205, h: 18 },
-            { x: 713, y: 412, w: 205, h: 18 },
-            { x: 713, y: 170, w: 18, h: 260 }
+            { x: 925, y: 370, w: 205, h: 18 },
+            { x: 925, y: 612, w: 205, h: 18 },
+            { x: 925, y: 370, w: 18, h: 260 }
           ]
         },
         {
-          x: 420, y: 20, w: 160, h: 125,
-          home: { x: 500, y: 82 }, spawn: { x: 500, y: 110 },
+          x: 477.5, y: 70, w: 245, h: 260,
+          home: { x: 600, y: 268 }, spawn: { x: 600, y: 240 },
           walls: [
-            { x: 420, y: 20, w: 160, h: 18 },
-            { x: 420, y: 20, w: 18, h: 125 },
-            { x: 562, y: 20, w: 18, h: 125 }
+            { x: 477.5, y: 312, w: 245, h: 18 },
+            { x: 477.5, y: 70, w: 18, h: 260 },
+            { x: 704.5, y: 70, w: 18, h: 260 }
           ]
         },
         {
-          x: 420, y: 455, w: 160, h: 125,
-          home: { x: 500, y: 518 }, spawn: { x: 500, y: 485 },
+          x: 477.5, y: 670, w: 245, h: 260,
+          home: { x: 600, y: 732 }, spawn: { x: 600, y: 760 },
           walls: [
-            { x: 420, y: 562, w: 160, h: 18 },
-            { x: 420, y: 455, w: 18, h: 125 },
-            { x: 562, y: 455, w: 18, h: 125 }
+            { x: 477.5, y: 670, w: 245, h: 18 },
+            { x: 477.5, y: 670, w: 18, h: 260 },
+            { x: 704.5, y: 670, w: 18, h: 260 }
           ]
         }
       ];
       const COVERS = [
-        { x: 340, y: 205, w: 72, h: 19 },
-        { x: 587, y: 365, w: 72, h: 19 },
-        { x: 333, y: 374, w: 54, h: 20 },
-        { x: 613, y: 196, w: 54, h: 20 },
-        { x: 433, y: 223, w: 20, h: 67 },
-        { x: 547, y: 310, w: 20, h: 67 },
-        { x: 477, y: 177, w: 48, h: 17 },
-        { x: 477, y: 406, w: 48, h: 17 },
-        { x: 365, y: 284, w: 34, h: 18 },
-        { x: 601, y: 298, w: 34, h: 18 }
+        { id: "brick-1", x: 440, y: 405, w: 72, h: 19 },
+        { id: "brick-2", x: 687, y: 565, w: 72, h: 19 },
+        { id: "brick-3", x: 433, y: 574, w: 54, h: 20 },
+        { id: "brick-4", x: 713, y: 396, w: 54, h: 20 },
+        { id: "brick-5", x: 533, y: 423, w: 20, h: 67 },
+        { id: "brick-6", x: 647, y: 510, w: 20, h: 67 },
+        { id: "brick-7", x: 577, y: 377, w: 48, h: 17 },
+        { id: "brick-8", x: 577, y: 606, w: 48, h: 17 },
+        { id: "brick-9", x: 465, y: 484, w: 34, h: 18 },
+        { id: "brick-10", x: 701, y: 498, w: 34, h: 18 }
       ];
       const input = {
         keys: new Set(),
         mouseDown: false,
-        touchFire: false,
         touchMove: { x: 0, y: 0 },
-        pointer: { x: 500, y: 300 }
+        touchAim: { x: 0, y: 0 },
+        touchAimActive: false,
+        pointer: { x: WIDTH / 2, y: HEIGHT / 2 }
       };
 
       let mode = "menu";
@@ -1251,6 +1316,7 @@
       let announceTimer = 0;
       let statusText = "";
       let bullets = [];
+      let laserBeams = [];
       let soundSequence = 0;
       let receivedSoundSequence = 0;
       let pendingSounds = [];
@@ -1258,6 +1324,9 @@
       let bots = [];
       let actors = [];
       let flags = [];
+      let guardian = null;
+      let diamond = null;
+      let companion = null;
       let score = [];
       let obstacles = [];
       let audioContext = null;
@@ -1272,8 +1341,17 @@
       let isHost = false;
       let remoteControls = new Map();
       let movePointerId = null;
+      let aimPointerId = null;
 
-      function createActor(team, name, id, isBot) {
+      function isWeaponId(weaponId) {
+        return Object.prototype.hasOwnProperty.call(WEAPONS, weaponId);
+      }
+
+      function randomWeaponId() {
+        return WEAPON_IDS[Math.floor(Math.random() * WEAPON_IDS.length)];
+      }
+
+      function createActor(team, name, id, isBot, weaponId) {
         const base = BASES[team];
         const aimX = WIDTH / 2 - base.home.x;
         const aimY = HEIGHT / 2 - base.home.y;
@@ -1283,14 +1361,16 @@
           team,
           name,
           isBot,
+          weaponId: isWeaponId(weaponId) ? weaponId : "standard",
           connected: true,
           x: base.spawn.x,
           y: base.spawn.y,
-          radius: 16,
+          radius: 20,
           speed: 205,
           health: MAX_HEALTH,
           ammo: MAGAZINE_SIZE,
           reloadTimer: 0,
+          laserChargeTimer: 0,
           lastDamageAt: -Infinity,
           regenAccumulator: 0,
           shotCooldown: 0,
@@ -1313,14 +1393,53 @@
         return { owner, home, x: home.x, y: home.y, state: "home", carrier: null, droppedBy: null, pickupLock: 0 };
       }
 
+      function createGuardian() {
+        return {
+          x: WIDTH / 2,
+          y: HEIGHT / 2,
+          radius: GUARDIAN_RADIUS,
+          health: GUARDIAN_HEALTH,
+          alive: true,
+          respawnTimer: 0,
+          speed: 145,
+          attackCooldown: 0.6,
+          hitFlash: 0,
+          aimX: 1,
+          aimY: 0,
+          path: [],
+          pathTarget: null,
+          pathTimer: 0
+        };
+      }
+
+      function createCompanion(owner) {
+        return {
+          owner,
+          x: owner.x,
+          y: owner.y - 24,
+          radius: 8,
+          lifetime: COMPANION_LIFETIME,
+          shotCooldown: 0,
+          phase: Math.random() * Math.PI * 2,
+          aimX: owner.aimX,
+          aimY: owner.aimY
+        };
+      }
+
       function startMatch(roomData) {
         currentRoom = roomData;
         isHost = roomData.hostId === localId;
         const participants = roomData.players.map((member, index) =>
-          createActor(index, member.name, member.id, false)
+          createActor(index, member.name, member.id, false, member.weapon)
         );
         bots = Array.from({ length: roomData.botCount }, (_, index) =>
-          createActor(participants.length + index, "Бот " + (index + 1), "bot-" + index, true)
+          createActor(
+            participants.length + index,
+            "Бот " + (index + 1),
+            "bot-" + index,
+            true,
+            roomData.botWeapons && roomData.botWeapons[index]
+          )
         );
         actors = [...participants, ...bots];
         player = actors.find((actor) => actor.id === localId);
@@ -1330,8 +1449,14 @@
         }
         flags = actors.map((actor) => createFlag(actor.team));
         score = actors.map(() => 0);
-        obstacles = actors.flatMap((actor) => BASES[actor.team].walls).concat(COVERS);
+        guardian = createGuardian();
+        diamond = null;
+        companion = null;
+        obstacles = actors.flatMap((actor) => BASES[actor.team].walls).concat(
+          COVERS.map((cover) => ({ ...cover, health: COVER_MAX_HEALTH, destructible: true }))
+        );
         bullets = [];
+        laserBeams = [];
         elapsed = 0;
         announceTimer = 0;
         networkAccumulator = 0;
@@ -1391,7 +1516,7 @@
           mode = "paused";
           input.keys.clear();
           input.mouseDown = false;
-          input.touchFire = false;
+          resetTouchAim();
           pauseButton.textContent = "Продолжить";
           showOverlay("Пауза", "Хозяин комнаты поставил матч на паузу.", "Продолжить", "pause");
           broadcastGameState();
@@ -1471,7 +1596,12 @@
           hostId: currentRoom.hostId,
           status: currentRoom.status,
           botCount: currentRoom.botCount,
-          players: currentRoom.players.map((member) => ({ id: member.id, name: member.name }))
+          botWeapons: currentRoom.botWeapons ? currentRoom.botWeapons.slice() : [],
+          players: currentRoom.players.map((member) => ({
+            id: member.id,
+            name: member.name,
+            weapon: isWeaponId(member.weapon) ? member.weapon : "standard"
+          }))
         };
       }
 
@@ -1556,7 +1686,8 @@
           hostId: localId,
           status: "lobby",
           botCount: 0,
-          players: [{ id: localId, name: cleanPlayerName(playerNameInput.value) }]
+          botWeapons: [],
+          players: [{ id: localId, name: cleanPlayerName(playerNameInput.value), weapon: "standard" }]
         };
         renderLobby(roomSnapshot());
       }
@@ -1743,7 +1874,8 @@
           const item = document.createElement("li");
           const role = member.id === roomData.hostId ? " · создатель" : "";
           const self = member.id === localId ? " · ты" : "";
-          item.textContent = TEAMS[index].name + " · " + member.name + role + self;
+          const weapon = isWeaponId(member.weapon) ? WEAPONS[member.weapon].label : WEAPONS.standard.label;
+          item.textContent = TEAMS[index].name + " · " + member.name + role + self + " · " + weapon;
           roomRoster.appendChild(item);
         });
 
@@ -1758,6 +1890,10 @@
         botCountSelect.value = String(Math.min(roomData.botCount, maxBots));
         botCountSelect.disabled = !isHost || roomData.status !== "lobby";
         botCountSetting.hidden = roomData.status !== "lobby";
+        const localMember = roomData.players.find((member) => member.id === localId);
+        weaponSelect.value = localMember && isWeaponId(localMember.weapon) ? localMember.weapon : "standard";
+        weaponSelect.disabled = !localMember || roomData.status !== "lobby";
+        weaponSetting.hidden = roomData.status !== "lobby";
         const occupied = roomData.players.length + roomData.botCount + pendingCount;
         matchSize.textContent = "Игроки и боты: " + (roomData.players.length + roomData.botCount) + " из 4";
         createInviteButton.hidden = !isHost;
@@ -1792,8 +1928,12 @@
         actors = [];
         bots = [];
         flags = [];
+        guardian = null;
+        diamond = null;
+        companion = null;
         score = [];
         bullets = [];
+        laserBeams = [];
         obstacles = [];
         remoteControls.clear();
         renderScoreboard();
@@ -1820,6 +1960,7 @@
         actor.connected = false;
         actor.alive = false;
         actor.respawnTimer = 0;
+        actor.laserChargeTimer = 0;
         remoteControls.delete(id);
         announce(actor.name + " покинул матч");
         updateHud();
@@ -1886,6 +2027,7 @@
         inviteGeneration += 1;
         pendingConnections.clear();
         latestInviteId = null;
+        currentRoom.botWeapons = Array.from({ length: currentRoom.botCount }, randomWeaponId);
         currentRoom.status = "running";
         hostInvitePanel.hidden = true;
         const snapshot = roomSnapshot();
@@ -1912,11 +2054,18 @@
             peer.name = cleanPlayerName(message.name);
             pendingConnections.delete(peerId);
             if (latestInviteId === peerId) latestInviteId = Array.from(pendingConnections.keys()).pop() || null;
-            currentRoom.players.push({ id: peerId, name: peer.name });
+            currentRoom.players.push({ id: peerId, name: peer.name, weapon: "standard" });
             const snapshot = roomSnapshot();
             sendPeerMessage(peerId, { type: "welcome", selfId: peerId, room: snapshot });
             broadcastPeerMessage({ type: "roomState", room: snapshot }, peerId);
             renderLobby(snapshot);
+          } else if (message.type === "weaponChoice" && mode === "lobby" && currentRoom) {
+            const member = currentRoom.players.find((candidate) => candidate.id === peerId);
+            if (member && isWeaponId(message.weapon)) {
+              member.weapon = message.weapon;
+              broadcastRoomState();
+              renderLobby(roomSnapshot());
+            }
           } else if (message.type === "input" && mode === "running") {
             const controls = message.controls;
             if (controls && ["moveX", "moveY", "aimX", "aimY"].every((key) => Number.isFinite(controls[key]))) {
@@ -1971,6 +2120,8 @@
             health: actor.health,
             ammo: actor.ammo,
             reloadTimer: actor.reloadTimer,
+            laserChargeTimer: actor.laserChargeTimer,
+            weaponId: actor.weaponId,
             alive: actor.alive,
             connected: actor.connected,
             respawnTimer: actor.respawnTimer,
@@ -1979,6 +2130,32 @@
             aimX: actor.aimX,
             aimY: actor.aimY,
             hitFlash: actor.hitFlash
+          })),
+          guardian: guardian ? {
+            x: guardian.x,
+            y: guardian.y,
+            health: guardian.health,
+            alive: guardian.alive,
+            respawnTimer: guardian.respawnTimer,
+            attackCooldown: guardian.attackCooldown,
+            hitFlash: guardian.hitFlash,
+            aimX: guardian.aimX,
+            aimY: guardian.aimY
+          } : null,
+          diamond: diamond ? { x: diamond.x, y: diamond.y } : null,
+          companion: companion ? {
+            ownerId: companion.owner.id,
+            x: companion.x,
+            y: companion.y,
+            lifetime: companion.lifetime,
+            shotCooldown: companion.shotCooldown,
+            phase: companion.phase,
+            aimX: companion.aimX,
+            aimY: companion.aimY
+          } : null,
+          covers: obstacles.filter((obstacle) => obstacle.destructible).map((obstacle) => ({
+            id: obstacle.id,
+            health: obstacle.health
           })),
           flags: flags.map((flag) => ({
             owner: flag.owner,
@@ -1995,7 +2172,17 @@
             vx: bullet.vx,
             vy: bullet.vy,
             range: bullet.range,
+            damage: bullet.damage,
+            weaponId: bullet.weaponId,
             ownerId: bullet.owner.id
+          })),
+          laserBeams: laserBeams.map((beam) => ({
+            startX: beam.startX,
+            startY: beam.startY,
+            endX: beam.endX,
+            endY: beam.endY,
+            remaining: beam.remaining,
+            ownerId: beam.owner.id
           }))
         };
       }
@@ -2028,6 +2215,10 @@
           actor.health = actorState.health;
           actor.ammo = actorState.ammo;
           actor.reloadTimer = actorState.reloadTimer;
+          actor.laserChargeTimer = Number.isFinite(actorState.laserChargeTimer)
+            ? Math.max(0, actorState.laserChargeTimer)
+            : 0;
+          actor.weaponId = isWeaponId(actorState.weaponId) ? actorState.weaponId : "standard";
           actor.alive = actorState.alive === true;
           actor.connected = actorState.connected !== false;
           actor.respawnTimer = actorState.respawnTimer;
@@ -2037,6 +2228,50 @@
           actor.aimY = actorState.aimY;
           actor.hitFlash = actorState.hitFlash;
           actor.carrying = null;
+        }
+        if (state.guardian) {
+          if (!guardian) guardian = createGuardian();
+          guardian.x = state.guardian.x;
+          guardian.y = state.guardian.y;
+          guardian.health = state.guardian.health;
+          guardian.alive = state.guardian.alive === true;
+          guardian.respawnTimer = state.guardian.respawnTimer;
+          guardian.attackCooldown = state.guardian.attackCooldown;
+          guardian.hitFlash = state.guardian.hitFlash;
+          guardian.aimX = state.guardian.aimX;
+          guardian.aimY = state.guardian.aimY;
+        } else {
+          guardian = null;
+        }
+        diamond = state.diamond
+          ? { x: state.diamond.x, y: state.diamond.y, radius: DIAMOND_RADIUS }
+          : null;
+        if (state.companion) {
+          const owner = actorById.get(state.companion.ownerId);
+          if (owner) {
+            if (!companion || companion.owner !== owner) companion = createCompanion(owner);
+            companion.owner = owner;
+            companion.x = state.companion.x;
+            companion.y = state.companion.y;
+            companion.lifetime = state.companion.lifetime;
+            companion.shotCooldown = state.companion.shotCooldown;
+            companion.phase = state.companion.phase;
+            companion.aimX = state.companion.aimX;
+            companion.aimY = state.companion.aimY;
+          } else {
+            companion = null;
+          }
+        } else {
+          companion = null;
+        }
+        if (Array.isArray(state.covers)) {
+          const coverStates = new Map(state.covers.map((cover) => [cover.id, cover.health]));
+          obstacles = obstacles.filter((obstacle) => {
+            if (!obstacle.destructible) return true;
+            if (!coverStates.has(obstacle.id)) return false;
+            obstacle.health = coverStates.get(obstacle.id);
+            return true;
+          });
         }
         const nextFlags = [];
         for (const flagState of state.flags) {
@@ -2065,8 +2300,20 @@
           vx: bullet.vx,
           vy: bullet.vy,
           range: bullet.range,
+          damage: typeof bullet.damage === "number" ? bullet.damage : 1,
+          weaponId: isWeaponId(bullet.weaponId) ? bullet.weaponId : "standard",
           owner: actorById.get(bullet.ownerId)
         })).filter((bullet) => bullet.owner);
+        laserBeams = Array.isArray(state.laserBeams)
+          ? state.laserBeams.map((beam) => ({
+            startX: beam.startX,
+            startY: beam.startY,
+            endX: beam.endX,
+            endY: beam.endY,
+            remaining: beam.remaining,
+            owner: actorById.get(beam.ownerId)
+          })).filter((beam) => beam.owner)
+          : [];
         mode = state.mode;
         setStatus(typeof state.status === "string" ? state.status : "");
         if (mode === "paused" && previousMode !== "paused") {
@@ -2109,17 +2356,21 @@
         draw();
       }
 
-      function isBlocked(x, y, radius) {
-        if (x - radius < 0 || x + radius > WIDTH || y - radius < 0 || y + radius > HEIGHT) {
-          return true;
-        }
-        return obstacles.some((obstacle) => {
+      function getObstacleCollision(x, y, radius) {
+        return obstacles.find((obstacle) => {
           const nearestX = Math.max(obstacle.x, Math.min(x, obstacle.x + obstacle.w));
           const nearestY = Math.max(obstacle.y, Math.min(y, obstacle.y + obstacle.h));
           const dx = x - nearestX;
           const dy = y - nearestY;
           return dx * dx + dy * dy < radius * radius;
-        });
+        }) || null;
+      }
+
+      function isBlocked(x, y, radius) {
+        if (x - radius < 0 || x + radius > WIDTH || y - radius < 0 || y + radius > HEIGHT) {
+          return true;
+        }
+        return Boolean(getObstacleCollision(x, y, radius));
       }
 
       function hasLineOfFire(shooter, target) {
@@ -2269,6 +2520,26 @@
         }
       }
 
+      function createBullet(owner, source, targetX, targetY, damage, weaponId) {
+        const dx = targetX - source.x;
+        const dy = targetY - source.y;
+        const distance = Math.hypot(dx, dy);
+        if (!distance) return null;
+        const nx = dx / distance;
+        const ny = dy / distance;
+        const weapon = isWeaponId(weaponId) ? WEAPONS[weaponId] : WEAPONS.standard;
+        return {
+          x: source.x + nx * (source.radius + 6),
+          y: source.y + ny * (source.radius + 6),
+          vx: nx * weapon.projectileSpeed,
+          vy: ny * weapon.projectileSpeed,
+          owner,
+          damage,
+          weaponId: isWeaponId(weaponId) ? weaponId : "standard",
+          range: 560
+        };
+      }
+
       function fire(actor, targetX, targetY) {
         if (!actor.alive || actor.shotCooldown > 0 || actor.reloadTimer > 0) return;
         if (actor.ammo === 0) {
@@ -2283,17 +2554,101 @@
         const ny = dy / distance;
         actor.aimX = nx;
         actor.aimY = ny;
-        actor.shotCooldown = actor.isBot ? 0.68 : 0.19;
+        const weapon = WEAPONS[actor.weaponId] || WEAPONS.standard;
+        if (actor.weaponId === "laser") {
+          if (actor.laserChargeTimer === 0) actor.laserChargeTimer = LASER_CHARGE_DURATION;
+          return;
+        }
+        actor.shotCooldown = (actor.isBot ? 0.68 : PLAYER_SHOT_COOLDOWN) * weapon.cooldownMultiplier;
         actor.ammo -= 1;
         if (actor.ammo === 0) actor.reloadTimer = RELOAD_DURATION;
         playSound("shoot");
-        bullets.push({
-          x: actor.x + nx * (actor.radius + 6),
-          y: actor.y + ny * (actor.radius + 6),
-          vx: nx * 610,
-          vy: ny * 610,
-          owner: actor,
-          range: 560
+        const bullet = createBullet(actor, actor, targetX, targetY, weapon.damage, actor.weaponId);
+        if (bullet) bullets.push(bullet);
+      }
+
+      function fireLaser(actor) {
+        actor.laserChargeTimer = 0;
+        if (!actor.alive || actor.reloadTimer > 0) return;
+        if (actor.ammo === 0) {
+          actor.reloadTimer = RELOAD_DURATION;
+          return;
+        }
+
+        const weapon = WEAPONS.laser;
+        const directionLength = Math.hypot(actor.aimX, actor.aimY) || 1;
+        const directionX = actor.aimX / directionLength;
+        const directionY = actor.aimY / directionLength;
+        const originX = actor.x + directionX * (actor.radius + 6);
+        const originY = actor.y + directionY * (actor.radius + 6);
+        let edgeDistance = Infinity;
+        if (directionX > 0) edgeDistance = Math.min(edgeDistance, (WIDTH - originX) / directionX);
+        if (directionX < 0) edgeDistance = Math.min(edgeDistance, -originX / directionX);
+        if (directionY > 0) edgeDistance = Math.min(edgeDistance, (HEIGHT - originY) / directionY);
+        if (directionY < 0) edgeDistance = Math.min(edgeDistance, -originY / directionY);
+
+        let beamDistance = Math.max(0, edgeDistance);
+        let hitObstacle = null;
+        for (let distance = 2; distance <= beamDistance; distance += 3) {
+          hitObstacle = getObstacleCollision(
+            originX + directionX * distance,
+            originY + directionY * distance,
+            2
+          );
+          if (hitObstacle) {
+            beamDistance = distance;
+            break;
+          }
+        }
+        if (hitObstacle && hitObstacle.destructible) {
+          hitObstacle.health = Math.max(0, hitObstacle.health - weapon.damage);
+          if (hitObstacle.health === 0) {
+            obstacles = obstacles.filter((obstacle) => obstacle !== hitObstacle);
+          }
+        }
+
+        const targets = [];
+        for (const target of actors) {
+          if (target === actor || !target.connected || !target.alive) continue;
+          const dx = target.x - originX;
+          const dy = target.y - originY;
+          const along = dx * directionX + dy * directionY;
+          const across = Math.abs(dx * directionY - dy * directionX);
+          const hitRadius = target.radius + 2;
+          if (along <= 0 || across > hitRadius) continue;
+          const hitDistance = along - Math.sqrt(hitRadius * hitRadius - across * across);
+          if (hitDistance <= beamDistance) targets.push({ actor: target, distance: hitDistance });
+        }
+        if (guardian && guardian.alive) {
+          const dx = guardian.x - originX;
+          const dy = guardian.y - originY;
+          const along = dx * directionX + dy * directionY;
+          const across = Math.abs(dx * directionY - dy * directionX);
+          const hitRadius = guardian.radius + 2;
+          if (along > 0 && across <= hitRadius) {
+            const hitDistance = along - Math.sqrt(hitRadius * hitRadius - across * across);
+            if (hitDistance <= beamDistance) targets.push({ guardian, distance: hitDistance });
+          }
+        }
+        targets.sort((left, right) => left.distance - right.distance);
+        for (let index = 0; index < Math.min(LASER_MAX_TARGETS, targets.length); index += 1) {
+          const target = targets[index];
+          const damage = index === 0 ? weapon.damage : weapon.damage / 2;
+          if (target.actor) damageActor(target.actor, damage);
+          else damageGuardian(damage);
+        }
+
+        actor.shotCooldown = (actor.isBot ? 0.68 : PLAYER_SHOT_COOLDOWN) * weapon.cooldownMultiplier;
+        actor.ammo -= 1;
+        if (actor.ammo === 0) actor.reloadTimer = RELOAD_DURATION;
+        playSound("shoot");
+        laserBeams.push({
+          startX: originX,
+          startY: originY,
+          endX: originX + directionX * beamDistance,
+          endY: originY + directionY * beamDistance,
+          remaining: LASER_BEAM_DURATION,
+          owner: actor
         });
       }
 
@@ -2310,7 +2665,7 @@
         playSound("drop");
       }
 
-      function damageActor(actor) {
+      function damageActor(actor, damage = 1) {
         if (!actor.connected || !actor.alive) return;
         if (actor.invulnerable > 0) {
           if (actor.carrying) {
@@ -2319,7 +2674,7 @@
           }
           return;
         }
-        actor.health -= 1;
+        actor.health = Math.max(0, actor.health - damage);
         actor.lastDamageAt = elapsed;
         actor.regenAccumulator = 0;
         actor.hitFlash = 0.18;
@@ -2332,13 +2687,14 @@
         if (actor.health <= 0) {
           actor.health = 0;
           actor.alive = false;
+          actor.laserChargeTimer = 0;
           playSound("death");
           actor.deaths += 1;
           actor.respawnTimer = Math.min(3 + (actor.deaths - 1) * 2, 10);
           actor.shotCooldown = 0;
           if (actor === player) {
             input.mouseDown = false;
-            input.touchFire = false;
+            resetTouchAim();
           }
           if (actor.carrying) dropFlag(actor);
           announce(actor === player
@@ -2354,6 +2710,7 @@
         actor.health = MAX_HEALTH;
         actor.ammo = MAGAZINE_SIZE;
         actor.reloadTimer = 0;
+        actor.laserChargeTimer = 0;
         actor.alive = true;
         actor.lastDamageAt = elapsed;
         actor.regenAccumulator = 0;
@@ -2438,6 +2795,10 @@
           actor.reloadTimer = Math.max(0, actor.reloadTimer - dt);
           if (actor.reloadTimer === 0) actor.ammo = MAGAZINE_SIZE;
         }
+        if (actor.laserChargeTimer > 0) {
+          actor.laserChargeTimer = Math.max(0, actor.laserChargeTimer - dt);
+          if (actor.laserChargeTimer === 0) fireLaser(actor);
+        }
 
         if (actor.health < MAX_HEALTH && elapsed - actor.lastDamageAt >= 10) {
           actor.regenAccumulator += dt;
@@ -2465,6 +2826,137 @@
         return { actor: nearest, distance: nearestDistance };
       }
 
+      function damageGuardian(damage) {
+        if (!guardian || !guardian.alive || damage <= 0) return;
+        guardian.health = Math.max(0, guardian.health - damage);
+        guardian.hitFlash = 0.16;
+        if (guardian.health === 0) {
+          guardian.alive = false;
+          guardian.respawnTimer = GUARDIAN_RESPAWN_DELAY;
+          guardian.path = [];
+          diamond = { x: guardian.x, y: guardian.y, radius: DIAMOND_RADIUS };
+          playSound("death");
+          announce("Страж повержен! Забери кристалл");
+        }
+      }
+
+      function updateGuardian(dt) {
+        if (!guardian) return;
+        if (!guardian.alive) {
+          guardian.respawnTimer = Math.max(0, guardian.respawnTimer - dt);
+          if (guardian.respawnTimer === 0) guardian = createGuardian();
+          return;
+        }
+        guardian.attackCooldown = Math.max(0, guardian.attackCooldown - dt);
+        if (guardian.hitFlash > 0) guardian.hitFlash = Math.max(0, guardian.hitFlash - dt);
+
+        let target = null;
+        let targetDistance = GUARDIAN_WAKE_RANGE;
+        for (const actor of actors) {
+          if (!actor.connected || !actor.alive) continue;
+          const distance = Math.hypot(actor.x - guardian.x, actor.y - guardian.y);
+          if (distance < targetDistance) {
+            target = actor;
+            targetDistance = distance;
+          }
+        }
+        if (!target) {
+          guardian.path = [];
+          guardian.pathTarget = null;
+          return;
+        }
+
+        const dx = target.x - guardian.x;
+        const dy = target.y - guardian.y;
+        const distance = Math.hypot(dx, dy);
+        const aimLength = distance || 1;
+        guardian.aimX = dx / aimLength;
+        guardian.aimY = dy / aimLength;
+        if (distance <= guardian.radius + target.radius + 6) {
+          if (guardian.attackCooldown === 0) {
+            damageActor(target);
+            guardian.attackCooldown = GUARDIAN_ATTACK_COOLDOWN;
+          }
+          return;
+        }
+
+        guardian.pathTimer -= dt;
+        const targetChanged = !guardian.pathTarget ||
+          guardian.pathTarget.reference !== target ||
+          Math.hypot(guardian.pathTarget.x - target.x, guardian.pathTarget.y - target.y) > 30;
+        if (guardian.pathTimer <= 0 || targetChanged) {
+          guardian.path = findPath(guardian.x, guardian.y, target.x, target.y, guardian.radius);
+          guardian.pathTarget = { reference: target, x: target.x, y: target.y };
+          guardian.pathTimer = 0.4;
+        }
+        while (guardian.path.length && Math.hypot(guardian.path[0].x - guardian.x, guardian.path[0].y - guardian.y) < 15) {
+          guardian.path.shift();
+        }
+        const waypoint = guardian.path[0] || target;
+        moveActor(guardian, waypoint.x - guardian.x, waypoint.y - guardian.y, dt);
+      }
+
+      function updateDiamondPickup() {
+        if (!diamond) return;
+        for (const actor of actors) {
+          if (!actor.connected || !actor.alive) continue;
+          if (Math.hypot(actor.x - diamond.x, actor.y - diamond.y) > actor.radius + diamond.radius) continue;
+          companion = createCompanion(actor);
+          diamond = null;
+          playSound("pickup");
+          announce(actor === player ? "Ты получил помощника на 30 секунд" : actor.name + " получил помощника");
+          return;
+        }
+      }
+
+      function updateCompanion(dt) {
+        if (!companion) return;
+        const owner = companion.owner;
+        if (!owner.connected) {
+          companion = null;
+          return;
+        }
+        companion.lifetime = Math.max(0, companion.lifetime - dt);
+        if (companion.lifetime === 0) {
+          companion = null;
+          if (owner === player) announce("Помощник улетел");
+          return;
+        }
+
+        const orbit = elapsed * 2.8 + companion.phase;
+        const desiredX = owner.x + Math.cos(orbit) * 34;
+        const desiredY = owner.y + Math.sin(orbit) * 25 - 20;
+        const follow = Math.min(1, dt * 8);
+        companion.x += (desiredX - companion.x) * follow;
+        companion.y += (desiredY - companion.y) * follow;
+        companion.shotCooldown = Math.max(0, companion.shotCooldown - dt);
+        if (!owner.alive || companion.shotCooldown > 0) return;
+
+        let target = null;
+        let targetDistance = 520;
+        for (const actor of actors) {
+          if (!actor.connected || !actor.alive || actor.team === owner.team) continue;
+          const distance = Math.hypot(actor.x - companion.x, actor.y - companion.y);
+          if (distance < targetDistance && hasLineOfFire(companion, actor)) {
+            target = actor;
+            targetDistance = distance;
+          }
+        }
+        if (!target) return;
+
+        const aimX = target.x - companion.x;
+        const aimY = target.y - companion.y;
+        const aimLength = Math.hypot(aimX, aimY) || 1;
+        companion.aimX = aimX / aimLength;
+        companion.aimY = aimY / aimLength;
+        const bullet = createBullet(owner, companion, target.x, target.y, COMPANION_DAMAGE, "standard");
+        if (bullet) {
+          bullets.push(bullet);
+          companion.shotCooldown = COMPANION_SHOT_COOLDOWN;
+          playSound("shoot");
+        }
+      }
+
       function getBotTarget(actor) {
         if (actor.carrying) return BASES[actor.team].home;
 
@@ -2472,13 +2964,11 @@
         if (ownFlag.state === "dropped") return ownFlag;
         if (ownFlag.state === "carried" && ownFlag.carrier && ownFlag.carrier !== actor) return ownFlag.carrier;
 
-        const enemy = nearestEnemy(actor);
-        if (enemy.actor && enemy.distance < 520) return enemy.actor;
-
         let nearestFlag = null;
         let nearestDistance = Infinity;
         for (const flag of flags) {
           if (flag.owner === actor.team) continue;
+          if (flag.state === "carried" && flag.carrier && flag.carrier.team === actor.team) continue;
           const target = flag.state === "carried" ? flag.carrier : flag;
           if (!target) continue;
           const distance = Math.hypot(target.x - actor.x, target.y - actor.y);
@@ -2487,7 +2977,7 @@
             nearestDistance = distance;
           }
         }
-        return nearestFlag || enemy.actor || BASES[actor.team].home;
+        return nearestFlag || BASES[actor.team].home;
       }
 
       function updateBot(actor, dt) {
@@ -2542,7 +3032,18 @@
             bullet.y += bullet.vy * stepTime;
             bullet.range -= Math.hypot(bullet.vx * stepTime, bullet.vy * stepTime);
 
-            if (isBlocked(bullet.x, bullet.y, 2) || bullet.range <= 0) {
+            if (isBlocked(bullet.x, bullet.y, 2)) {
+              const obstacle = getObstacleCollision(bullet.x, bullet.y, 2);
+              if (obstacle && obstacle.destructible) {
+                obstacle.health = Math.max(0, obstacle.health - bullet.damage);
+                if (obstacle.health === 0) {
+                  obstacles = obstacles.filter((candidate) => candidate !== obstacle);
+                }
+              }
+              hit = true;
+              break;
+            }
+            if (bullet.range <= 0) {
               hit = true;
               break;
             }
@@ -2550,16 +3051,28 @@
             for (const target of actors) {
               if (target === bullet.owner || !target.connected || !target.alive) continue;
               if (Math.hypot(target.x - bullet.x, target.y - bullet.y) < target.radius + 3) {
-                damageActor(target);
+                damageActor(target, bullet.damage);
                 hit = true;
                 break;
               }
+            }
+            if (!hit && guardian && guardian.alive &&
+                Math.hypot(guardian.x - bullet.x, guardian.y - bullet.y) < guardian.radius + 3) {
+              damageGuardian(bullet.damage);
+              hit = true;
             }
             if (hit) break;
           }
           if (!hit) survivors.push(bullet);
         }
         bullets = survivors;
+      }
+
+      function updateLaserBeams(dt) {
+        laserBeams = laserBeams.filter((beam) => {
+          beam.remaining = Math.max(0, beam.remaining - dt);
+          return beam.remaining > 0;
+        });
       }
 
       function currentControls() {
@@ -2569,14 +3082,11 @@
         moveY = Math.max(-1, Math.min(1, moveY));
         let aimX = input.pointer.x;
         let aimY = input.pointer.y;
-        if (input.touchFire && player) {
-          const enemy = nearestEnemy(player).actor;
-          if (enemy) {
-            aimX = enemy.x;
-            aimY = enemy.y;
-          }
+        if (input.touchAimActive && player) {
+          aimX = player.x + input.touchAim.x * 100;
+          aimY = player.y + input.touchAim.y * 100;
         }
-        return { moveX, moveY, aimX, aimY, fire: input.mouseDown || input.touchFire };
+        return { moveX, moveY, aimX, aimY, fire: input.mouseDown || input.touchAimActive };
       }
 
       function applyHumanControls(actor, controls, dt) {
@@ -2595,6 +3105,7 @@
       function update(dt) {
         if (mode !== "running" || !isHost) return;
         elapsed += dt;
+        updateLaserBeams(dt);
         for (const flag of Object.values(flags)) {
           if (flag.pickupLock > 0) flag.pickupLock = Math.max(0, flag.pickupLock - dt);
         }
@@ -2620,6 +3131,9 @@
             if (mode !== "running") break;
           }
         }
+        if (mode === "running") updateGuardian(dt);
+        if (mode === "running") updateDiamondPickup();
+        if (mode === "running") updateCompanion(dt);
         if (mode === "running") updateBullets(dt);
         hudAccumulator += dt;
         networkAccumulator += dt;
@@ -2694,6 +3208,11 @@
           : actor.ammo + " / " + MAGAZINE_SIZE;
       }
 
+      function healthLabel(actor) {
+        const health = Number.isInteger(actor.health) ? actor.health : actor.health.toFixed(1);
+        return health + " / " + MAX_HEALTH;
+      }
+
       function updateHud() {
         for (const actor of actors) {
           actor.scoreElement.textContent = score[actor.team] + " / " + WIN_SCORE;
@@ -2705,13 +3224,13 @@
                 ? "Выбыл"
                 : "Вышел";
           if (actor !== player) {
-            actor.healthElement.textContent = actor.health + " / " + MAX_HEALTH;
+            actor.healthElement.textContent = healthLabel(actor);
             actor.ammoElement.textContent = ammoLabel(actor);
             actor.stateElement.textContent = actor.alive ? "" : " · выбыл";
           }
         }
 
-        playerHealthElement.textContent = player.health + " / " + MAX_HEALTH;
+        playerHealthElement.textContent = healthLabel(player);
         playerAmmoElement.textContent = ammoLabel(player);
         const flagLabels = flags.map((flag) => {
           const name = flag.owner === player.team ? "Твой флаг" : TEAMS[flag.owner].name + " флаг";
@@ -2730,8 +3249,8 @@
         ctx.fillStyle = "#1b3026";
         ctx.fillRect(0, 0, WIDTH, HEIGHT);
 
-        for (let row = 0; row < 15; row += 1) {
-          for (let col = 0; col < 25; col += 1) {
+        for (let row = 0; row < Math.ceil(HEIGHT / 40); row += 1) {
+          for (let col = 0; col < Math.ceil(WIDTH / 40); col += 1) {
             const shade = (row * 17 + col * 29) % 4;
             ctx.fillStyle = ["rgba(193,222,160,.025)", "rgba(0,0,0,.025)", "rgba(155,205,145,.035)", "rgba(0,0,0,0)"][shade];
             ctx.fillRect(col * 40, row * 40, 40, 40);
@@ -2742,8 +3261,8 @@
         ctx.lineWidth = 1;
         ctx.setLineDash([5, 10]);
         ctx.beginPath();
-        ctx.moveTo(500, 35);
-        ctx.lineTo(500, 565);
+        ctx.moveTo(WIDTH / 2, 35);
+        ctx.lineTo(WIDTH / 2, HEIGHT - 35);
         ctx.stroke();
         ctx.setLineDash([]);
 
@@ -2762,7 +3281,7 @@
         ctx.fillRect(base.x + 18, base.y + 18, base.w - 36, base.h - 36);
         ctx.save();
         ctx.fillStyle = TEAMS[team].color;
-        ctx.font = "700 11px system-ui, sans-serif";
+        ctx.font = "700 16px system-ui, sans-serif";
         ctx.textAlign = "center";
         const owner = actors.find((actor) => actor.team === team);
         const label = player && player.team === team ? "ТВОЯ БАЗА" : owner && !owner.isBot ? "БАЗА ИГРОКА" : "БАЗА БОТА";
@@ -2772,19 +3291,60 @@
 
       function drawWalls() {
         for (const obstacle of obstacles) {
+          const isBrick = obstacle.destructible;
           ctx.fillStyle = "rgba(0,0,0,.28)";
           ctx.fillRect(obstacle.x + 3, obstacle.y + 5, obstacle.w, obstacle.h);
-          ctx.fillStyle = "#727c80";
+          ctx.fillStyle = isBrick
+            ? obstacle.health > COVER_MAX_HEALTH * 2 / 3
+              ? "#a4543d"
+              : obstacle.health > COVER_MAX_HEALTH / 3
+                ? "#854334"
+                : "#68352e"
+            : "#727c80";
           ctx.fillRect(obstacle.x, obstacle.y, obstacle.w, obstacle.h);
-          ctx.fillStyle = "rgba(225,234,228,.22)";
+          ctx.fillStyle = isBrick ? "rgba(255,211,172,.2)" : "rgba(225,234,228,.22)";
           ctx.fillRect(obstacle.x + 2, obstacle.y + 2, obstacle.w - 4, 3);
-          ctx.strokeStyle = "rgba(35,47,45,.8)";
+          ctx.strokeStyle = isBrick ? "rgba(47,22,18,.9)" : "rgba(35,47,45,.8)";
           ctx.lineWidth = 2;
           ctx.strokeRect(obstacle.x + 1, obstacle.y + 1, obstacle.w - 2, obstacle.h - 2);
 
-          ctx.strokeStyle = "rgba(38,49,48,.65)";
+          ctx.strokeStyle = isBrick ? "rgba(50,22,18,.72)" : "rgba(38,49,48,.65)";
           ctx.lineWidth = 1;
-          if (obstacle.w > obstacle.h) {
+          if (isBrick && obstacle.w > obstacle.h) {
+            const rows = Math.ceil((obstacle.h - 4) / 9);
+            for (let row = 0; row < rows; row += 1) {
+              const rowTop = obstacle.y + 2 + row * 9;
+              const rowBottom = Math.min(rowTop + 9, obstacle.y + obstacle.h - 2);
+              if (row > 0) {
+                ctx.beginPath();
+                ctx.moveTo(obstacle.x + 2, rowTop);
+                ctx.lineTo(obstacle.x + obstacle.w - 2, rowTop);
+                ctx.stroke();
+              }
+              const offset = row % 2 === 0 ? 0 : 13;
+              for (let x = obstacle.x + 26 + offset; x < obstacle.x + obstacle.w - 2; x += 26) {
+                ctx.beginPath();
+                ctx.moveTo(x, rowTop + 1);
+                ctx.lineTo(x, rowBottom);
+                ctx.stroke();
+              }
+            }
+          } else if (isBrick) {
+            let row = 0;
+            for (let y = obstacle.y + 15; y < obstacle.y + obstacle.h - 2; y += 15) {
+              ctx.beginPath();
+              ctx.moveTo(obstacle.x + 2, y);
+              ctx.lineTo(obstacle.x + obstacle.w - 2, y);
+              ctx.stroke();
+              if (row % 2 === 0) {
+                ctx.beginPath();
+                ctx.moveTo(obstacle.x + obstacle.w / 2, y - 15);
+                ctx.lineTo(obstacle.x + obstacle.w / 2, y);
+                ctx.stroke();
+              }
+              row += 1;
+            }
+          } else if (obstacle.w > obstacle.h) {
             for (let x = obstacle.x + 25; x < obstacle.x + obstacle.w; x += 27) {
               ctx.beginPath();
               ctx.moveTo(x, obstacle.y + 2);
@@ -2810,33 +3370,47 @@
         }
       }
 
+      function drawFlagBase(flag) {
+        const x = flag.home.x;
+        const y = flag.home.y + 8;
+        ctx.fillStyle = "rgba(12,21,18,.84)";
+        ctx.beginPath();
+        ctx.arc(x, y, 12 * FLAG_SCALE, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.strokeStyle = TEAMS[flag.owner].flag;
+        ctx.lineWidth = 2;
+        ctx.stroke();
+      }
+
       function drawFlag(flag) {
-        if (flag.state === "carried") return;
         const x = flag.state === "home" ? flag.home.x : flag.x;
         const y = flag.state === "home" ? flag.home.y : flag.y;
+        const groundY = y + 8;
+        const poleTop = groundY - 29 * FLAG_SCALE;
+        const direction = flag.owner % 2 === 0 ? 1 : -1;
         if (flag.state === "dropped") {
           ctx.fillStyle = "rgba(5,12,10,.35)";
           ctx.beginPath();
-          ctx.ellipse(x, y + 9, 15, 5, 0, 0, Math.PI * 2);
+          ctx.ellipse(x, groundY, 15 * FLAG_SCALE, 5 * FLAG_SCALE, 0, 0, Math.PI * 2);
           ctx.fill();
         }
 
         ctx.strokeStyle = "#d9dfd9";
-        ctx.lineWidth = 3;
+        ctx.lineWidth = 3 * FLAG_SCALE;
         ctx.beginPath();
-        ctx.moveTo(x, y + 13);
-        ctx.lineTo(x, y - 16);
+        ctx.moveTo(x, groundY);
+        ctx.lineTo(x, poleTop);
         ctx.stroke();
         ctx.fillStyle = TEAMS[flag.owner].flag;
         ctx.beginPath();
-        ctx.moveTo(x + 1, y - 15);
-        ctx.lineTo(x + (flag.owner % 2 === 0 ? 19 : -19), y - 10);
-        ctx.lineTo(x + 1, y - 3);
+        ctx.moveTo(x + direction * FLAG_SCALE, poleTop + FLAG_SCALE);
+        ctx.lineTo(x + direction * 19 * FLAG_SCALE, poleTop + 6 * FLAG_SCALE);
+        ctx.lineTo(x + direction * FLAG_SCALE, poleTop + 13 * FLAG_SCALE);
         ctx.closePath();
         ctx.fill();
         ctx.fillStyle = "rgba(239,246,236,.72)";
         ctx.beginPath();
-        ctx.ellipse(x, y + 14, 8, 3, 0, 0, Math.PI * 2);
+        ctx.ellipse(x, groundY, 8 * FLAG_SCALE, 3 * FLAG_SCALE, 0, 0, Math.PI * 2);
         ctx.fill();
       }
 
@@ -2849,7 +3423,7 @@
 
         ctx.fillStyle = "rgba(0,0,0,.34)";
         ctx.beginPath();
-        ctx.ellipse(0, 12, 17, 7, 0, 0, Math.PI * 2);
+        ctx.ellipse(0, 14, 21, 9, 0, 0, Math.PI * 2);
         ctx.fill();
 
         if (actor.invulnerable > 0 && Math.floor(elapsed * 10) % 2 === 0) {
@@ -2861,10 +3435,22 @@
         }
 
         ctx.rotate(Math.atan2(actor.aimY, actor.aimX));
+        const weaponId = isWeaponId(actor.weaponId) ? actor.weaponId : "standard";
         ctx.fillStyle = "#282f36";
-        ctx.fillRect(1, -4, 23, 8);
-        ctx.fillStyle = "#b7c2ca";
-        ctx.fillRect(17, -2, 10, 4);
+        if (weaponId === "double") {
+          ctx.fillRect(1, -6, 27, 12);
+          ctx.fillStyle = "#b7c2ca";
+          ctx.fillRect(18, -6, 15, 3);
+          ctx.fillRect(18, 3, 15, 3);
+        } else {
+          ctx.fillRect(1, -5, 28, 10);
+          ctx.fillStyle = weaponId === "laser" ? "#69e9ff" : "#b7c2ca";
+          if (weaponId === "laser") {
+            ctx.shadowColor = "#49eaff";
+            ctx.shadowBlur = 9;
+          }
+          ctx.fillRect(21, -3, 12, 6);
+        }
         ctx.restore();
 
         ctx.save();
@@ -2877,52 +3463,193 @@
         ctx.stroke();
         ctx.fillStyle = "rgba(13,22,28,.8)";
         ctx.beginPath();
-        ctx.arc(actor.x, actor.y, 5, 0, Math.PI * 2);
+        ctx.arc(actor.x, actor.y, 6, 0, Math.PI * 2);
         ctx.fill();
 
         ctx.fillStyle = "rgba(6,12,16,.68)";
-        ctx.fillRect(actor.x - 20, actor.y - 30, 40, 4);
+        ctx.fillRect(actor.x - 26, actor.y - 35, 52, 6);
         ctx.fillStyle = actor.health <= 1 ? "#ff737b" : "#75e1a3";
-        ctx.fillRect(actor.x - 20, actor.y - 30, 40 * actor.health / MAX_HEALTH, 4);
+        ctx.fillRect(actor.x - 26, actor.y - 35, 52 * actor.health / MAX_HEALTH, 6);
+        if (actor === player) {
+          const meterWidth = 64;
+          const meterHeight = 8;
+          const meterX = actor.x - meterWidth / 2;
+          const meterY = actor.y - 75;
+          const progress = actor.reloadTimer > 0
+            ? 1 - actor.reloadTimer / RELOAD_DURATION
+            : actor.ammo / MAGAZINE_SIZE;
+          ctx.fillStyle = "rgba(6,12,16,.82)";
+          ctx.fillRect(meterX, meterY, meterWidth, meterHeight);
+          ctx.fillStyle = actor.reloadTimer > 0 ? "#ffc879" : TEAMS[actor.team].flag;
+          ctx.fillRect(meterX, meterY, meterWidth * Math.max(0, Math.min(1, progress)), meterHeight);
+          ctx.strokeStyle = "rgba(239,246,236,.76)";
+          ctx.lineWidth = 1;
+          ctx.strokeRect(meterX, meterY, meterWidth, meterHeight);
+        }
         ctx.fillStyle = "#edf4f6";
-        ctx.font = "600 10px system-ui, sans-serif";
+        ctx.font = "600 16px system-ui, sans-serif";
         ctx.textAlign = "center";
-        ctx.fillText(actor.name, actor.x, actor.y - 36);
+        ctx.fillText(actor.name, actor.x, actor.y - 49);
         ctx.restore();
 
         if (actor.carrying) {
           drawCarriedFlag(actor);
         }
+        drawLaserCharge(actor);
       }
 
       function drawCarriedFlag(actor) {
-        const x = actor.x;
-        const y = actor.y - 23;
+        const x = actor.x + 21;
+        const groundY = actor.y - 5;
         ctx.strokeStyle = "#e7eceb";
-        ctx.lineWidth = 2;
+        ctx.lineWidth = 2 * FLAG_SCALE;
         ctx.beginPath();
-        ctx.moveTo(x, y + 2);
-        ctx.lineTo(x, y - 16);
+        ctx.moveTo(x, groundY);
+        ctx.lineTo(x, groundY - 18 * FLAG_SCALE);
         ctx.stroke();
         ctx.fillStyle = TEAMS[actor.carrying.owner].flag;
         ctx.beginPath();
-        ctx.moveTo(x + 1, y - 15);
-        ctx.lineTo(x + 13, y - 11);
-        ctx.lineTo(x + 1, y - 7);
+        ctx.moveTo(x + FLAG_SCALE, groundY - 17 * FLAG_SCALE);
+        ctx.lineTo(x + 13 * FLAG_SCALE, groundY - 12 * FLAG_SCALE);
+        ctx.lineTo(x + FLAG_SCALE, groundY - 7 * FLAG_SCALE);
         ctx.closePath();
         ctx.fill();
       }
 
+      function drawLaserCharge(actor) {
+        if (actor.weaponId !== "laser" || actor.laserChargeTimer <= 0) return;
+        const progress = Math.max(0, Math.min(1, 1 - actor.laserChargeTimer / LASER_CHARGE_DURATION));
+        const x = actor.x + actor.aimX * (actor.radius + 22);
+        const y = actor.y + actor.aimY * (actor.radius + 22);
+        ctx.save();
+        ctx.globalAlpha = 0.45 + progress * 0.55;
+        ctx.fillStyle = "#e8fdff";
+        ctx.shadowColor = "#4beaff";
+        ctx.shadowBlur = 7 + progress * 12;
+        ctx.beginPath();
+        ctx.arc(x, y, 2.5 + progress * 4.5, 0, Math.PI * 2);
+        ctx.fill();
+        ctx.restore();
+      }
+
+      function drawGuardian() {
+        if (!guardian || !guardian.alive) return;
+        ctx.save();
+        ctx.translate(guardian.x, guardian.y);
+        if (guardian.hitFlash > 0) ctx.globalAlpha = 0.55;
+        ctx.rotate(Math.atan2(guardian.aimY, guardian.aimX) + Math.PI / 2);
+        ctx.fillStyle = "#9c55d8";
+        ctx.strokeStyle = "#e7c7ff";
+        ctx.lineWidth = 3;
+        ctx.beginPath();
+        ctx.moveTo(0, -guardian.radius);
+        ctx.lineTo(guardian.radius * 0.9, guardian.radius * 0.75);
+        ctx.lineTo(-guardian.radius * 0.9, guardian.radius * 0.75);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+
+        const barWidth = 72;
+        const barX = guardian.x - barWidth / 2;
+        const barY = guardian.y - guardian.radius - 14;
+        ctx.fillStyle = "rgba(6,12,16,.82)";
+        ctx.fillRect(barX, barY, barWidth, 7);
+        ctx.fillStyle = "#c17cff";
+        ctx.fillRect(barX, barY, barWidth * guardian.health / GUARDIAN_HEALTH, 7);
+        ctx.strokeStyle = "rgba(239,246,236,.76)";
+        ctx.lineWidth = 1;
+        ctx.strokeRect(barX, barY, barWidth, 7);
+        ctx.fillStyle = "#edddff";
+        ctx.font = "700 16px system-ui, sans-serif";
+        ctx.textAlign = "center";
+        ctx.fillText("СТРАЖ", guardian.x, barY - 5);
+      }
+
+      function drawDiamond() {
+        if (!diamond) return;
+        const pulse = 1 + Math.sin(elapsed * 5) * 0.1;
+        const radius = diamond.radius * pulse;
+        ctx.save();
+        ctx.translate(diamond.x, diamond.y);
+        ctx.rotate(Math.PI / 4);
+        ctx.shadowColor = "#c38aff";
+        ctx.shadowBlur = 16;
+        ctx.fillStyle = "#a85cff";
+        ctx.strokeStyle = "#f0d7ff";
+        ctx.lineWidth = 3;
+        ctx.fillRect(-radius * 0.72, -radius * 0.72, radius * 1.44, radius * 1.44);
+        ctx.strokeRect(-radius * 0.72, -radius * 0.72, radius * 1.44, radius * 1.44);
+        ctx.restore();
+      }
+
+      function drawCompanion() {
+        if (!companion) return;
+        ctx.save();
+        ctx.translate(companion.x, companion.y);
+        ctx.rotate(Math.atan2(companion.aimY, companion.aimX) + Math.PI / 2);
+        ctx.fillStyle = "#ff9d38";
+        ctx.strokeStyle = "#ffe0a6";
+        ctx.lineWidth = 2;
+        ctx.beginPath();
+        ctx.moveTo(0, -companion.radius);
+        ctx.lineTo(companion.radius * 0.9, companion.radius * 0.75);
+        ctx.lineTo(-companion.radius * 0.9, companion.radius * 0.75);
+        ctx.closePath();
+        ctx.fill();
+        ctx.stroke();
+        ctx.restore();
+      }
+
       function drawBullets() {
+        ctx.save();
         for (const bullet of bullets) {
+          if (bullet.weaponId === "laser") {
+            const length = Math.hypot(bullet.vx, bullet.vy) || 1;
+            const aimX = bullet.vx / length;
+            const aimY = bullet.vy / length;
+            ctx.strokeStyle = "#c8faff";
+            ctx.shadowColor = "#49eaff";
+            ctx.shadowBlur = 14;
+            ctx.lineWidth = 4;
+            ctx.beginPath();
+            ctx.moveTo(bullet.x - aimX * 20, bullet.y - aimY * 20);
+            ctx.lineTo(bullet.x + aimX * 4, bullet.y + aimY * 4);
+            ctx.stroke();
+            continue;
+          }
           ctx.fillStyle = TEAMS[bullet.owner.team].stroke;
-          ctx.shadowColor = TEAMS[bullet.owner.team].flag;
+          ctx.shadowColor = bullet.weaponId === "double" ? "#ffc56b" : TEAMS[bullet.owner.team].flag;
           ctx.shadowBlur = 9;
           ctx.beginPath();
-          ctx.arc(bullet.x, bullet.y, 3, 0, Math.PI * 2);
+          ctx.arc(bullet.x, bullet.y, bullet.weaponId === "double" ? 3.5 : 3, 0, Math.PI * 2);
           ctx.fill();
         }
-        ctx.shadowBlur = 0;
+        ctx.restore();
+      }
+
+      function drawLaserBeams() {
+        ctx.save();
+        ctx.lineCap = "round";
+        for (const beam of laserBeams) {
+          ctx.globalAlpha = Math.max(0, Math.min(1, beam.remaining / LASER_BEAM_DURATION));
+          ctx.strokeStyle = "#4beaff";
+          ctx.shadowColor = "#49eaff";
+          ctx.shadowBlur = 18;
+          ctx.lineWidth = 10;
+          ctx.beginPath();
+          ctx.moveTo(beam.startX, beam.startY);
+          ctx.lineTo(beam.endX, beam.endY);
+          ctx.stroke();
+          ctx.strokeStyle = "#f3feff";
+          ctx.shadowBlur = 8;
+          ctx.lineWidth = 3;
+          ctx.beginPath();
+          ctx.moveTo(beam.startX, beam.startY);
+          ctx.lineTo(beam.endX, beam.endY);
+          ctx.stroke();
+        }
+        ctx.restore();
       }
 
       function draw() {
@@ -2939,13 +3666,18 @@
         );
         drawGround();
         for (const flag of flags) {
+          drawFlagBase(flag);
           if (flag.state === "home") drawFlag(flag);
         }
         drawWalls();
+        drawLaserBeams();
         drawBullets();
+        drawGuardian();
+        drawDiamond();
         for (const actor of actors) {
           drawActor(actor);
         }
+        drawCompanion();
         for (const flag of flags) {
           if (flag.state === "dropped") drawFlag(flag);
         }
@@ -2964,7 +3696,7 @@
         ctx.font = "800 76px system-ui, sans-serif";
         ctx.fillText(Math.max(0, Math.ceil(player.respawnTimer)), WIDTH / 2, HEIGHT / 2 + 23);
         ctx.fillStyle = "#a9c5d8";
-        ctx.font = "700 12px system-ui, sans-serif";
+        ctx.font = "700 14px system-ui, sans-serif";
         ctx.fillText("ВОЗВРАЩЕНИЕ В БОЙ", WIDTH / 2, HEIGHT / 2 + 53);
       }
 
@@ -2991,6 +3723,19 @@
         currentRoom.botCount = Number(botCountSelect.value);
         broadcastRoomState();
         renderLobby(roomSnapshot());
+      });
+
+      weaponSelect.addEventListener("change", () => {
+        if (!currentRoom || mode !== "lobby" || !isWeaponId(weaponSelect.value)) return;
+        if (isHost) {
+          const member = currentRoom.players.find((candidate) => candidate.id === localId);
+          if (!member) return;
+          member.weapon = weaponSelect.value;
+          broadcastRoomState();
+          renderLobby(roomSnapshot());
+        } else if (guestDataChannel && guestDataChannel.readyState === "open") {
+          guestDataChannel.send(JSON.stringify({ type: "weaponChoice", weapon: weaponSelect.value }));
+        }
       });
 
       createRoomButton.addEventListener("click", createHostRoom);
@@ -3041,10 +3786,10 @@
       window.addEventListener("blur", () => {
         input.keys.clear();
         input.mouseDown = false;
-        input.touchFire = false;
         input.touchMove = { x: 0, y: 0 };
         moveStick.style.transform = "";
-        fireTouch.classList.remove("pressed");
+        movePointerId = null;
+        resetTouchAim();
       });
 
       function updateTouchMove(event) {
@@ -3077,19 +3822,44 @@
       movePad.addEventListener("pointerup", releaseMovePointer);
       movePad.addEventListener("pointercancel", releaseMovePointer);
 
-      fireTouch.addEventListener("pointerdown", (event) => {
+      function updateTouchAim(event) {
+        const rect = aimPad.getBoundingClientRect();
+        const radius = rect.width * 0.34;
+        const rawX = event.clientX - (rect.left + rect.width / 2);
+        const rawY = event.clientY - (rect.top + rect.height / 2);
+        const scale = Math.max(1, Math.hypot(rawX, rawY) / radius);
+        const x = rawX / scale;
+        const y = rawY / scale;
+        input.touchAim = { x: x / radius, y: y / radius };
+        input.touchAimActive = Math.hypot(input.touchAim.x, input.touchAim.y) > 0.12;
+        aimStick.style.transform = "translate(" + x + "px, " + y + "px)";
+      }
+
+      function resetTouchAim() {
+        aimPointerId = null;
+        input.touchAim = { x: 0, y: 0 };
+        input.touchAimActive = false;
+        aimStick.style.transform = "";
+        aimPad.classList.remove("pressed");
+      }
+
+      aimPad.addEventListener("pointerdown", (event) => {
         event.preventDefault();
         enableAudio();
-        input.touchFire = true;
-        fireTouch.classList.add("pressed");
-        fireTouch.setPointerCapture(event.pointerId);
+        aimPointerId = event.pointerId;
+        aimPad.classList.add("pressed");
+        aimPad.setPointerCapture(event.pointerId);
+        updateTouchAim(event);
       });
-      function releaseFirePointer() {
-        input.touchFire = false;
-        fireTouch.classList.remove("pressed");
+      aimPad.addEventListener("pointermove", (event) => {
+        if (event.pointerId === aimPointerId) updateTouchAim(event);
+      });
+      function releaseAimPointer(event) {
+        if (event.pointerId !== aimPointerId) return;
+        resetTouchAim();
       }
-      fireTouch.addEventListener("pointerup", releaseFirePointer);
-      fireTouch.addEventListener("pointercancel", releaseFirePointer);
+      aimPad.addEventListener("pointerup", releaseAimPointer);
+      aimPad.addEventListener("pointercancel", releaseAimPointer);
 
       canvas.addEventListener("pointermove", (event) => {
         input.pointer = canvasPoint(event);
