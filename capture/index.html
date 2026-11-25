@@ -998,7 +998,7 @@
                     <option value="double">Tweens</option>
                     <option value="laser">Railgun</option>
                   </select>
-                  <small>Smoke наносит 1,5 урона и перезаряжается за 1,5 с. Tweens наносит половину урона и перезаряжается за 0,3 с. Railgun может убить с одного выстрела, но перезаряжается за 5 с. У каждого оружия один патрон; оружие ботов выбирается случайно.</small>
+                  <small id="weaponDescription">Обычная пушка с средней дальностью стрельбы небольшой перезарядкой и средним уроном.</small>
                 </div>
                 <div class="room-buttons">
                   <button class="button button-primary" id="startMatchButton" type="button">Начать матч</button>
@@ -1059,6 +1059,7 @@
       const botCountSelect = document.getElementById("botCountSelect");
       const weaponSetting = document.getElementById("weaponSetting");
       const weaponSelect = document.getElementById("weaponSelect");
+      const weaponDescription = document.getElementById("weaponDescription");
       const matchSize = document.getElementById("matchSize");
       const movePad = document.getElementById("movePad");
       const moveStick = document.getElementById("moveStick");
@@ -1081,9 +1082,40 @@
       const LASER_BEAM_DURATION = 0.16;
       const LASER_MAX_TARGETS = 2;
       const WEAPONS = {
-        standard: { label: "Smoke", damage: 1.5, magazineSize: 1, reloadDuration: 1.5, cooldownMultiplier: 1, projectileSpeed: 610 },
-        double: { label: "Tweens", damage: 0.5, magazineSize: 1, reloadDuration: 0.3, cooldownMultiplier: 0.5, projectileSpeed: 610 },
-        laser: { label: "Railgun", damage: MAX_HEALTH, magazineSize: 1, reloadDuration: 5, cooldownMultiplier: 4, projectileSpeed: 1800 }
+        standard: {
+          label: "Smoke",
+          description: "Обычная пушка с средней дальностью стрельбы небольшой перезарядкой и средним уроном.",
+          damage: 1.5,
+          magazineSize: 1,
+          reloadDuration: 1.5,
+          cooldownMultiplier: 1,
+          projectileSpeed: 610,
+          projectileRange: 560,
+          projectileRadius: 3
+        },
+        double: {
+          label: "Tweens",
+          description: "Скорострельная пушка. Стреляет маленькими плазменными снарядами. Отнимает мало урона, но компенсирует этот недостаток за счёт скорострельности.",
+          damage: 0.5,
+          magazineSize: 1,
+          reloadDuration: 0.3,
+          cooldownMultiplier: 0.5,
+          projectileSpeed: 610,
+          projectileRange: 392,
+          projectileRadius: 5.25,
+          projectileColor: "#4ca9e9"
+        },
+        laser: {
+          label: "Railgun",
+          description: "Очень мощная пушка. Низкая скорострельность компенсируется мощным уроном. Мощный плазменный снаряд способен пробить броню любого неприятеля даже на очень большом расстоянии.",
+          damage: MAX_HEALTH,
+          magazineSize: 1,
+          reloadDuration: 5,
+          cooldownMultiplier: 4,
+          projectileSpeed: 1800,
+          projectileRange: 560,
+          projectileRadius: 3
+        }
       };
       const WEAPON_IDS = Object.keys(WEAPONS);
       const COVER_MAX_HEALTH = 3;
@@ -1767,6 +1799,7 @@
         botCountSetting.hidden = roomData.status !== "lobby";
         const localMember = roomData.players.find((member) => member.id === localId);
         weaponSelect.value = localMember && isWeaponId(localMember.weapon) ? localMember.weapon : "standard";
+        weaponDescription.textContent = WEAPONS[weaponSelect.value].description;
         weaponSelect.disabled = !localMember || roomData.status !== "lobby";
         weaponSetting.hidden = roomData.status !== "lobby";
         const occupied = roomData.players.length + roomData.botCount + pendingCount;
@@ -2366,13 +2399,25 @@
       }
 
       function playSound(name) {
-        if (!["shoot", "pickup", "capture", "death", "drop"].includes(name)) return;
+        if (![
+          "shoot", "tweensShoot", "railgunCharge", "railgunFire",
+          "pickup", "capture", "death", "drop"
+        ].includes(name)) return;
         if (isHost) {
           pendingSounds.push({ sequence: ++soundSequence, name });
         }
         if (!audioContext) return;
         const patterns = {
           shoot: [{ wave: "square", frequency: 180, endFrequency: 72, duration: 0.045, volume: 0.025, delay: 0 }],
+          tweensShoot: [{ wave: "triangle", frequency: 620, endFrequency: 230, duration: 0.07, volume: 0.025, delay: 0 }],
+          railgunCharge: [
+            { wave: "sine", frequency: 120, endFrequency: 560, duration: 0.32, volume: 0.03, delay: 0 },
+            { wave: "triangle", frequency: 360, endFrequency: 720, duration: 0.32, volume: 0.016, delay: 0 }
+          ],
+          railgunFire: [
+            { wave: "sawtooth", frequency: 780, endFrequency: 70, duration: 0.22, volume: 0.045, delay: 0 },
+            { wave: "sine", frequency: 100, endFrequency: 35, duration: 0.32, volume: 0.04, delay: 0 }
+          ],
           pickup: [
             { wave: "square", frequency: 520, endFrequency: 520, duration: 0.07, volume: 0.045, delay: 0 },
             { wave: "square", frequency: 780, endFrequency: 780, duration: 0.09, volume: 0.045, delay: 0.075 }
@@ -2424,7 +2469,7 @@
           owner,
           damage,
           weaponId: isWeaponId(weaponId) ? weaponId : "standard",
-          range: 560
+          range: weapon.projectileRange
         };
       }
 
@@ -2444,13 +2489,16 @@
         actor.aimX = nx;
         actor.aimY = ny;
         if (actor.weaponId === "laser") {
-          if (actor.laserChargeTimer === 0) actor.laserChargeTimer = LASER_CHARGE_DURATION;
+          if (actor.laserChargeTimer === 0) {
+            actor.laserChargeTimer = LASER_CHARGE_DURATION;
+            playSound("railgunCharge");
+          }
           return;
         }
         actor.shotCooldown = (actor.isBot ? 0.68 : PLAYER_SHOT_COOLDOWN) * weapon.cooldownMultiplier;
         actor.ammo -= 1;
         if (actor.ammo === 0) actor.reloadTimer = weapon.reloadDuration;
-        playSound("shoot");
+        playSound(actor.weaponId === "double" ? "tweensShoot" : "shoot");
         const bullet = createBullet(actor, actor, targetX, targetY, weapon.damage, actor.weaponId);
         if (bullet) bullets.push(bullet);
       }
@@ -2529,7 +2577,7 @@
         actor.shotCooldown = (actor.isBot ? 0.68 : PLAYER_SHOT_COOLDOWN) * weapon.cooldownMultiplier;
         actor.ammo -= 1;
         if (actor.ammo === 0) actor.reloadTimer = weapon.reloadDuration;
-        playSound("shoot");
+        playSound("railgunFire");
         laserBeams.push({
           startX: originX,
           startY: originY,
@@ -3515,11 +3563,13 @@
             ctx.stroke();
             continue;
           }
-          ctx.fillStyle = TEAMS[bullet.owner.team].stroke;
-          ctx.shadowColor = bullet.weaponId === "double" ? "#ffc56b" : TEAMS[bullet.owner.team].flag;
+          const weapon = WEAPONS[bullet.weaponId] || WEAPONS.standard;
+          const projectileColor = weapon.projectileColor || TEAMS[bullet.owner.team].stroke;
+          ctx.fillStyle = projectileColor;
+          ctx.shadowColor = weapon.projectileColor || TEAMS[bullet.owner.team].flag;
           ctx.shadowBlur = 9;
           ctx.beginPath();
-          ctx.arc(bullet.x, bullet.y, bullet.weaponId === "double" ? 3.5 : 3, 0, Math.PI * 2);
+          ctx.arc(bullet.x, bullet.y, weapon.projectileRadius, 0, Math.PI * 2);
           ctx.fill();
         }
         ctx.restore();
@@ -3625,6 +3675,7 @@
 
       weaponSelect.addEventListener("change", () => {
         if (!currentRoom || mode !== "lobby" || !isWeaponId(weaponSelect.value)) return;
+        weaponDescription.textContent = WEAPONS[weaponSelect.value].description;
         if (isHost) {
           const member = currentRoom.players.find((candidate) => candidate.id === localId);
           if (!member) return;
