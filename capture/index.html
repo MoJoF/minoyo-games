@@ -59,7 +59,6 @@
     .scoreboard,
     .team-readout,
     .game-actions,
-    .game-footer,
     .control-item {
       display: flex;
       align-items: center;
@@ -547,66 +546,6 @@
       font-size: 15px;
     }
 
-    .game-footer {
-      flex-wrap: wrap;
-      justify-content: space-between;
-      gap: 16px;
-      padding: 14px 18px;
-      border-top: 1px solid var(--line);
-      background: rgba(255, 255, 255, 0.018);
-    }
-
-    .health-row {
-      display: flex;
-      align-items: center;
-      gap: 9px;
-      color: #a9b5c1;
-      font-size: 15px;
-    }
-
-    .health-row strong {
-      color: #f0f5f8;
-      font-variant-numeric: tabular-nums;
-    }
-
-    .health-icon {
-      color: #ff7b82;
-      font-size: 16px;
-    }
-
-    .ammo-row {
-      color: #c4cfda;
-    }
-
-    .ammo-row.reloading strong {
-      color: #ffc879;
-    }
-
-    .flag-state {
-      min-height: 17px;
-      color: #b7c4cf;
-      font-size: 15px;
-      text-align: center;
-    }
-
-    .bot-stats {
-      display: flex;
-      flex-wrap: wrap;
-      justify-content: flex-end;
-      gap: 6px 12px;
-    }
-
-    .bot-stat {
-      color: #a9b5c1;
-      font-size: 14px;
-      white-space: nowrap;
-    }
-
-    .bot-stat strong {
-      color: #e8eef3;
-      font-variant-numeric: tabular-nums;
-    }
-
     .controls {
       display: flex;
       flex-wrap: wrap;
@@ -704,16 +643,6 @@
     .aim-stick {
       border-color: rgba(255, 217, 220, 0.7);
       background: rgba(220, 67, 82, 0.72);
-    }
-
-    .joystick-label {
-      position: absolute;
-      top: 10px;
-      color: rgba(241, 247, 250, 0.76);
-      font-size: 8px;
-      font-weight: 800;
-      letter-spacing: 0.08em;
-      pointer-events: none;
     }
 
     .aim-pad.pressed {
@@ -828,12 +757,6 @@
         font-size: 13px;
       }
 
-      .game-footer {
-        flex-wrap: wrap;
-        justify-content: center;
-        gap: 8px 18px;
-        padding: 11px 8px;
-      }
     }
 
     @media (max-width: 390px) {
@@ -978,26 +901,10 @@
       #battlefield {
         width: auto;
         height: auto;
+        min-width: 0;
+        min-height: 0;
         max-width: 100%;
         max-height: 100%;
-      }
-
-      .game-footer {
-        flex: 0 0 auto;
-        justify-content: space-around;
-        gap: 4px 8px;
-        padding: 4px 7px;
-      }
-
-      .health-row,
-      .bot-stat,
-      .flag-state {
-        font-size: 12px;
-      }
-
-      .bot-stats {
-        justify-content: center;
-        gap: 3px 8px;
       }
 
       .controls {
@@ -1055,11 +962,9 @@
           </canvas>
           <div class="touch-controls" id="touchControls" aria-label="Сенсорное управление">
             <div class="move-pad" id="movePad" aria-label="Движение">
-              <span class="joystick-label" aria-hidden="true">Движение</span>
               <span class="move-stick" id="moveStick"></span>
             </div>
             <div class="aim-pad" id="aimPad" aria-label="Прицел и стрельба">
-              <span class="joystick-label" aria-hidden="true">Огонь</span>
               <span class="aim-stick" id="aimStick"></span>
             </div>
           </div>
@@ -1128,19 +1033,6 @@
           </div>
         </div>
 
-        <div class="game-footer">
-          <div class="health-row">
-            <span class="health-icon" aria-hidden="true">♥</span>
-            <span>Здоровье:</span>
-            <strong id="playerHealth">4 / 4</strong>
-          </div>
-          <div class="health-row ammo-row" id="playerAmmoRow">
-            <span>Патроны:</span>
-            <strong id="playerAmmo">10 / 10</strong>
-          </div>
-          <div class="flag-state" id="flagStatus">Твой флаг на базе · флаг бота на базе</div>
-          <div class="bot-stats" id="botStats" aria-label="Состояние ботов"></div>
-        </div>
       </section>
 
       <div class="controls" aria-label="Управление">
@@ -1199,16 +1091,11 @@
       const restartButton = document.getElementById("restartButton");
       const gameStatus = document.getElementById("gameStatus");
       const scoreChips = document.getElementById("scoreChips");
-      const playerHealthElement = document.getElementById("playerHealth");
-      const playerAmmoElement = document.getElementById("playerAmmo");
-      const flagStatus = document.getElementById("flagStatus");
-      const botStats = document.getElementById("botStats");
 
       const WIDTH = 1200;
       const HEIGHT = 1000;
-      const ZOOM = 1;
-      const CAMERA_OFFSET_X = (WIDTH - WIDTH * ZOOM) / 2;
-      const CAMERA_OFFSET_Y = (HEIGHT - HEIGHT * ZOOM) / 2;
+      const MOBILE_ZOOM = 1.77;
+      const mobileLandscape = window.matchMedia("(pointer: coarse) and (orientation: landscape)");
       const MAX_HEALTH = 4;
       const WIN_SCORE = 5;
       const MAGAZINE_SIZE = 10;
@@ -1464,7 +1351,6 @@
         mode = "running";
         setStatus("Матч начался · доставь пять флагов");
         renderScoreboard();
-        renderBotStats();
         hideOverlay();
         pauseButton.disabled = !isHost;
         restartButton.disabled = !isHost;
@@ -1937,7 +1823,6 @@
         obstacles = [];
         remoteControls.clear();
         renderScoreboard();
-        renderBotStats();
         pauseButton.disabled = true;
         restartButton.disabled = true;
         guestAnswerPanel.hidden = true;
@@ -2339,13 +2224,27 @@
         guestDataChannel.send(JSON.stringify({ type: "input", controls: currentControls() }));
       }
 
+      function cameraView() {
+        const zoom = mobileLandscape.matches ? MOBILE_ZOOM : 1;
+        const viewWidth = WIDTH / zoom;
+        const viewHeight = HEIGHT / zoom;
+        const focusX = player ? player.x : WIDTH / 2;
+        const focusY = player ? player.y : HEIGHT / 2;
+        return {
+          zoom,
+          x: Math.max(0, Math.min(WIDTH - viewWidth, focusX - viewWidth / 2)),
+          y: Math.max(0, Math.min(HEIGHT - viewHeight, focusY - viewHeight / 2))
+        };
+      }
+
       function canvasPoint(event) {
         const rect = canvas.getBoundingClientRect();
         const viewX = (event.clientX - rect.left) * WIDTH / rect.width;
         const viewY = (event.clientY - rect.top) * HEIGHT / rect.height;
+        const camera = cameraView();
         return {
-          x: Math.max(0, Math.min(WIDTH, (viewX - CAMERA_OFFSET_X) / ZOOM)),
-          y: Math.max(0, Math.min(HEIGHT, (viewY - CAMERA_OFFSET_Y) / ZOOM))
+          x: Math.max(0, Math.min(WIDTH, camera.x + viewX / camera.zoom)),
+          y: Math.max(0, Math.min(HEIGHT, camera.y + viewY / camera.zoom))
         };
       }
 
@@ -3178,41 +3077,6 @@
         }
       }
 
-      function renderBotStats() {
-        botStats.replaceChildren();
-        for (const actor of actors) {
-          if (actor === player) continue;
-          const row = document.createElement("span");
-          row.className = "bot-stat";
-          row.appendChild(document.createTextNode(actor.name + " · ♥ "));
-
-          const health = document.createElement("strong");
-          row.appendChild(health);
-          row.appendChild(document.createTextNode(" · патроны "));
-
-          const ammo = document.createElement("strong");
-          row.appendChild(ammo);
-          const state = document.createElement("span");
-          row.appendChild(state);
-          botStats.appendChild(row);
-
-          actor.healthElement = health;
-          actor.ammoElement = ammo;
-          actor.stateElement = state;
-        }
-      }
-
-      function ammoLabel(actor) {
-        return actor.reloadTimer > 0
-          ? "Перезарядка " + actor.reloadTimer.toFixed(1) + " с"
-          : actor.ammo + " / " + MAGAZINE_SIZE;
-      }
-
-      function healthLabel(actor) {
-        const health = Number.isInteger(actor.health) ? actor.health : actor.health.toFixed(1);
-        return health + " / " + MAX_HEALTH;
-      }
-
       function updateHud() {
         for (const actor of actors) {
           actor.scoreElement.textContent = score[actor.team] + " / " + WIN_SCORE;
@@ -3223,22 +3087,8 @@
               : actor.connected
                 ? "Выбыл"
                 : "Вышел";
-          if (actor !== player) {
-            actor.healthElement.textContent = healthLabel(actor);
-            actor.ammoElement.textContent = ammoLabel(actor);
-            actor.stateElement.textContent = actor.alive ? "" : " · выбыл";
-          }
         }
 
-        playerHealthElement.textContent = healthLabel(player);
-        playerAmmoElement.textContent = ammoLabel(player);
-        const flagLabels = flags.map((flag) => {
-          const name = flag.owner === player.team ? "Твой флаг" : TEAMS[flag.owner].name + " флаг";
-          if (flag.state === "home") return name + " на базе";
-          if (flag.state === "dropped") return name + " на земле";
-          return name + (flag.carrier === player ? " у тебя" : " у " + flag.carrier.name);
-        });
-        flagStatus.textContent = flagLabels.join(" · ");
         matchSize.textContent = "Всего игроков: " + actors.length + " из 4";
         pauseButton.textContent = mode === "paused" ? "Продолжить" : "Пауза";
         pauseButton.disabled = !isHost || (mode !== "running" && mode !== "paused");
@@ -3654,15 +3504,16 @@
 
       function draw() {
         if (!ctx || !player || !actors.length) return;
+        const camera = cameraView();
         ctx.setTransform(1, 0, 0, 1, 0, 0);
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         ctx.setTransform(
-          pixelRatio * ZOOM,
+          pixelRatio * camera.zoom,
           0,
           0,
-          pixelRatio * ZOOM,
-          pixelRatio * CAMERA_OFFSET_X,
-          pixelRatio * CAMERA_OFFSET_Y
+          pixelRatio * camera.zoom,
+          -pixelRatio * camera.x * camera.zoom,
+          -pixelRatio * camera.y * camera.zoom
         );
         drawGround();
         for (const flag of flags) {
