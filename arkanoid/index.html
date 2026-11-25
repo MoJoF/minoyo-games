@@ -607,7 +607,6 @@
         <div class="stat-item">
           <span class="stat-label">Уровень:</span>
           <span id="levelDisplay" class="stat-val">1 / 20</span>
-          <!--<span id="levelNameDisplay" class="stat-val level-name-tag">(Разминка)</span>-->
         </div>
         <div class="stat-item">
           <span class="stat-label">Сложность:</span>
@@ -808,7 +807,6 @@
     const scoreDisplay = document.getElementById('scoreDisplay');
     const highScoreDisplay = document.getElementById('highScoreDisplay');
     const levelDisplay = document.getElementById('levelDisplay');
-    //const levelNameDisplay = document.getElementById('levelNameDisplay');
     const diffDisplay = document.getElementById('diffDisplay');
     const livesDisplay = document.getElementById('livesDisplay');
 
@@ -1662,10 +1660,6 @@
       const diff = DIFFICULTY_CONFIGS[currentDifficulty] || DIFFICULTY_CONFIGS.easy;
       scoreDisplay.textContent = score;
       levelDisplay.textContent = `${level} / ${LEVEL_CONFIGS.length}`;
-      /*if (levelNameDisplay && currentConfig) {
-        levelNameDisplay.textContent = `(${currentConfig.name})`;
-        levelNameDisplay.style.color = currentConfig.accent;
-      }*/
       if (diffDisplay) {
         diffDisplay.textContent = diff.name;
         diffDisplay.style.color = diff.color;
